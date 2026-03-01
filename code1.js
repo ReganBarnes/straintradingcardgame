@@ -690,6 +690,31 @@ gdjs.copyArray(gdjs.GameCode.GDenemy1Objects3, gdjs.GameCode.GDenemy1Objects4);
 
 let isConditionTrue_0 = false;
 isConditionTrue_0 = false;
+{isConditionTrue_0 = ((( gdjs.GameCode.GDEnemyMechanicObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemyVanObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemycarObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemyShieldObjects4.length === 0 ) ? (( gdjs.GameCode.GDenemy1Objects4.length === 0 ) ? "" :gdjs.GameCode.GDenemy1Objects4[0].getName()) :gdjs.GameCode.GDEnemyShieldObjects4[0].getName()) :gdjs.GameCode.GDEnemycarObjects4[0].getName()) :gdjs.GameCode.GDEnemyVanObjects4[0].getName()) :gdjs.GameCode.GDEnemyMechanicObjects4[0].getName()) == "EnemyShield");
+}
+if (isConditionTrue_0) {
+{runtimeScene.getGame().getVariables().getFromIndex(1).add(5);
+}
+}
+
+}
+
+
+{
+
+gdjs.copyArray(gdjs.GameCode.GDEnemyMechanicObjects3, gdjs.GameCode.GDEnemyMechanicObjects4);
+
+gdjs.copyArray(gdjs.GameCode.GDEnemyShieldObjects3, gdjs.GameCode.GDEnemyShieldObjects4);
+
+gdjs.copyArray(gdjs.GameCode.GDEnemyVanObjects3, gdjs.GameCode.GDEnemyVanObjects4);
+
+gdjs.copyArray(gdjs.GameCode.GDEnemycarObjects3, gdjs.GameCode.GDEnemycarObjects4);
+
+gdjs.copyArray(gdjs.GameCode.GDenemy1Objects3, gdjs.GameCode.GDenemy1Objects4);
+
+
+let isConditionTrue_0 = false;
+isConditionTrue_0 = false;
 {isConditionTrue_0 = ((( gdjs.GameCode.GDEnemyMechanicObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemyVanObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemycarObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemyShieldObjects4.length === 0 ) ? (( gdjs.GameCode.GDenemy1Objects4.length === 0 ) ? "" :gdjs.GameCode.GDenemy1Objects4[0].getName()) :gdjs.GameCode.GDEnemyShieldObjects4[0].getName()) :gdjs.GameCode.GDEnemycarObjects4[0].getName()) :gdjs.GameCode.GDEnemyVanObjects4[0].getName()) :gdjs.GameCode.GDEnemyMechanicObjects4[0].getName()) == "Enemycar");
 }
 if (isConditionTrue_0) {
@@ -989,6 +1014,43 @@ gdjs.copyArray(gdjs.GameCode.GDEnemycarObjects3, gdjs.GameCode.GDEnemycarObjects
 gdjs.copyArray(gdjs.GameCode.GDenemy1Objects3, gdjs.GameCode.GDenemy1Objects4);
 
 {isConditionTrue_1 = ((( gdjs.GameCode.GDEnemyMechanicObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemyVanObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemycarObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemyShieldObjects4.length === 0 ) ? (( gdjs.GameCode.GDenemy1Objects4.length === 0 ) ? "" :gdjs.GameCode.GDenemy1Objects4[0].getName()) :gdjs.GameCode.GDEnemyShieldObjects4[0].getName()) :gdjs.GameCode.GDEnemycarObjects4[0].getName()) :gdjs.GameCode.GDEnemyVanObjects4[0].getName()) :gdjs.GameCode.GDEnemyMechanicObjects4[0].getName()) == "EnemyMechanic");
+}
+if(isConditionTrue_1) {
+    isConditionTrue_0 = true;
+    for (let j = 0, jLen = gdjs.GameCode.GDEnemyMechanicObjects4.length; j < jLen ; ++j) {
+        if ( gdjs.GameCode.GDEnemyMechanicObjects3_1final.indexOf(gdjs.GameCode.GDEnemyMechanicObjects4[j]) === -1 )
+            gdjs.GameCode.GDEnemyMechanicObjects3_1final.push(gdjs.GameCode.GDEnemyMechanicObjects4[j]);
+    }
+    for (let j = 0, jLen = gdjs.GameCode.GDEnemyShieldObjects4.length; j < jLen ; ++j) {
+        if ( gdjs.GameCode.GDEnemyShieldObjects3_1final.indexOf(gdjs.GameCode.GDEnemyShieldObjects4[j]) === -1 )
+            gdjs.GameCode.GDEnemyShieldObjects3_1final.push(gdjs.GameCode.GDEnemyShieldObjects4[j]);
+    }
+    for (let j = 0, jLen = gdjs.GameCode.GDEnemyVanObjects4.length; j < jLen ; ++j) {
+        if ( gdjs.GameCode.GDEnemyVanObjects3_1final.indexOf(gdjs.GameCode.GDEnemyVanObjects4[j]) === -1 )
+            gdjs.GameCode.GDEnemyVanObjects3_1final.push(gdjs.GameCode.GDEnemyVanObjects4[j]);
+    }
+    for (let j = 0, jLen = gdjs.GameCode.GDEnemycarObjects4.length; j < jLen ; ++j) {
+        if ( gdjs.GameCode.GDEnemycarObjects3_1final.indexOf(gdjs.GameCode.GDEnemycarObjects4[j]) === -1 )
+            gdjs.GameCode.GDEnemycarObjects3_1final.push(gdjs.GameCode.GDEnemycarObjects4[j]);
+    }
+    for (let j = 0, jLen = gdjs.GameCode.GDenemy1Objects4.length; j < jLen ; ++j) {
+        if ( gdjs.GameCode.GDenemy1Objects3_1final.indexOf(gdjs.GameCode.GDenemy1Objects4[j]) === -1 )
+            gdjs.GameCode.GDenemy1Objects3_1final.push(gdjs.GameCode.GDenemy1Objects4[j]);
+    }
+}
+}
+{
+gdjs.copyArray(gdjs.GameCode.GDEnemyMechanicObjects3, gdjs.GameCode.GDEnemyMechanicObjects4);
+
+gdjs.copyArray(gdjs.GameCode.GDEnemyShieldObjects3, gdjs.GameCode.GDEnemyShieldObjects4);
+
+gdjs.copyArray(gdjs.GameCode.GDEnemyVanObjects3, gdjs.GameCode.GDEnemyVanObjects4);
+
+gdjs.copyArray(gdjs.GameCode.GDEnemycarObjects3, gdjs.GameCode.GDEnemycarObjects4);
+
+gdjs.copyArray(gdjs.GameCode.GDenemy1Objects3, gdjs.GameCode.GDenemy1Objects4);
+
+{isConditionTrue_1 = ((( gdjs.GameCode.GDEnemyMechanicObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemyVanObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemycarObjects4.length === 0 ) ? (( gdjs.GameCode.GDEnemyShieldObjects4.length === 0 ) ? (( gdjs.GameCode.GDenemy1Objects4.length === 0 ) ? "" :gdjs.GameCode.GDenemy1Objects4[0].getName()) :gdjs.GameCode.GDEnemyShieldObjects4[0].getName()) :gdjs.GameCode.GDEnemycarObjects4[0].getName()) :gdjs.GameCode.GDEnemyVanObjects4[0].getName()) :gdjs.GameCode.GDEnemyMechanicObjects4[0].getName()) == "EnemyShield");
 }
 if(isConditionTrue_1) {
     isConditionTrue_0 = true;
@@ -2845,33 +2907,6 @@ gdjs.copyArray(runtimeScene.getObjects("EnemyShield"), gdjs.GameCode.GDEnemyShie
 let isConditionTrue_0 = false;
 isConditionTrue_0 = false;
 for (var i = 0, k = 0, l = gdjs.GameCode.GDEnemyShieldObjects1.length;i<l;++i) {
-    if ( gdjs.GameCode.GDEnemyShieldObjects1[i].getVariableNumber(gdjs.GameCode.GDEnemyShieldObjects1[i].getVariables().getFromIndex(1)) <= 0 ) {
-        isConditionTrue_0 = true;
-        gdjs.GameCode.GDEnemyShieldObjects1[k] = gdjs.GameCode.GDEnemyShieldObjects1[i];
-        ++k;
-    }
-}
-gdjs.GameCode.GDEnemyShieldObjects1.length = k;
-if (isConditionTrue_0) {
-/* Reuse gdjs.GameCode.GDEnemyShieldObjects1 */
-{for(var i = 0, len = gdjs.GameCode.GDEnemyShieldObjects1.length ;i < len;++i) {
-    gdjs.GameCode.GDEnemyShieldObjects1[i].deleteFromScene(runtimeScene);
-}
-}
-{runtimeScene.getGame().getVariables().getFromIndex(1).add(5);
-}
-}
-
-}
-
-
-{
-
-gdjs.copyArray(runtimeScene.getObjects("EnemyShield"), gdjs.GameCode.GDEnemyShieldObjects1);
-
-let isConditionTrue_0 = false;
-isConditionTrue_0 = false;
-for (var i = 0, k = 0, l = gdjs.GameCode.GDEnemyShieldObjects1.length;i<l;++i) {
     if ( !(gdjs.GameCode.GDEnemyShieldObjects1[i].getBehavior("InOnScreen").IsOnScreen(0, null)) ) {
         isConditionTrue_0 = true;
         gdjs.GameCode.GDEnemyShieldObjects1[k] = gdjs.GameCode.GDEnemyShieldObjects1[i];
@@ -2906,10 +2941,15 @@ gdjs.copyArray(runtimeScene.getObjects("SniperTurret"), gdjs.GameCode.GDSniperTu
 
 let isConditionTrue_0 = false;
 isConditionTrue_0 = false;
-isConditionTrue_0 = gdjs.evtTools.input.isMouseButtonPressed(runtimeScene, "Left");
+isConditionTrue_0 = gdjs.evtTools.input.isMouseButtonReleased(runtimeScene, "Left");
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
 isConditionTrue_0 = gdjs.evtTools.input.cursorOnObject(gdjs.GameCode.mapOfGDgdjs_9546GameCode_9546GDSniperTurretObjects1Objects, runtimeScene, true, false);
+if (isConditionTrue_0) {
+isConditionTrue_0 = false;
+{isConditionTrue_0 = !runtimeScene.getScene().getVariables().getFromIndex(9).getAsBoolean();
+}
+}
 }
 if (isConditionTrue_0) {
 /* Reuse gdjs.GameCode.GDSniperTurretObjects1 */
@@ -2934,10 +2974,15 @@ gdjs.copyArray(runtimeScene.getObjects("TowerDouble"), gdjs.GameCode.GDTowerDoub
 
 let isConditionTrue_0 = false;
 isConditionTrue_0 = false;
-isConditionTrue_0 = gdjs.evtTools.input.isMouseButtonPressed(runtimeScene, "Left");
+isConditionTrue_0 = gdjs.evtTools.input.isMouseButtonReleased(runtimeScene, "Left");
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
 isConditionTrue_0 = gdjs.evtTools.input.cursorOnObject(gdjs.GameCode.mapOfGDgdjs_9546GameCode_9546GDTowerDoubleObjects1Objects, runtimeScene, true, false);
+if (isConditionTrue_0) {
+isConditionTrue_0 = false;
+{isConditionTrue_0 = !runtimeScene.getScene().getVariables().getFromIndex(9).getAsBoolean();
+}
+}
 }
 if (isConditionTrue_0) {
 /* Reuse gdjs.GameCode.GDTowerDoubleObjects1 */
@@ -2962,10 +3007,15 @@ gdjs.copyArray(runtimeScene.getObjects("Towerbasic"), gdjs.GameCode.GDTowerbasic
 
 let isConditionTrue_0 = false;
 isConditionTrue_0 = false;
-isConditionTrue_0 = gdjs.evtTools.input.isMouseButtonPressed(runtimeScene, "Left");
+isConditionTrue_0 = gdjs.evtTools.input.isMouseButtonReleased(runtimeScene, "Left");
 if (isConditionTrue_0) {
 isConditionTrue_0 = false;
 isConditionTrue_0 = gdjs.evtTools.input.cursorOnObject(gdjs.GameCode.mapOfGDgdjs_9546GameCode_9546GDTowerbasicObjects1Objects, runtimeScene, true, false);
+if (isConditionTrue_0) {
+isConditionTrue_0 = false;
+{isConditionTrue_0 = !runtimeScene.getScene().getVariables().getFromIndex(9).getAsBoolean();
+}
+}
 }
 if (isConditionTrue_0) {
 /* Reuse gdjs.GameCode.GDTowerbasicObjects1 */
