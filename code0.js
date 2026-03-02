@@ -44,9 +44,9 @@ let isConditionTrue_0 = false;
 isConditionTrue_0 = false;
 isConditionTrue_0 = gdjs.evtTools.runtimeScene.sceneJustBegins(runtimeScene);
 if (isConditionTrue_0) {
-{gdjs.evtTools.sound.preloadMusic(runtimeScene, "Blippy Trance.aac");
+{gdjs.evtTools.sound.preloadMusic(runtimeScene, "Pixel Pulse Alley.mp3");
 }
-{gdjs.evtTools.sound.playMusicOnChannel(runtimeScene, "Blippy Trance.aac", 99, true, 100, 1);
+{gdjs.evtTools.sound.playMusicOnChannel(runtimeScene, "Pixel Pulse Alley.mp3", 99, true, 100, 1);
 }
 {gdjs.evtTools.sound.setGlobalVolume(runtimeScene, 100);
 }
