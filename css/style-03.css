@@ -1,0 +1,76 @@
+
+/* V51: Pixel-art cannabis sign buttons throughout the battle UI */
+.battle-v14 .battle-moves button,
+#creatureBox:has(.battle-v14) #battleActions button,
+#creatureBox:has(.battle-v14) button[data-attack],
+#creatureBox:has(.battle-v14) button[data-action],
+#creatureBox:has(.battle-v14) button[data-switch],
+#creatureBox:has(.battle-v14) button[data-capture] {
+ background-image:url("../assets/v204_5c4eb9c892be1e9f53e3c406.png")!important;
+ background-color:transparent!important;
+ background-repeat:no-repeat!important;
+ background-position:center!important;
+ background-size:100% 100%!important;
+ border:0!important;
+ border-radius:0!important;
+ box-shadow:none!important;
+ color:#faffdd!important;
+ text-shadow:1px 2px 0 #143b0a, -1px -1px 0 #15350a, 0 0 4px #102800!important;
+ font-family:system-ui,sans-serif!important;
+ font-weight:900!important;
+ letter-spacing:.3px;
+ min-height:67px!important;
+ padding:13px 18px!important;
+ transition:filter .12s, transform .12s;
+}
+.battle-v14 .battle-moves button:hover:not(:disabled),
+#creatureBox:has(.battle-v14) #battleActions button:hover:not(:disabled){filter:brightness(1.18);transform:translateY(-2px)}
+.battle-v14 .battle-moves button:active:not(:disabled),
+#creatureBox:has(.battle-v14) #battleActions button:active:not(:disabled){transform:translateY(2px);filter:brightness(.9)}
+.battle-v14 .battle-moves button small,
+#creatureBox:has(.battle-v14) #battleActions button small{color:#f1ffcd!important;text-shadow:1px 1px #17420a!important}
+.battle-v14 .battle-moves button:disabled{opacity:.55;filter:grayscale(.65)}
+@media(max-width:550px){.battle-v14 .battle-moves button{min-height:61px!important;padding:10px 13px!important;font-size:11px!important}}
+
+/* V144 main menu: artwork is the complete visual; transparent buttons align to artwork. */
+body.menuPending #hud,body.menuPending #controls,body.menuPending #action,body.menuPending #mute,body.menuPending #teamBtn{visibility:hidden!important}
+#overlay.mainMenu{display:block;z-index:200;background:#172d22 url("../assets/v204_6478005e2edd23fd56c8b2a7.jpg") center center / contain no-repeat;padding:0}
+#menuArtwork{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100vw,150dvh);aspect-ratio:3/2;background:inherit;background-size:100% 100%;background-position:center}#menuButtons{position:absolute;inset:0;pointer-events:none}
+#menuButtons .menuHit{position:absolute;left:37.3%;width:27.5%;height:10.6%;padding:0;opacity:0;pointer-events:auto;cursor:pointer;border:0;background:transparent}
+#menuButtons #play{top:42.4%}#menuButtons #menuSaves{top:53.3%}#menuButtons #menuSettings{top:64.3%}
+#menuButtons .menuHit:focus-visible{opacity:1;outline:4px solid #fff8a5;outline-offset:3px;border-radius:12px;background:#fff2}
+#menuSub{position:absolute;inset:0;background:#07170dc9;display:flex;align-items:center;justify-content:center;padding:20px}
+#menuSub[hidden]{display:none!important}
+.menuSubPanel{width:min(94vw,470px);background:linear-gradient(145deg,#6c431f,#3e2919);border:5px solid #c99a53;box-shadow:0 15px 50px #000b;border-radius:20px;padding:26px;text-align:center;color:#fff7d8}
+.menuSubPanel h2{font-size:clamp(25px,5vw,37px);margin:0 0 20px;text-shadow:3px 3px #1e130b}
+.menuSubPanel p{line-height:1.5}
+.menuSubPanel button{display:block;width:100%;margin:12px 0;background:#53792e;border:3px solid #b8d270;border-radius:12px;color:white;cursor:pointer}
+#menuBack{background:#80502d!important;border-color:#d9a66b!important}
+@media(max-aspect-ratio: 4/3){#overlay.mainMenu{background-size:cover}#menuArtwork{width:150dvh;max-width:none}#menuButtons .menuHit{left:37.3%;width:27.5%;height:10.6%}}
+
+/* V145 interactive menu: muted buttons brighten and gently enlarge on selection. */
+#menuButtons .menuHit{opacity:1;transform:scale(1);transform-origin:center;transition:transform .2s ease,box-shadow .2s ease,background .2s ease,filter .2s ease;border-radius:14px;box-shadow:inset 0 0 0 2px #38271480;filter:saturate(.72)}
+#menuButtons #play{background:linear-gradient(100deg,#5d3825a6,#7a4829a0,#5b3426a8)}
+#menuButtons #menuSaves,#menuButtons #menuSettings{background:#402a171c}
+#menuButtons .menuHit:hover,#menuButtons .menuHit:focus-visible,#menuButtons .menuHit:active{transform:scale(1.065);filter:saturate(1.3) brightness(1.15);background:#a3ef6330!important;box-shadow:0 0 0 3px #e8ffac,0 0 24px #bbff65bb,inset 0 0 24px #79c94850;outline:none}
+#menuButtons #play:hover,#menuButtons #play:focus-visible,#menuButtons #play:active{background:transparent!important}
+@media(hover:none){#menuButtons .menuHit:active{transform:scale(1.065)}}
+
+/* V146: full-viewport menu and identical resting states for all three buttons. */
+#overlay.mainMenu{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;height:100dvh!important;margin:0!important;padding:0!important;overflow:hidden!important;background-size:100% 100%!important}
+#menuArtwork{position:absolute!important;left:0!important;top:0!important;transform:none!important;width:100%!important;height:100%!important;max-width:none!important;aspect-ratio:auto!important;background-size:100% 100%!important}
+#menuButtons .menuHit,#menuButtons #play,#menuButtons #menuSaves,#menuButtons #menuSettings{background:rgba(120,78,45,.47)!important;backdrop-filter:grayscale(1) sepia(.25) brightness(.94)!important;-webkit-backdrop-filter:grayscale(1) sepia(.25) brightness(.94)!important;box-shadow:inset 0 0 0 2px #392c1e65!important;filter:none!important;opacity:1!important}
+#menuButtons .menuHit:hover,#menuButtons .menuHit:focus-visible,#menuButtons .menuHit:active{transform:scale(1.065)!important;background:rgba(141,213,69,.28)!important;backdrop-filter:saturate(1.25) brightness(1.12)!important;-webkit-backdrop-filter:saturate(1.25) brightness(1.12)!important;box-shadow:0 0 0 3px #e8ffac,0 0 24px #bbff65bb,inset 0 0 24px #79c94850!important}
+
+/* V147: the menu art already contains the wooden signs; do not paint or desaturate them. */
+#menuButtons .menuHit,#menuButtons #play,#menuButtons #menuSaves,#menuButtons #menuSettings{
+ background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+ filter:none!important;opacity:1!important;box-shadow:none!important;border-radius:12px!important;
+}
+#menuButtons .menuHit:hover,#menuButtons .menuHit:focus-visible,#menuButtons .menuHit:active{
+ background:rgba(104,204,45,.35)!important;
+ backdrop-filter:sepia(.35) saturate(2.4) hue-rotate(32deg) brightness(1.1)!important;
+ -webkit-backdrop-filter:sepia(.35) saturate(2.4) hue-rotate(32deg) brightness(1.1)!important;
+ box-shadow:0 0 0 3px #c8f17d,0 0 22px #8cdb49aa!important;
+ transform:scale(1.055)!important;
+}

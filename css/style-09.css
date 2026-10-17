@@ -1,0 +1,4 @@
+
+/* Effect odds are shown unobtrusively beside Gorilla Glue's move cost. */
+.battle-moves .v228-sticky-odds{color:#6355a5;font-weight:900}
+.battle-v14 .battle-moves button[data-attack="2"].v228-special-move{border-color:#9988b6!important}

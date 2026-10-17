@@ -1,0 +1,406 @@
+{
+  "version": "240",
+  "name": "Eastern Grove",
+  "referenceWidth": 1448,
+  "referenceHeight": 1086,
+  "worldWidth": 2896,
+  "worldHeight": 2172,
+  "routes": [
+    [
+      [
+        255,
+        210
+      ],
+      [
+        300,
+        206
+      ],
+      [
+        365,
+        211
+      ],
+      [
+        490,
+        209
+      ],
+      [
+        575,
+        215
+      ],
+      [
+        700,
+        224
+      ],
+      [
+        826,
+        222
+      ],
+      [
+        1000,
+        225
+      ],
+      [
+        1130,
+        232
+      ],
+      [
+        1278,
+        233
+      ]
+    ],
+    [
+      [
+        255,
+        210
+      ],
+      [
+        242,
+        288
+      ],
+      [
+        202,
+        350
+      ],
+      [
+        158,
+        388
+      ],
+      [
+        167,
+        490
+      ],
+      [
+        159,
+        589
+      ],
+      [
+        210,
+        670
+      ],
+      [
+        218,
+        765
+      ],
+      [
+        218,
+        882
+      ]
+    ],
+    [
+      [
+        218,
+        882
+      ],
+      [
+        330,
+        871
+      ],
+      [
+        425,
+        901
+      ],
+      [
+        521,
+        943
+      ]
+    ],
+    [
+      [
+        521,
+        943
+      ],
+      [
+        590,
+        880
+      ],
+      [
+        670,
+        805
+      ],
+      [
+        741,
+        804
+      ],
+      [
+        828,
+        814
+      ],
+      [
+        945,
+        851
+      ],
+      [
+        1033,
+        944
+      ]
+    ],
+    [
+      [
+        1033,
+        944
+      ],
+      [
+        1140,
+        908
+      ],
+      [
+        1260,
+        840
+      ],
+      [
+        1320,
+        750
+      ],
+      [
+        1296,
+        665
+      ],
+      [
+        1190,
+        605
+      ],
+      [
+        1202,
+        500
+      ],
+      [
+        1323,
+        438
+      ]
+    ],
+    [
+      [
+        1323,
+        438
+      ],
+      [
+        1268,
+        365
+      ],
+      [
+        1170,
+        295
+      ],
+      [
+        1278,
+        233
+      ]
+    ],
+    [
+      [
+        750,
+        220
+      ],
+      [
+        725,
+        261
+      ],
+      [
+        725,
+        291
+      ]
+    ],
+    [
+      [
+        1278,
+        233
+      ],
+      [
+        1370,
+        236
+      ],
+      [
+        1410,
+        260
+      ]
+    ],
+    [
+      [
+        157,
+        589
+      ],
+      [
+        238,
+        644
+      ],
+      [
+        316,
+        689
+      ]
+    ],
+    [
+      [
+        220,
+        765
+      ],
+      [
+        300,
+        741
+      ],
+      [
+        348,
+        720
+      ]
+    ],
+    [
+      [
+        521,
+        943
+      ],
+      [
+        480,
+        982
+      ],
+      [
+        440,
+        1034
+      ]
+    ],
+    [
+      [
+        1033,
+        944
+      ],
+      [
+        1080,
+        986
+      ],
+      [
+        1110,
+        1025
+      ]
+    ]
+  ],
+  "bridges": [
+    {
+      "x": 493,
+      "y": 213,
+      "w": 102,
+      "h": 44,
+      "orientation": 0
+    },
+    {
+      "x": 329,
+      "y": 478,
+      "w": 74,
+      "h": 41,
+      "orientation": 1.5707963267948966
+    },
+    {
+      "x": 746,
+      "y": 807,
+      "w": 90,
+      "h": 48,
+      "orientation": 0
+    },
+    {
+      "x": 1190,
+      "y": 519,
+      "w": 72,
+      "h": 40,
+      "orientation": 1.5707963267948966
+    },
+    {
+      "x": 398,
+      "y": 877,
+      "w": 55,
+      "h": 38,
+      "orientation": 0
+    },
+    {
+      "x": 983,
+      "y": 886,
+      "w": 54,
+      "h": 35,
+      "orientation": 0
+    },
+    {
+      "x": 1186,
+      "y": 893,
+      "w": 54,
+      "h": 35,
+      "orientation": 0
+    },
+    {
+      "x": 1187,
+      "y": 568,
+      "w": 62,
+      "h": 36,
+      "orientation": 1.5707963267948966
+    },
+    {
+      "x": 1252,
+      "y": 376,
+      "w": 59,
+      "h": 38,
+      "orientation": 1.5707963267948966
+    }
+  ],
+  "houses": [
+    {
+      "name": "FOREST LODGE",
+      "doorX": 514,
+      "doorY": 414,
+      "assetId": "eg240_house_forest_lodge"
+    },
+    {
+      "name": "RANGER HUT",
+      "doorX": 2556,
+      "doorY": 440,
+      "assetId": "eg240_house_ranger_hut"
+    },
+    {
+      "name": "PINE COTTAGE",
+      "doorX": 300,
+      "doorY": 772,
+      "assetId": "eg240_house_pine_cottage"
+    },
+    {
+      "name": "FERN HOUSE",
+      "doorX": 2646,
+      "doorY": 876,
+      "assetId": "eg240_house_fern_house"
+    },
+    {
+      "name": "MOSSY HOME",
+      "doorX": 314,
+      "doorY": 1178,
+      "assetId": "eg240_house_mossy_home"
+    },
+    {
+      "name": "WOODSMAN HOME",
+      "doorX": 2642,
+      "doorY": 1508,
+      "assetId": "eg240_house_woodsman_home"
+    },
+    {
+      "name": "GROVE HOUSE",
+      "doorX": 438,
+      "doorY": 1766,
+      "assetId": "eg240_house_grove_house"
+    },
+    {
+      "name": "WILLOW CABIN",
+      "doorX": 1042,
+      "doorY": 1886,
+      "assetId": "eg240_house_willow_cabin"
+    },
+    {
+      "name": "OAK LODGE",
+      "doorX": 2066,
+      "doorY": 1890,
+      "assetId": "eg240_house_oak_lodge"
+    },
+    {
+      "name": "EASTERN GROVE HALL",
+      "doorX": 1654,
+      "doorY": 410,
+      "assetId": "eg240_house_eastern_grove_hall"
+    }
+  ],
+  "terrain": {
+    "lake": "lake_footprint.png",
+    "shore": "shore_footprint.png",
+    "rendering": "native procedural Leaf Town terrain and water"
+  }
+}

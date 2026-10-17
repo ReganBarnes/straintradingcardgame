@@ -1,0 +1,78 @@
+
+/* Strain Adventures World Studio — independent of player game/save menus. */
+#saEditorOpen{position:fixed;z-index:6;right:12px;bottom:128px;padding:8px 11px;border:2px solid #dfebae;border-radius:12px;background:#173b2ce8;color:#edfacd;box-shadow:0 5px 18px #0007;font:800 12px system-ui;display:none;cursor:pointer;user-select:none;touch-action:manipulation}
+#saEditorOpen:hover{filter:brightness(1.2)}
+#saEditorOpen:focus-visible{outline:3px solid #fff5b1}
+#saEditor.active{display:flex}
+#saEditor{--panel:#10291e;--line:#466e54;--muted:#adc4b2;--accent:#d5f5a1;position:fixed;left:0;top:0;bottom:0;width:min(365px,92vw);z-index:40;display:none;flex-direction:column;background:linear-gradient(130deg,#163b2c,#0b211a);color:#f1f6e8;border-right:3px solid #8dc079;box-shadow:7px 0 26px #0009;font:14px system-ui;touch-action:auto;user-select:none}
+#saEditor *,#saEditor *::before,#saEditor *::after{box-sizing:border-box}
+#saEditor button,#saEditor select,#saEditor input{font:inherit;touch-action:manipulation}
+#saEditor button{border:1px solid #6a956e;background:#245640;color:#f3ffe5;border-radius:8px;padding:8px 9px;font-size:12px;font-weight:700;min-height:34px;cursor:pointer;box-shadow:none;text-shadow:none}
+#saEditor button:hover{background:#38734f}
+#saEditor button.selected{background:#c6e996;color:#0f2b19;border-color:#e7fcc1}
+#saEditor button:disabled{opacity:.38;cursor:default}
+#saEditor h3{font-size:11px;color:#d8eba8;text-transform:uppercase;letter-spacing:1.2px;margin:14px 0 7px}
+#saEditor .saHeader{background:#163f2b;padding:14px 13px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #527e54;gap:8px}
+#saEditor .saHeader b{font-size:17px;color:#eaffc4;display:block;letter-spacing:.3px}
+#saEditor .saHeader small{font-size:10px;color:#b8d1b6;display:block;margin-top:2px}
+#saEditor .saHeader button{font-size:13px;background:#794b37;border-color:#d09a6b;min-width:62px}
+#saEditor .saContent{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 12px 18px;overscroll-behavior:contain;touch-action:pan-y}
+#saEditor .saRow{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+#saEditor .saRow > button{flex:1}
+#saEditor .saField{display:flex;align-items:center;gap:7px;color:#ccdfc8;font-size:12px;margin:7px 0}
+#saEditor .saField>span:first-child{flex:0 0 70px}
+#saEditor .saField select,#saEditor .saField input:not([type=checkbox]){color:#fcffe9;background:#102d23;border:1px solid #648a70;border-radius:7px;min-width:0;padding:7px;flex:1;max-width:100%}
+#saEditor select option{background:#163628}
+#saEditor .saField input[type=range]{padding:0;accent-color:#a5d57b}
+#saEditor .saField input[type=checkbox]{accent-color:#a8da8a;width:16px;height:16px}
+#saEditor .saCatRow{display:flex;gap:6px;overflow-x:auto;padding-bottom:7px;scrollbar-width:thin}
+#saEditor .saCatRow button{flex:0 0 auto;white-space:nowrap}
+#saEditor #saAssetSearch{width:100%;color:#fff;background:#0e3026;border:1px solid #577e5e;border-radius:8px;padding:8px 10px;margin:6px 0 8px;outline-color:#d1e9a3}
+#saEditor .saGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+#saEditor .saAsset{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:flex-start;min-height:99px;padding:6px 4px;border:2px solid #48704d;border-radius:10px;background:#244735;cursor:pointer;text-align:center;min-width:0}
+#saEditor .saAsset.selected{border-color:#eeef96;background:#375e3e;box-shadow:inset 0 0 0 1px #f5ee99}
+#saEditor .saAsset img{display:block;max-width:72px;max-height:68px;object-fit:contain;image-rendering:pixelated;height:68px;width:72px}
+#saEditor .saAsset span{font-size:10px;line-height:1.2;color:#e5eee1;max-width:100%;overflow-wrap:break-word}
+#saEditor .saInfo{color:#b2c9bb;font-size:11px;line-height:1.4;padding:8px 0}
+#saEditor .saFooter{padding:10px 12px;background:#0d261d;border-top:1px solid #527a54;font-size:11px;color:#bad6b9;display:flex;gap:6px;align-items:center;justify-content:space-between}
+#saEditor .saAccent{background:#3b6f42!important;border-color:#b6dd83!important;color:#f5ffd9!important}
+#saEditor .saWarning{background:#513a32!important;border-color:#be8063!important}
+#saEditor .saActiveTool{background:#d4eba7!important;color:#102a1a!important}
+#saEditor .saSmall{font-size:10px;color:#9db8a4}
+#saEditor .saFile{display:none}
+#saEditor .saPreview{padding:8px;background:#0e2f23;border-radius:7px;margin:7px 0;font-size:11px;color:#c9dec8}
+#saEditorCanvas{position:fixed;inset:0;width:100vw;height:100dvh;z-index:35;pointer-events:none;display:none}
+#saEditorToast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:45;max-width:90vw;background:#102d24;border:2px solid #d5eaa1;color:#f5ffe8;border-radius:12px;padding:10px 15px;font:700 13px system-ui;box-shadow:0 8px 26px #0009;pointer-events:none;display:none}
+body.sa-editing #game{cursor:crosshair}
+body.sa-editing #controls,body.sa-editing #action,body.sa-editing #mute,body.sa-editing #teamBtn,body.sa-editing #hud,body.sa-editing #saEditorOpen{visibility:hidden!important;pointer-events:none!important}
+#saEditorCompact{display:none;position:fixed;left:10px;top:10px;z-index:44;border:2px solid #cff0a5;background:#164a2f;color:#f3ffe7;border-radius:11px;padding:9px 12px;font:800 13px system-ui;box-shadow:0 8px 24px #0009}
+body.sa-editing #saEditorCompact{display:block}
+body.sa-editing:has(#saEditor.active) #saEditorCompact{display:none}
+@media(max-width:650px){
+ #saEditor{width:100vw;max-height:49dvh;top:auto;bottom:0;border-right:0;border-top:3px solid #8dc079;border-radius:15px 15px 0 0;box-shadow:0 -8px 28px #000a}
+ #saEditor .saHeader{padding:7px 12px}
+ #saEditor .saHeader b{font-size:15px}
+ #saEditor .saAsset{min-height:86px}
+ #saEditor .saAsset img{height:56px;max-height:56px}
+ #saEditor .saContent{padding:0 11px 12px}
+ #saEditorOpen{bottom:120px;right:8px;font-size:11px}
+}
+
+/* V194 manually drawn collision tools and live test overlay. */
+#saEditor .saWallTools button{min-width:0;flex:1 1 29%;font-size:12px}
+#saCollisionTestBar{display:none;position:fixed;z-index:90;top:14px;left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100vw - 22px);align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;background:#143e2ff5;border:2px solid #f5ac75;border-radius:14px;padding:8px 12px;box-shadow:0 7px 28px #0009;color:#fff2cf;touch-action:manipulation;font:700 12px system-ui}
+#saCollisionTestBar strong{color:#ffd69c}
+#saCollisionTestBar span{font-weight:500;opacity:.85;flex:1 1 170px}
+#saCollisionTestBar button{background:#3d7044;color:#fff7de;border:2px solid #b9de9e;border-radius:8px;padding:8px 10px;font-size:12px;min-height:35px;touch-action:manipulation}
+body.sa-collision-testing #saEditorOpen{display:none!important}
+@media(max-width:650px){#saCollisionTestBar{top:6px;left:6px;right:6px;transform:none;width:auto;padding:5px 7px;gap:5px;font-size:10px}#saCollisionTestBar button{padding:5px 7px;min-height:30px}#saCollisionTestBar span{flex-basis:100%;order:4;text-align:center;font-size:10px}}
+
+/* V194 manually drawn collision tools and live test overlay. */
+#saEditor .saWallTools button{min-width:0;flex:1 1 29%;font-size:12px}
+#saCollisionTestBar{display:none;position:fixed;z-index:90;top:14px;left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100vw - 22px);align-items:center;justify-content:center;gap:9px;flex-wrap:wrap;background:#143e2ff5;border:2px solid #f5ac75;border-radius:14px;padding:8px 12px;box-shadow:0 7px 28px #0009;color:#fff2cf;touch-action:manipulation;font:700 12px system-ui}
+#saCollisionTestBar strong{color:#ffd69c}
+#saCollisionTestBar span{font-weight:500;opacity:.85;flex:1 1 170px}
+#saCollisionTestBar button{background:#3d7044;color:#fff7de;border:2px solid #b9de9e;border-radius:8px;padding:8px 10px;font-size:12px;min-height:35px;touch-action:manipulation}
+body.sa-collision-testing #saEditorOpen{display:none!important}
+@media(max-width:650px){#saCollisionTestBar{top:6px;left:6px;right:6px;transform:none;width:auto;padding:5px 7px;gap:5px;font-size:10px}#saCollisionTestBar button{padding:5px 7px;min-height:30px}#saCollisionTestBar span{flex-basis:100%;order:4;text-align:center;font-size:10px}}
+

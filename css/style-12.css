@@ -1,0 +1,5 @@
+
+/* A small fire badge, consistent with compact V227 battle layout. */
+.battle-hud .v231-burn-marker{color:#b44720;font-weight:900;font-size:9px;white-space:nowrap}
+.battle-v14 .battle-moves button.v231-special-move{border-color:#d98e5f!important}
+.battle-v14 .battle-moves .v231-burn-label{color:#b74720!important;font-weight:900}

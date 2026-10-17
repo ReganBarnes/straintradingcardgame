@@ -1,0 +1,23 @@
+
+/* V235: preserve V227 compact interface. */
+.battle-v14 .battle-moves button#v235DefendButton{background:#e4f0e8!important;color:#294c3c!important;border-color:#729685!important;grid-column:span 1!important}
+.battle-v14 .battle-moves button#v235DefendButton small{color:#536e62!important}
+.battle-v14 .battle-moves button .v235-move-info{font-size:9px!important;line-height:1.15!important;white-space:normal;color:#3f6a77!important;text-shadow:none!important}
+.battle-v14 .battle-moves button[data-attack]{min-height:47px!important}
+.battle-v14 .battle-field{height:clamp(240px,36vh,325px)!important}
+.battle-v14 .battle-message{min-height:68px!important;padding:9px 11px!important}
+.battle-v14 .battle-moves{gap:5px!important}
+.battle-v14 .battle-moves button{min-height:42px!important;padding:6px 9px!important}
+.battle-v14 #v226RestButton{grid-column:auto!important}
+.battle-v14 .v235-intent{position:absolute;top:calc(3.5% + 102px);left:2%;color:#ecf7ed;background:#17382ce0;border:1px solid #91ab8a;border-radius:7px;padding:4px 8px;font-weight:800;font-size:10px;z-index:3;max-width:45%;pointer-events:none}
+.battle-hud .v235-statuses{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px;max-height:38px;overflow:auto}
+.battle-hud .v235-status{font-size:9px;line-height:1.1;padding:2px 4px;border-radius:4px;background:#dce7d5;color:#32503f;white-space:nowrap}
+.battle-hud .v235-status.negative{background:#f5d9cc;color:#7f3f2e}
+.battle-v14 .v235-combo{position:absolute;z-index:5;left:50%;top:12%;transform:translateX(-50%);background:#22391de8;color:#ffdc78;border:1px solid #ffda83;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:900;pointer-events:none;white-space:nowrap;box-shadow:0 3px 8px #0006}
+.battle-hud .v235-status[role=button]{cursor:pointer;outline-offset:2px}
+@media(max-width:550px){.battle-v14 .v235-intent{top:calc(3% + 88px);font-size:9px;padding:3px 5px}.battle-v14 .battle-moves button .v235-move-info{font-size:8.5px!important}.battle-v14 .battle-moves button[data-attack]{min-height:47px!important}
+.battle-v14 .battle-field{height:clamp(240px,36vh,325px)!important}
+.battle-v14 .battle-message{min-height:68px!important;padding:9px 11px!important}
+.battle-v14 .battle-moves{gap:5px!important}
+.battle-v14 .battle-moves button{min-height:42px!important;padding:6px 9px!important}
+.battle-v14 #v226RestButton{grid-column:auto!important}}

@@ -1,0 +1,5 @@
+
+.battle-v14 .battle-moves button .v236-move-detail{display:block;font-size:9px!important;line-height:1.14!important;color:#377080!important;white-space:normal}
+.battle-v14 .battle-moves button[data-attack]{min-height:48px!important}
+.v236-tier-pill{display:inline-block;margin-top:5px;background:#dcecbf;color:#1c4933;font-size:11px;padding:5px 8px;border-radius:8px;font-weight:800}
+@media(max-width:550px){.battle-v14 .battle-moves button .v236-move-detail{font-size:8px!important}.battle-v14 .battle-moves button[data-attack]{min-height:47px!important}}

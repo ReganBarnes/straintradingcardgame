@@ -1,0 +1,14 @@
+
+/* V238 battle controls: small choices that don't cover the existing artwork. */
+.battle-v14 .v238-style-switch{grid-column:1/-1;display:flex;gap:4px;align-items:center;flex-wrap:wrap;color:#264c40;background:#e2eddf;border:1px solid #779485;border-radius:9px;padding:5px 7px;font-size:10px}
+.battle-v14 .v238-style-switch strong{margin-right:auto}
+.battle-v14 .v238-style-switch button{background:#f6f6e8!important;color:#285240!important;border:1px solid #769588!important;min-height:27px!important;padding:5px 7px!important;border-radius:7px!important;font-size:10px!important;flex-direction:row!important;align-items:center!important;justify-content:center!important}
+.battle-v14 .v238-style-switch button.selected{background:#264c3c!important;color:white!important;border-color:#86caac!important}
+.battle-v14 .v238-type-hint{font-size:9px;font-weight:850;white-space:nowrap;color:#17633a}
+.battle-v14 .v238-type-hint.resist{color:#8a583a}
+.battle-v14 .v238-locked{opacity:.56!important;filter:grayscale(.4)}
+.battle-v14 .v238-plan-badge{display:inline-block;padding:2px 6px;font-size:10px;color:#f5ffe8;background:#173b2ecc;border-radius:6px}
+.battle-v14 .battle-moves button[data-attack] small{line-height:1.18!important}
+.battle-v14 .v238-tactic-details{font-size:9px;color:#547468;font-weight:650}
+.battle-v14 .v238-swap-hint{font-size:9px;color:#184a36}
+@media(max-width:550px){.battle-v14 .v238-style-switch{padding:4px 5px;gap:3px}.battle-v14 .v238-style-switch button{font-size:9px!important;padding:4px 6px!important;min-height:27px!important}}

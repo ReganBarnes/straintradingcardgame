@@ -1,0 +1,14 @@
+
+#oldLadyPinOverlay{position:fixed;inset:0;z-index:100020;display:none;align-items:center;justify-content:center;background:rgba(5,12,20,.83);padding:18px;box-sizing:border-box;font-family:system-ui,sans-serif}
+#oldLadyPinOverlay.active{display:flex}
+#oldLadyPinPanel{width:min(660px,96vw);max-height:95dvh;overflow:auto;border:5px solid #825a2f;background:linear-gradient(160deg,#f7eaca,#ddc58d);color:#2a2418;box-shadow:0 25px 80px #050710;border-radius:20px;padding:26px;text-align:center}
+#oldLadyPinPanel h2{font-weight:1000;font-size:clamp(23px,4vw,39px);margin:0 0 12px;color:#47311d}
+#oldLadyPinPanel p{line-height:1.5;font-size:clamp(15px,2vw,20px)}
+#oldLadyPinClues{background:#fff9e7;border:3px dashed #b89962;border-radius:13px;padding:12px 20px;margin:12px 0 22px;text-align:left}
+#oldLadyPinChoices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+#oldLadyPinChoices button{border:3px solid #785026;border-radius:12px;background:linear-gradient(#936536,#6f4528);color:#fff2c3;font:bold clamp(23px,5vw,39px) monospace;cursor:pointer;padding:15px;transition:transform .12s,filter .12s,box-shadow .12s}
+#oldLadyPinChoices button:hover,#oldLadyPinChoices button:focus-visible{transform:scale(1.055);filter:brightness(1.17);box-shadow:0 0 18px rgba(109,175,65,.55)}
+#oldLadyPinChoices button.wrong{background:linear-gradient(#fc4e45,#a90b18)!important;color:white!important;border-color:#ff9a87!important;animation:oldLadyWrong .16s alternate 5;box-shadow:0 0 24px #ff2222!important}
+@keyframes oldLadyWrong{from{transform:scale(1)}to{transform:scale(1.08)}}
+#oldLadyPinFeedback{min-height:27px;font-weight:800;margin-top:16px;color:#922b23}
+#oldLadyPinExit{margin-top:8px;background:transparent;border:0;color:#604728;text-decoration:underline;font-weight:bold;cursor:pointer;font-size:16px}

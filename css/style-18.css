@@ -1,0 +1,38 @@
+
+/* Touch scrolling must be available inside the battle overlay even though the
+   overworld intentionally disables touch panning. Use the overlay as the only
+   vertical scroll container on narrow viewports to avoid nested scroll traps. */
+@media(max-width:700px){
+  #creatureUI:has(.battle-v14){
+    align-items:flex-start!important;justify-content:center!important;
+    overflow-y:auto!important;overflow-x:hidden!important;
+    touch-action:pan-y!important;-webkit-overflow-scrolling:touch!important;
+    overscroll-behavior:contain;
+    padding: max(8px,env(safe-area-inset-top)) 8px max(18px,env(safe-area-inset-bottom))!important;
+  }
+  #creatureUI:has(.battle-v14) #creatureBox{
+    flex:0 0 auto!important;width:100%!important;max-width:100%!important;
+    max-height:none!important;overflow:visible!important;touch-action:pan-y!important;
+    padding:10px!important;margin:0 0 14px!important;
+  }
+  #creatureUI:has(.battle-v14) .battle-v14,
+  #creatureUI:has(.battle-v14) .battle-panel,
+  #creatureUI:has(.battle-v14) .battle-field,
+  #creatureUI:has(.battle-v14) .battle-moves {touch-action:pan-y!important;}
+  #creatureUI:has(.battle-v14) button{touch-action:manipulation!important;}
+}
+/* The roaming-world status controls are not battle controls: hide them only
+   while the battle dialog is actually visible, and restore on exit. */
+body.v237-in-battle #teamBtn,
+body.v237-in-battle #bagPackBtn,
+body.v237-in-battle #v78StrainDexButton,
+body.v237-in-battle #mute,
+body.v237-in-battle #hud,
+body.v237-in-battle #controls,
+body.v237-in-battle #action {visibility:hidden!important;pointer-events:none!important;}
+body.v237-in-battle #v237StarterNotice {display:none!important;}
+/* Small, legible status in the compact HUD. */
+.battle-hud .v237-cosmic-mark{
+  display:block;margin-top:3px;padding:2px 4px;border-radius:4px;
+  background:#eadcf7;color:#5a367c;font-size:9px;font-weight:800;line-height:1.2;
+}

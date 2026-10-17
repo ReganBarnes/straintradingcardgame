@@ -1,159 +1,3576 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <link rel="manifest" href="manifest.webmanifest">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#183f32"><link rel="preload" as="image" href="assets/v204_6478005e2edd23fd56c8b2a7.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="assets/v204_f18d6f769b9a0a4ed95867f1.png" fetchpriority="high"><title>Strain Adventures — V243 Eastern Grove Square Editor Paths & NPC Waypoint Routes</title><link rel="stylesheet" href="css/style-01.css"><link rel="stylesheet" href="css/style-02.css"><link rel="stylesheet" href="css/style-03.css"><script id="standalone-resource-loader">
+(()=>{
+  'use strict';
+  const images = {}; // Embedded images externalized as files for Cloudflare Pages.
+  const jsonFiles = {}; // Editor JSON externalized as files for Cloudflare Pages.
+  const generated = Object.create(null);
+  function normalized(input){
+    if(typeof input !== 'string')return '';
+    let p=input.replace(/\\/g,'/').split('?')[0].split('#')[0];
+    if(p.startsWith('./'))p=p.slice(2);
+    return p;
+  }
+  function lookup(input){
+    const key=normalized(input);
+    if(!Object.prototype.hasOwnProperty.call(images,key))return input;
+    if(!generated[key]){
+      const b64=images[key];
+      const raw=atob(b64);
+      const bytes=new Uint8Array(raw.length);
+      for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+      const mime=/\.jpe?g$/i.test(key)?'image/jpeg':/\.webp$/i.test(key)?'image/webp':'image/png';
+      generated[key]=URL.createObjectURL(new Blob([bytes],{type:mime}));
+    }
+    return generated[key];
+  }
+  window.__strainStandaloneAsset=lookup;
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  const desc=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');
+  if(desc && desc.set){
+    Object.defineProperty(HTMLImageElement.prototype,'src',{
+      configurable:true,enumerable:desc.enumerable,
+      get:desc.get,
+      set(v){desc.set.call(this,lookup(v));}
+    });
+  }
+  function fixCss(text){
+    return text.replace(/url\(\s*(['"]?)(assets\/[^)'"\s]+)\1\s*\)/g,
+      (match,q,path)=>`url("${lookup(path)}")`);
+  }
+  function fixElement(el){
+    if(!el||el.nodeType!==1)return;
+    if(el.tagName==='IMG'){
+      const v=el.getAttribute('src');
+      if(v){const a=lookup(v);if(a!==v)el.setAttribute('src',a);}
+    }
+    const style=el.getAttribute('style');
+    if(style && style.includes('assets/')){
+      const next=fixCss(style);
+      if(next!==style)el.setAttribute('style',next);
+    }
+    for(const c of el.children)fixElement(c);
+  }
+  new MutationObserver(changes=>{
+    for(const m of changes){
+      if(m.type==='attributes'){fixElement(m.target);}
+      else for(const child of m.addedNodes)fixElement(child);
+    }
+  }).observe(document,{subtree:true,childList:true,attributes:true,attributeFilter:['src','style']});
 
-    <meta name="theme-color" content="#000000" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  const nativeFetch=window.fetch?window.fetch.bind(window):null;
+  window.fetch=function(resource, options){
+    const key=normalized(typeof resource==='string'?resource:(resource&&resource.url));
+    if(Object.prototype.hasOwnProperty.call(jsonFiles,key)){
+      return Promise.resolve(new Response(jsonFiles[key],{status:200,headers:{'Content-Type':'application/json'}}));
+    }
+    return nativeFetch?nativeFetch(resource,options):Promise.reject(new Error('File not embedded: '+key));
+  };
+})();
+</script>
+</head><body class="menuPending"><canvas id="game"></canvas><div id="hud"><strong>🌿 LEAF TOWN</strong><div id="stats">HP 100/100 · 0 badges</div></div><button id="mute">♫ Music ON</button><div id="controls"><button id="up" data-dir="up">▲</button><button id="left" data-dir="left">◀</button><button id="down" data-dir="down">▼</button><button id="right" data-dir="right">▶</button></div><button id="action">A</button><div id="dialog"></div><button id="teamBtn">🌿 Strains (0 owned · 0/3 team)</button><div id="creatureUI"><div id="creatureBox"><h2 id="creatureTitle">Your Strains</h2><p id="creatureHelp"></p><div id="creatureContent"></div><button id="creatureClose" class="creatureClose">← BACK TO GAME</button></div></div><div id="shop"><div id="shopWindow"><h2>🌿 CURE SHOP SUPPLIES</h2><p style="margin:4px 0;text-align:center">Welcome! Choose an item.</p><div id="coins" style="text-align:center;color:#e7cf8a;font-weight:800">£50</div><div class="item"><div><b>🫙 Small Cure Jar</b><small>£25 · Restore 25% HP to one strain</small></div><button data-buy="jar">BUY</button></div><div class="item"><div><b>🧪 Bong</b><small>£45 · Give one strain 50 XP</small></div><button data-buy="bong">BUY</button></div><div class="item"><div><b>💨 Terp Spray</b><small>£15 · +20% attack damage for a battle</small></div><button data-buy="spray">BUY</button></div><div id="shopMsg" aria-live="polite"></div><button id="shopClose">← BACK TO GAME</button></div></div><div id="overlay" class="mainMenu" aria-label="Strain Adventures main menu"><div id="menuArtwork"><div id="menuButtons"><button id="play" class="menuHit" aria-label="Play new game"></button><button id="menuSaves" class="menuHit" aria-label="Saved games"></button><button id="menuSettings" class="menuHit" aria-label="Settings"></button></div><button id="menuAdmin" type="button" aria-label="Start admin test mode">⚙ ADMIN MODE <small>UNLOCKED TEST RUN</small></button></div><div id="menuSub" aria-live="polite" hidden><section class="menuSubPanel"><h2 id="menuSubTitle">SETTINGS</h2><div id="menuSubContent"></div><button type="button" id="menuBack">← BACK</button></section></div></div><div id="missionOverlay" role="dialog" aria-modal="true" aria-label="PapaHerb mission list"><section id="missionPanel"><h2>ACTIVE MISSIONS</h2><p class="missionIntro">PapaHerb HQ · Mission Journal</p><nav id="missionTabs"><button type="button" data-mission-tab="active" class="selected">ACTIVE MISSIONS</button><button type="button" data-mission-tab="finished">FINISHED</button></nav><div id="missionEntries"></div><div id="missionDetail">Select a mission above to view its objective.</div><button id="missionClose" type="button">← BACK TO HQ</button></section></div><script src="js/game-01.js"></script>
+<script>
+// V100 — Nitty cottage upgrade: smoother idle animation + full-screen sprite cutscene.
+(function(){
+  const nittySceneSprites = {
+    frustrated:'assets/v204_f16de53d6222d50d76705c8b.png',
+    curious:'assets/v204_c7fe285c6c41bf405ef79e4c.png',
+    wallet:'assets/v204_21ac3a903e4da5140a1a5383.png'
+  };
+  function nittyEnsureSceneSprites(){
+    return nittySceneSprites;
+  }
 
-	<style>
-		body {
-			margin: 0;
-			padding: 0;
-			background-color: #000000;
-            overflow: hidden;
-		}
-        #canvasArea {
-            margin-left: auto;
-            margin-right: auto;
-            overflow: hidden;
+  // Override the in-room Nitty draw to use a smoother ping-pong breathing loop.
+  drawNitty=function(x,y){
+    const seq=[0,1,2,3,2,1];
+    const bob=[0,-1,0,1,0,-1];
+    const frameIndex=Math.floor(Date.now()/170)%seq.length;
+    const frame=seq[frameIndex];
+    ctx.save();
+    ctx.imageSmoothingEnabled=false;
+    if(nittySpriteSheet.complete&&nittySpriteSheet.naturalWidth){
+      const h=88,w=Math.round(70*h/102);
+      const drawY=y+bob[frameIndex];
+      ctx.drawImage(nittySpriteSheet,frame*nittyFrameWidth,0,nittyFrameWidth,nittyFrameHeight,x-w/2,drawY-h+26,w,h);
+    }
+    ctx.restore();
+  };
+
+  const nittySceneStyle=document.createElement('style');
+  nittySceneStyle.textContent=`
+  #nittyCinematic{position:fixed;inset:0;z-index:100120;display:none;align-items:center;justify-content:center;padding:12px;background:#0d1218ee;box-sizing:border-box;font-family:system-ui,sans-serif}
+  #nittyCinematic.active{display:flex}
+  #nittyCinematicStage{width:min(1100px,98vw);height:min(96dvh,850px);min-height:360px;position:relative;overflow:hidden;border:5px solid #6d4b35;border-radius:20px;box-shadow:0 0 0 3px #221811,0 18px 70px #000b;background:linear-gradient(180deg,#cdb38d 0%,#a57852 44%,#7b5a3d 76%,#4e3928 100%);color:#fff8da}
+  #nittyCinematicStage:before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.25;background:repeating-linear-gradient(90deg,transparent 0 110px,#2b1e1444 112px 118px),radial-gradient(circle at 20% 18%,#fff2c533 0 10%,transparent 22%),radial-gradient(circle at 82% 12%,#fff2c522 0 8%,transparent 18%)}
+  #nittyCinematicTitle{position:absolute;left:0;right:0;top:2.3%;z-index:2;text-align:center;font-weight:1000;letter-spacing:1px;font-size:clamp(21px,4vw,38px);color:#fff0ae;text-shadow:3px 4px 0 #3a281b}
+  #nittyCinematicArt{position:absolute;top:11%;height:56%;max-height:500px;width:100%;z-index:2;display:flex;align-items:end;justify-content:center}
+  #nittyCinematicArt img{height:100%;width:100%;max-width:520px;object-fit:contain;object-position:center bottom;image-rendering:pixelated;filter:drop-shadow(10px 13px 0 #18201170);animation:nittyReveal .20s ease-out}
+  #nittyCinematicBox{position:absolute;bottom:2.6%;left:3%;right:3%;min-height:26%;z-index:4;border:4px solid #845938;border-radius:13px;background:#f5e5bd;box-shadow:0 7px 0 #34291e;color:#342719;padding:clamp(12px,2.8vh,23px)}
+  #nittyCinematicName{font-size:clamp(15px,2.5vw,24px);font-weight:1000;letter-spacing:.4px;color:#7a361f}
+  #nittyCinematicLine{font-size:clamp(17px,3.4vw,31px);font-weight:900;margin-top:10px;line-height:1.24;min-height:2em}
+  #nittyCinematicFooter{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:11px;font-weight:800;font-size:clamp(12px,1.5vw,16px);color:#745c45}
+  #nittyCinematicNext{border:2px solid #533a24;border-radius:9px;background:#4f6b7d;color:#fff2c8;padding:8px 19px;font-weight:900;cursor:pointer;min-height:42px}
+  @keyframes nittyReveal{from{transform:translateY(8px) scale(.97);opacity:.45}to{transform:translateY(0) scale(1);opacity:1}}
+  @media(max-height:520px){#nittyCinematicArt{height:49%;top:7%}#nittyCinematicBox{min-height:36%}#nittyCinematicTitle{top:1%;font-size:20px}#nittyCinematicLine{font-size:17px}}
+  `;
+  document.head.appendChild(nittySceneStyle);
+
+  const nittyCinematic=document.createElement('div');
+  nittyCinematic.id='nittyCinematic';
+  nittyCinematic.setAttribute('role','dialog');
+  nittyCinematic.setAttribute('aria-modal','true');
+  nittyCinematic.setAttribute('aria-label','Nitty cottage cutscene');
+  nittyCinematic.innerHTML=`<div id="nittyCinematicStage"><div id="nittyCinematicTitle">🏡 COTTAGE</div><div id="nittyCinematicArt"><img id="nittyCinematicSprite" alt="Nitty sprite"></div><div id="nittyCinematicBox"><div id="nittyCinematicName">NITTY</div><div id="nittyCinematicLine"></div><div id="nittyCinematicFooter"><span id="nittyCinematicProgress">1 / 3 · Press A or Enter</span><button type="button" id="nittyCinematicNext">NEXT ▶</button></div></div></div>`;
+  document.body.appendChild(nittyCinematic);
+
+  const nittyScenePlan=[
+    {sprite:'frustrated'},
+    {sprite:'curious'},
+    {sprite:'wallet'}
+  ];
+
+  function nittyHideScene(){nittyCinematic.classList.remove('active');}
+  function nittyRenderScene(){
+    closeDialog();
+    keys.clear();
+    nittyEnsureSceneSprites();
+    nittyCinematic.classList.add('active');
+    const step=Math.max(0,Math.min(cottageCutsceneAt,cottageSpeech.length-1));
+    const plan=nittyScenePlan[step]||nittyScenePlan[nittyScenePlan.length-1];
+    document.getElementById('nittyCinematicLine').textContent=cottageSpeech[step]||'';
+    document.getElementById('nittyCinematicProgress').textContent=(step+1)+' / '+cottageSpeech.length+' · Press A or Enter';
+    document.getElementById('nittyCinematicNext').textContent=(step>=cottageSpeech.length-1?'OPEN PIPE PUZZLE ▶':'NEXT ▶');
+    const img=document.getElementById('nittyCinematicSprite');
+    const sprites=nittyEnsureSceneSprites();
+    if(sprites && sprites[plan.sprite]) img.src=sprites[plan.sprite];
+    img.style.animation='none'; void img.offsetWidth; img.style.animation='nittyReveal .20s ease-out';
+  }
+
+
+  cottageNextLine=function(){
+    cottageCutsceneAt++;
+    if(cottageCutsceneAt<cottageSpeech.length){ nittyRenderScene(); return; }
+    nittyHideScene();
+    cottageCutsceneAt=-1;
+    cottageManSpoken=true;
+    openCottagePuzzle();
+  };
+
+  document.getElementById('nittyCinematicNext').addEventListener('click',()=>{if(nittyCinematic.classList.contains('active')) cottageNextLine();});
+  window.addEventListener('keydown',e=>{
+    if(!nittyCinematic.classList.contains('active')) return;
+    if([' ','Enter','a','A','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Escape'].includes(e.key)){
+      e.preventDefault(); e.stopImmediatePropagation();
+      if(!e.repeat && [' ','Enter','a','A'].includes(e.key)) cottageNextLine();
+    }
+  },true);
+  document.getElementById('action').addEventListener('pointerdown',e=>{
+    if(!nittyCinematic.classList.contains('active')) return;
+    e.preventDefault(); e.stopImmediatePropagation(); cottageNextLine();
+  },true);
+
+  const v100PriorMove=move;
+  move=function(dt){ if(nittyCinematic.classList.contains('active')) return; v100PriorMove(dt); };
+
+  const v100PriorOpenCottagePuzzle=openCottagePuzzle;
+  openCottagePuzzle=function(){ nittyHideScene(); v100PriorOpenCottagePuzzle(); };
+})();
+</script>
+
+<script>
+// V101 — Fix Nitty cutscene transparency + let Nitty roam around the cottage.
+(function(){
+  const nittyCinematicEl = document.getElementById('nittyCinematic');
+  const nittySpriteEl = document.getElementById('nittyCinematicSprite');
+
+  function transparentizeDataUrl(src){
+    return new Promise(resolve=>{
+      if(!src){ resolve(src); return; }
+      const img = new Image();
+      img.onload = ()=>{
+        const c = document.createElement('canvas');
+        c.width = img.width; c.height = img.height;
+        const cx = c.getContext('2d');
+        cx.imageSmoothingEnabled = false;
+        cx.drawImage(img,0,0);
+        const id = cx.getImageData(0,0,c.width,c.height);
+        const d = id.data;
+        for(let i=0;i<d.length;i+=4){
+          const r=d[i], g=d[i+1], b=d[i+2];
+          if(r>232 && g>232 && b>232){ d[i+3]=0; }
         }
+        cx.putImageData(id,0,0);
+        resolve(c.toDataURL('image/png'));
+      };
+      img.onerror = ()=>resolve(src);
+      img.src = src;
+    });
+  }
 
-        
-	</style>
-    <!-- Libs and GDJS core files : -->
-		<script src="libs/jshashtable.js" crossorigin="anonymous"></script>
-	<script src="logger.js" crossorigin="anonymous"></script>
-	<script src="gd.js" crossorigin="anonymous"></script>
-	<script src="libs/rbush.js" crossorigin="anonymous"></script>
-	<script src="AsyncTasksManager.js" crossorigin="anonymous"></script>
-	<script src="inputmanager.js" crossorigin="anonymous"></script>
-	<script src="jsonmanager.js" crossorigin="anonymous"></script>
-	<script src="Model3DManager.js" crossorigin="anonymous"></script>
-	<script src="ResourceLoader.js" crossorigin="anonymous"></script>
-	<script src="ResourceCache.js" crossorigin="anonymous"></script>
-	<script src="timemanager.js" crossorigin="anonymous"></script>
-	<script src="polygon.js" crossorigin="anonymous"></script>
-	<script src="runtimeobject.js" crossorigin="anonymous"></script>
-	<script src="profiler.js" crossorigin="anonymous"></script>
-	<script src="RuntimeInstanceContainer.js" crossorigin="anonymous"></script>
-	<script src="runtimescene.js" crossorigin="anonymous"></script>
-	<script src="scenestack.js" crossorigin="anonymous"></script>
-	<script src="force.js" crossorigin="anonymous"></script>
-	<script src="RuntimeLayer.js" crossorigin="anonymous"></script>
-	<script src="layer.js" crossorigin="anonymous"></script>
-	<script src="RuntimeCustomObjectLayer.js" crossorigin="anonymous"></script>
-	<script src="timer.js" crossorigin="anonymous"></script>
-	<script src="runtimewatermark.js" crossorigin="anonymous"></script>
-	<script src="runtimegame.js" crossorigin="anonymous"></script>
-	<script src="variable.js" crossorigin="anonymous"></script>
-	<script src="variablescontainer.js" crossorigin="anonymous"></script>
-	<script src="oncetriggers.js" crossorigin="anonymous"></script>
-	<script src="runtimebehavior.js" crossorigin="anonymous"></script>
-	<script src="SpriteAnimator.js" crossorigin="anonymous"></script>
-	<script src="spriteruntimeobject.js" crossorigin="anonymous"></script>
-	<script src="affinetransformation.js" crossorigin="anonymous"></script>
-	<script src="CustomRuntimeObjectInstanceContainer.js" crossorigin="anonymous"></script>
-	<script src="CustomRuntimeObject.js" crossorigin="anonymous"></script>
-	<script src="CustomRuntimeObject2D.js" crossorigin="anonymous"></script>
-	<script src="indexeddb.js" crossorigin="anonymous"></script>
-	<script src="events-tools/commontools.js" crossorigin="anonymous"></script>
-	<script src="events-tools/variabletools.js" crossorigin="anonymous"></script>
-	<script src="events-tools/runtimescenetools.js" crossorigin="anonymous"></script>
-	<script src="events-tools/inputtools.js" crossorigin="anonymous"></script>
-	<script src="events-tools/objecttools.js" crossorigin="anonymous"></script>
-	<script src="events-tools/cameratools.js" crossorigin="anonymous"></script>
-	<script src="events-tools/soundtools.js" crossorigin="anonymous"></script>
-	<script src="events-tools/storagetools.js" crossorigin="anonymous"></script>
-	<script src="events-tools/stringtools.js" crossorigin="anonymous"></script>
-	<script src="events-tools/windowtools.js" crossorigin="anonymous"></script>
-	<script src="events-tools/networktools.js" crossorigin="anonymous"></script>
-	<script src="splash/gd-logo-light.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/pixi.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/pixi-filters-tools.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/runtimegame-pixi-renderer.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/runtimescene-pixi-renderer.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/layer-pixi-renderer.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/pixi-image-manager.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/pixi-bitmapfont-manager.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/spriteruntimeobject-pixi-renderer.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/CustomRuntimeObject2DPixiRenderer.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/DebuggerPixiRenderer.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/loadingscreen-pixi-renderer.js" crossorigin="anonymous"></script>
-	<script src="pixi-renderers/pixi-effects-manager.js" crossorigin="anonymous"></script>
-	<script src="howler-sound-manager/howler.min.js" crossorigin="anonymous"></script>
-	<script src="howler-sound-manager/howler-sound-manager.js" crossorigin="anonymous"></script>
-	<script src="fontfaceobserver-font-manager/fontfaceobserver.js" crossorigin="anonymous"></script>
-	<script src="fontfaceobserver-font-manager/fontfaceobserver-font-manager.js" crossorigin="anonymous"></script>
-	<script src="Extensions/AnchorBehavior/anchorruntimebehavior.js" crossorigin="anonymous"></script>
-	<script src="Extensions/BitmapText/bitmaptextruntimeobject-pixi-renderer.js" crossorigin="anonymous"></script>
-	<script src="Extensions/BitmapText/bitmaptextruntimeobject.js" crossorigin="anonymous"></script>
-	<script src="Extensions/PanelSpriteObject/panelspriteruntimeobject-pixi-renderer.js" crossorigin="anonymous"></script>
-	<script src="Extensions/PanelSpriteObject/panelspriteruntimeobject.js" crossorigin="anonymous"></script>
-	<script src="Extensions/PathfindingBehavior/PathTools.js" crossorigin="anonymous"></script>
-	<script src="Extensions/PathfindingBehavior/pathfindingobstacleruntimebehavior.js" crossorigin="anonymous"></script>
-	<script src="Extensions/PathfindingBehavior/pathfindingruntimebehavior.js" crossorigin="anonymous"></script>
-	<script src="Extensions/TextObject/textruntimeobject-pixi-renderer.js" crossorigin="anonymous"></script>
-	<script src="Extensions/TextObject/textruntimeobject.js" crossorigin="anonymous"></script>
-	<script src="Extensions/TiledSpriteObject/tiledspriteruntimeobject-pixi-renderer.js" crossorigin="anonymous"></script>
-	<script src="Extensions/TiledSpriteObject/tiledspriteruntimeobject.js" crossorigin="anonymous"></script>
-	<script src="Extensions/TopDownMovementBehavior/topdownmovementruntimebehavior.js" crossorigin="anonymous"></script>
-	<script src="Extensions/TweenBehavior/TweenManager.js" crossorigin="anonymous"></script>
-	<script src="Extensions/TweenBehavior/tweenruntimebehavior.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__advancedprojectile__advancedprojectile.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__faceforward__faceforward.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__firebullet__firebullet.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__flash__colortint-func.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__flash__flashcolor.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__flash__istinted-func.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__flash__togglecolortint-func.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__flash__togglevisibility-func.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__isonscreen__inonscreen.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__panelspritebutton__bitmaptextstylestate.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__panelspritebutton__buttonfsm.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__panelspritebutton__isingameedition-func.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__panelspritebutton__panelspritebutton.js" crossorigin="anonymous"></script>
-	<script src="gdjs-evtsext__panelspritebutton__textstylestate.js" crossorigin="anonymous"></script>
-	<script src="object-capabilities/AnimatableBehavior.js" crossorigin="anonymous"></script>
-	<script src="object-capabilities/EffectBehavior.js" crossorigin="anonymous"></script>
-	<script src="object-capabilities/FlippableBehavior.js" crossorigin="anonymous"></script>
-	<script src="object-capabilities/OpacityBehavior.js" crossorigin="anonymous"></script>
-	<script src="object-capabilities/ResizableBehavior.js" crossorigin="anonymous"></script>
-	<script src="object-capabilities/ScalableBehavior.js" crossorigin="anonymous"></script>
-	<script src="object-capabilities/TextContainerBehavior.js" crossorigin="anonymous"></script>
-	<script src="Extensions/3D/DirectionalLight.js" crossorigin="anonymous"></script>
-	<script src="Extensions/3D/HemisphereLight.js" crossorigin="anonymous"></script>
-	<script src="code0.js" crossorigin="anonymous"></script>
-	<script src="code1.js" crossorigin="anonymous"></script>
-	<script src="data.js" crossorigin="anonymous"></script>
+  if(nittySpriteEl){
+    const applyTransparency = async()=>{
+      const src = nittySpriteEl.getAttribute('src');
+      if(!src || nittySpriteEl.dataset.transparentized === src) return;
+      const clean = await transparentizeDataUrl(src);
+      nittySpriteEl.dataset.transparentized = clean;
+      nittySpriteEl.src = clean;
+      nittySpriteEl.style.background = 'transparent';
+      nittySpriteEl.style.mixBlendMode = 'normal';
+    };
+    const obs = new MutationObserver(()=>{ applyTransparency(); });
+    obs.observe(nittySpriteEl,{attributes:true,attributeFilter:['src']});
+    applyTransparency();
+  }
+
+  const nittyRoam = {
+    x:470,
+    y:350,
+    targetX:470,
+    targetY:350,
+    speed:60, // world units per SECOND; v101 incorrectly multiplied speed by 40
+    wait:0,
+    moving:false,
+    direction:'down',
+    stepClock:0,
+    idleClock:0
+  };
+
+  // Expose the live NPC position; original AI is unchanged.
+  window.nittyRoam = nittyRoam;
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+  function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+  function pickNittyTarget(){
+    // Choose a new walk after a natural pause; stay clear of the furniture and exit.
+    nittyRoam.targetX = rand(375,545);
+    nittyRoam.targetY = rand(295,435);
+    nittyRoam.wait = 0;
+  }
+  function resetNittyRoam(){
+    nittyRoam.x=470; nittyRoam.y=350;
+    nittyRoam.targetX=470; nittyRoam.targetY=350;
+    nittyRoam.wait=0.9;
+    nittyRoam.moving=false;
+    nittyRoam.direction='down';
+    nittyRoam.stepClock=0;
+    nittyRoam.idleClock=0;
+  }
+  resetNittyRoam();
+
+  const oldEnterRoomV101=enterRoom;
+  enterRoom=function(kind){
+    oldEnterRoomV101(kind);
+    if(kind==='cottage') resetNittyRoam();
+  };
+
+  cottageNearOwner=function(){
+    return interior==='cottage'&&Math.hypot(player.x-nittyRoam.x,player.y-(nittyRoam.y-6))<118;
+  };
+
+  // Nitty overworld walking frames extracted as individual full sprites.
+  // These preserve the complete silhouette of each sprite and avoid rectangle slicing.
+  const nittyWalkFrames={
+    down:[0,1,2,3].map(i=>{const img=new Image();img.src=["assets/v204_db28ca2df45ff784b2694647.png","assets/v204_bf7a30cc5a21b6ff3750b7c0.png","assets/v204_dad722e9346a7f769256d294.png","assets/v204_c9d25b027769fe4285b13b24.png"][i];return img;}),
+    up:[0,1,2,3].map(i=>{const img=new Image();img.src=["assets/v204_103230e038fb294620034ada.png","assets/v204_c3f82d3a5e06fc8ac76876d1.png","assets/v204_ae1331be43ef156b9e28737c.png","assets/v204_b4b43915ad0b7e302ae56306.png"][i];return img;}),
+    left:[0,1,2,3].map(i=>{const img=new Image();img.src=["assets/v204_b2f480009a7003f0e6d080ce.png","assets/v204_bc3f702643ab6bae53e73aaa.png","assets/v204_3d4210e024ad45e95dbd0229.png","assets/v204_6e9e4934cdb59ee2218ae973.png"][i];return img;}),
+    right:[0,1,2,3].map(i=>{const img=new Image();img.src=["assets/v204_160b4f86a39ce540affe548e.png","assets/v204_c9b0c632951ee4f877ebb7f4.png","assets/v204_ec17c45a1e606971c56f2069.png","assets/v204_1e9e7719a407051d0d182bd1.png"][i];return img;})
+  };
+  drawNitty=function(x,y){
+    const moving=nittyRoam.moving;
+    const step=moving?Math.floor(nittyRoam.stepClock*8)%4:0;
+    const bob=(moving?Math.sin(nittyRoam.stepClock*17)*0.65:0);
+    ctx.save(); ctx.imageSmoothingEnabled=false;
+    const frames=nittyWalkFrames[nittyRoam.direction]||nittyWalkFrames.down;
+    const frame=frames[step]||frames[0];
+    if(frame && frame.complete && frame.naturalWidth){
+      const displayH=88;
+      const displayW=Math.max(1,Math.round(displayH*(frame.naturalWidth/frame.naturalHeight)));
+      ctx.drawImage(frame,Math.round(x-displayW/2),Math.round(y-displayH+10+bob),displayW,displayH);
+    }else if(nittySpriteSheet.complete&&nittySpriteSheet.naturalWidth){
+      const offsets={down:0,up:4,left:8,right:12};
+      const index=offsets[nittyRoam.direction]+step;
+      const cellW=169,cellH=244,displayH=88,displayW=Math.round(62*displayH/89);
+      ctx.drawImage(nittySpriteSheet,index*cellW,0,cellW,cellH,
+        Math.round(x-displayW/2),Math.round(y-displayH+10+bob),displayW,displayH);
+    }
+    ctx.restore();
+  };
+
+  function updateNittyRoam(dt){
+    if(interior!=='cottage'||cottagePuzzleOpen||dialogOpen||missionOpen||shopOpen)return;
+    if(nittyCinematicEl&&nittyCinematicEl.classList.contains('active'))return;
+    // dt is already elapsed time in seconds from requestAnimationFrame.
+    dt=Math.max(0,Math.min(Number(dt)||0,0.04));
+    if(!dt)return;
+    nittyRoam.idleClock+=dt;
+    if(window.SAActorRoutes?.drive('nitty',nittyRoam,dt))return;
+    if(nittyRoam.wait>0){
+      nittyRoam.wait=Math.max(0,nittyRoam.wait-dt);
+      nittyRoam.moving=false;
+      return;
+    }
+    const dx=nittyRoam.targetX-nittyRoam.x;
+    const dy=nittyRoam.targetY-nittyRoam.y;
+    const distance=Math.hypot(dx,dy);
+    if(distance<=1.2){
+      nittyRoam.x=nittyRoam.targetX;
+      nittyRoam.y=nittyRoam.targetY;
+      nittyRoam.moving=false;
+      nittyRoam.stepClock=0;
+      nittyRoam.wait=0.75+Math.random()*1.35;
+      pickNittyTarget();
+      // Hold the idle pause despite a new destination being queued.
+      nittyRoam.wait=0.75+Math.random()*1.35;
+      return;
+    }
+    // FireRed-style four-direction movement: one axis per update.
+    const horizontal=Math.abs(dx)>1.2;
+    const rem=horizontal?dx:dy;
+    const distanceThisFrame=Math.sign(rem)*Math.min(Math.abs(rem),nittyRoam.speed*dt);
+    nittyRoam.direction=horizontal?(distanceThisFrame>0?'right':'left'):(distanceThisFrame>0?'down':'up');
+    nittyRoam.moving=distanceThisFrame!==0;
+    if(horizontal)nittyRoam.x+=distanceThisFrame;
+    else nittyRoam.y+=distanceThisFrame;
+    nittyRoam.x=clamp(nittyRoam.x,375,545);
+    nittyRoam.y=clamp(nittyRoam.y,295,435);
+    nittyRoam.stepClock+=dt;
+  }
+
+  // Replace the cottage renderer so the fixed old Nitty is gone and the roaming one is drawn instead.
+  const baseInteriorDrawV101 = cottageOriginalDrawInterior;
+  drawInterior = function(){
+    if(interior!=='cottage'){
+      baseInteriorDrawV101();
+      return;
+    }
+    baseInteriorDrawV101();
+    ctx.save();
+    ctx.fillStyle='#d8c3a2';ctx.fillRect(64,110,772,466);
+    for(let y=112;y<570;y+=48){
+      for(let x=65;x<835;x+=48){
+        ctx.fillStyle=((x+y)%4===0)?'#d6b995':'#ead1ac';
+        ctx.fillRect(x,y,46,46);
+      }
+    }
+    ctx.fillStyle='#695042';ctx.fillRect(80,142,285,87);ctx.fillStyle='#bb8658';ctx.fillRect(94,160,255,49);
+    text('TOOLS & SPARES',221,199,21,'#ffe2a1');
+    ctx.fillStyle='#7a4b35';ctx.fillRect(570,165,209,116);ctx.fillStyle='#b7c5b2';ctx.fillRect(590,179,169,18);
+    ctx.strokeStyle=cottagePipesFixed?'#6b9b80':'#667d88';ctx.lineWidth=22;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(595,300);ctx.lineTo(740,300);ctx.lineTo(740,375);ctx.stroke();
+    if(!cottagePipesFixed){
+      ctx.fillStyle='#5dccff';
+      for(let i=0;i<5;i++){
+        ctx.beginPath();ctx.ellipse(685+(i%3)*13,335+(i%2)*15,5,9,0,0,7);ctx.fill();
+      }
+    }
+    ctx.fillStyle='#264a3e';ctx.fillRect(95,396,206,100);text('WORK BENCH',200,446,18,'#ffe1a0');
+
+    // Draw roaming Nitty with a fluid looping animation.
+    const shadowY = nittyRoam.y + 10;
+    ctx.fillStyle='rgba(60,66,56,0.9)';ctx.beginPath();ctx.ellipse(nittyRoam.x,shadowY,27,8,0,0,Math.PI*2);ctx.fill();
+    if(typeof drawNitty === 'function') drawNitty(nittyRoam.x, nittyRoam.y);
+    text('NITTY', nittyRoam.x, nittyRoam.y-96, 19, '#fff0a3');
+    if(!cottageManSpoken) text('!', nittyRoam.x, nittyRoam.y-122, 32, '#ffdc61');
+    if(cottagePipesFixed) text('✓', nittyRoam.x, nittyRoam.y-122, 32, '#8ef0a2');
+
+    drawHero(player.x,player.y,player.dir,player.step);
+    ctx.restore();
+  };
+
+  const moveBeforeV101 = move;
+  move = function(dt){
+    if(nittyCinematicEl && nittyCinematicEl.classList.contains('active')) return;
+    moveBeforeV101(dt);
+    updateNittyRoam(dt);
+  };
+})();
+</script>
+
+<script src="js/game-02.js"></script>
+
+<script>
+// V120 — restore HOUSE / missing-lighter mission without altering other interiors.
+(()=>{
+  const house=quietHouses.find(h=>h.name==='HOUSE');
+  const priorHouseInteract=interact;
+  interact=function(){
+    // Route the Leaf Town HOUSE door before later interaction wrappers can swallow it.
+    if(!interior && currentDistrict==='leaf' && house && !dialogOpen && !shopOpen && !missionOpen && !battle){
+      const doorX=house.x+house.w/2,doorY=house.y+house.h+12;
+      if(Math.hypot(player.x-doorX,player.y-doorY)<132){enterRoom('lighterhouse');return;}
+    }
+    if(interior==='lighterhouse'){
+      if(lighterCutsceneAt>=0){lighterAdvanceConversation();return;}
+      if(dialogOpen){closeDialog();return;}
+      if(player.y>540 && player.x>335 && player.x<565){leaveRoom();return;}
+      if(lighterNearOwner()){lighterTalk();return;}
+      show('HOUSE',"Walk up to Reth Sogan and press A to speak.");return;
+    }
+    return priorHouseInteract();
+  };
+  // Ensure the owner and his quest are visible whenever the HOUSE interior is entered.
+  const previousHouseDraw=drawInterior;
+  drawInterior=function(){
+    previousHouseDraw();
+    if(interior!=='lighterhouse')return;
+    ctx.save();
+    // Render the NPC AFTER all interior wall/background overlays. Previous versions
+    // drew the NPC first, then a later room-wall layer completely concealed him.
+    const ox=lighterOwnerX, oy=lighterOwnerY;
+    ctx.fillStyle='rgba(28,33,40,.30)';
+    ctx.beginPath();ctx.ellipse(ox,oy+49,29,9,0,0,Math.PI*2);ctx.fill();
+
+    const rethFrame=(window.rethSoganFrames&&window.rethSoganFrames.down&&window.rethSoganFrames.down[0])||null;
+    const displayH=88, displayW=Math.round(74*displayH/112);
+    if(rethFrame&&rethFrame.complete&&rethFrame.naturalWidth){
+      ctx.save();ctx.imageSmoothingEnabled=false;
+      ctx.drawImage(rethFrame,Math.round(ox-displayW/2),Math.round(oy-74),displayW,displayH);
+      ctx.restore();
+    }
+    ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    ctx.font='bold 16px system-ui';ctx.lineWidth=4;ctx.strokeStyle='#273139';ctx.fillStyle='#fff4cc';
+    ctx.strokeText('RETH SOGAN',ox,oy-89);ctx.fillText('RETH SOGAN',ox,oy-89);
+    // Draw player last so the owner does not visually cover the player.
+    drawHero(player.x,player.y,player.dir,player.step);
+    // The mission marker is independent of the house furniture/background layers.
+    if(!lighterDelivered){
+      ctx.fillStyle='#ffe276';ctx.strokeStyle='#382b1a';ctx.lineWidth=3;
+      ctx.font='bold 35px system-ui';ctx.textAlign='center';
+      ctx.strokeText('!',lighterOwnerX,208);ctx.fillText('!',lighterOwnerX,208);
+    }
+    ctx.restore();
+  };
+})();
+</script>
+
+<script src="js/game-03.js"></script>
+
+<script>
+// V144 main menu interactions; existing Play handlers still launch the unchanged game.
+(function(){
+ const overlay=document.getElementById('overlay');
+ const sub=document.getElementById('menuSub');
+ const title=document.getElementById('menuSubTitle');
+ const content=document.getElementById('menuSubContent');
+ function openMenu(kind){
+  sub.hidden=false;
+  if(kind==='settings'){
+   title.textContent='SETTINGS';
+   content.innerHTML='<p>Background music</p><button type="button" id="menuMusicToggle"></button>';
+   const toggle=document.getElementById('menuMusicToggle');
+   function update(){toggle.textContent=musicOn?'♫ MUSIC: ON':'♫ MUSIC: OFF';document.getElementById('mute').textContent=musicOn?'♫ Music ON':'♫ Music OFF'}
+   toggle.addEventListener('click',()=>{musicOn=!musicOn;update();if(musicOn&&running)startMusic()});update();
+  }else{
+   title.textContent='SAVED GAMES';
+   content.innerHTML='<p>Saved-game loading will be available in a future update.</p><p>Choose PLAY to start a new game.</p>';
+  }
+ }
+ document.getElementById('menuSettings').addEventListener('click',()=>openMenu('settings'));
+ document.getElementById('menuSaves').addEventListener('click',()=>openMenu('saves'));
+ document.getElementById('menuBack').addEventListener('click',()=>{sub.hidden=true});
+})();
+
+/* V146 gentle menu-only music, synthesised locally (no external files). */
+(function(){
+ let ctx=null, timer=null, step=0;
+ const notes=[60,64,67,72,67,64,62,65,69,74,69,65,60,64,67,72,69,67,65,62,60,64,67,64];
+ function tone(midi,when,duration,volume){
+  if(!ctx)return;
+  const osc=ctx.createOscillator(),gain=ctx.createGain();
+  osc.type='sine';osc.frequency.value=440*Math.pow(2,(midi-69)/12);
+  gain.gain.setValueAtTime(.0001,when);gain.gain.exponentialRampToValueAtTime(volume,when+.06);
+  gain.gain.exponentialRampToValueAtTime(.0001,when+duration);
+  osc.connect(gain);gain.connect(ctx.destination);osc.start(when);osc.stop(when+duration+.03);
+ }
+ function tick(){
+  if(!document.body.classList.contains('menuPending')||!musicOn)return;
+  const now=ctx.currentTime+.015;
+  tone(notes[step%notes.length],now,.5,.027);
+  if(step%4===0)tone([48,53,57,55][Math.floor(step/4)%4],now,1.5,.017);
+  step++;
+ }
+ function start(){
+  if(!document.body.classList.contains('menuPending')||!musicOn)return;
+  try{
+   ctx=ctx||new(window.AudioContext||window.webkitAudioContext)();
+   ctx.resume().catch(()=>{});
+   if(!timer){tick();timer=setInterval(tick,330)}
+  }catch(e){}
+ }
+ function stop(){if(timer){clearInterval(timer);timer=null}if(ctx){ctx.suspend().catch(()=>{})}}
+ // Attempt immediately; browsers that block autoplay will unlock on the first user gesture.
+ start();
+ document.addEventListener('pointerdown',start,{passive:true,capture:true});
+ document.addEventListener('touchstart',start,{passive:true,capture:true});
+ document.addEventListener('mousedown',start,{capture:true});
+ document.addEventListener('click',start,{capture:true});
+ document.getElementById('overlay').addEventListener('pointerdown',start,{passive:true});
+ document.getElementById('overlay').addEventListener('click',start);
+ document.getElementById('overlay').addEventListener('pointerover',start,{passive:true});
+ document.addEventListener('keydown',start);
+ document.getElementById('play').addEventListener('click',stop);
+ document.getElementById('menuSettings').addEventListener('click',start);
+ document.getElementById('menuSaves').addEventListener('click',start);
+ document.getElementById('menuSub').addEventListener('click',e=>{
+  if(e.target.id==='menuMusicToggle'){
+   if(musicOn)start();else stop();
+  }
+ });
+})();
+</script><script id="v148-visible-menu-hover">
+(function(){
+  function setup(){
+    var menu=document.getElementById('overlay');
+    var artwork=document.getElementById('menuArtwork');
+    if(!menu||!artwork)return;
+    // The menu background is one image. Reuse its pixels to replicate each button
+    // precisely as an isolated moving layer, preserving the original wood artwork.
+    artwork.style.setProperty('--menu-sign-art',getComputedStyle(menu).backgroundImage);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup,{once:true});
+  else setup();
+})();
+</script>
+
+<link rel="stylesheet" href="css/style-04.css">
+<div id="oldLadyPinOverlay" role="dialog" aria-modal="true" aria-label="Forgetful Moments four digit pin riddle">
+ <section id="oldLadyPinPanel"><h2>🔐 FORGETFUL MOMENTS</h2><p>Old Lady's four-digit PIN has been forgotten. Use her clues to find it!</p>
+ <div id="oldLadyPinClues"><strong>My handwritten clues:</strong><p>1. My first digit is the number of seasons in a year.<br>2. My second is the number of days in a weekend.<br>3. My third is the number of sides on a triangle.<br>4. My last digit is the number of legs on a spider.</p></div>
+ <div id="oldLadyPinChoices"><button type="button" data-pin="4236">4236</button><button type="button" data-pin="4238">4238</button><button type="button" data-pin="4328">4328</button><button type="button" data-pin="5238">5238</button></div>
+ <div id="oldLadyPinFeedback" aria-live="polite"></div><button id="oldLadyPinExit" type="button">← Return to HOME</button>
+ </section>
+</div>
+<script id="v151-old-lady-mission" src="js/game-04.js"></script>
+
+<script>
+// V155 — Reth Sogan movement + grounded shadow fix.
+(()=>{
+  const rethPatrol=[
+    {x:465,y:305},
+    {x:520,y:305},
+    {x:520,y:348},
+    {x:438,y:348},
+    {x:438,y:292},
+    {x:495,y:292}
+  ];
+  const rethRoam={x:465,y:305,targetX:465,targetY:305,point:0,speed:58,wait:0.9,moving:false,direction:'down',stepClock:0};
+  window.rethRoam=rethRoam;
+
+  function rethBoundsReady(img){ return img && img.complete && img.naturalWidth && img.naturalHeight; }
+  const rethTrimCache=new WeakMap();
+  function rethGetTrimmedFrame(img){
+    if(!rethBoundsReady(img)) return null;
+    if(rethTrimCache.has(img)) return rethTrimCache.get(img);
+    const c=document.createElement('canvas');
+    c.width=img.naturalWidth; c.height=img.naturalHeight;
+    const cx=c.getContext('2d',{willReadFrequently:true});
+    cx.imageSmoothingEnabled=false;
+    cx.drawImage(img,0,0);
+    const data=cx.getImageData(0,0,c.width,c.height);
+    const px=data.data;
+    let minX=c.width, minY=c.height, maxX=-1, maxY=-1;
+    for(let i=0;i<px.length;i+=4){
+      const a=px[i+3], r=px[i], g=px[i+1], b=px[i+2];
+      const n=i>>2, x=n%c.width, y=(n/c.width)|0;
+      const whiteLike=(r>245&&g>245&&b>245);
+      if(a && !whiteLike){
+        if(x<minX)minX=x; if(y<minY)minY=y; if(x>maxX)maxX=x; if(y>maxY)maxY=y;
+      }else if(whiteLike){
+        px[i+3]=0;
+      }
+    }
+    cx.putImageData(data,0,0);
+    if(maxX<minX||maxY<minY){
+      const fallback={canvas:c,w:c.width,h:c.height};
+      rethTrimCache.set(img,fallback); return fallback;
+    }
+    const pad=2;
+    minX=Math.max(0,minX-pad); minY=Math.max(0,minY-pad);
+    maxX=Math.min(c.width-1,maxX+pad); maxY=Math.min(c.height-1,maxY+pad);
+    const w=maxX-minX+1, h=maxY-minY+1;
+    const out=document.createElement('canvas'); out.width=w; out.height=h;
+    const ox=out.getContext('2d'); ox.imageSmoothingEnabled=false;
+    ox.drawImage(c,minX,minY,w,h,0,0,w,h);
+    const trimmed={canvas:out,w,h};
+    rethTrimCache.set(img,trimmed);
+    return trimmed;
+  }
+
+  function rethCurrentPos(){ return (interior==='lighterhouse') ? rethRoam : {x:465,y:305}; }
+  lighterNearOwner=function(){
+    const p=rethCurrentPos();
+    return interior==='lighterhouse' && Math.hypot(player.x-p.x,player.y-p.y)<122;
+  };
+
+  function pickNextRethPoint(){
+    rethRoam.point=(rethRoam.point+1)%rethPatrol.length;
+    rethRoam.targetX=rethPatrol[rethRoam.point].x;
+    rethRoam.targetY=rethPatrol[rethRoam.point].y;
+  }
+
+  const rethMovePrev=move;
+  move=function(dt){
+    rethMovePrev(dt);
+    if(interior!=='lighterhouse'){
+      rethRoam.x=465; rethRoam.y=305; rethRoam.targetX=465; rethRoam.targetY=305; rethRoam.point=0; rethRoam.moving=false; rethRoam.stepClock=0; rethRoam.wait=0.9; rethRoam.direction='down';
+      return;
+    }
+    if(dialogOpen||shopOpen||missionOpen||battle||lighterCutsceneAt>=0){ rethRoam.moving=false; return; }
+    dt=Math.max(0,Math.min(Number(dt)||0,0.04));
+    if(!dt) return;
+    if(window.SAActorRoutes?.drive('reth',rethRoam,dt))return;
+    if(rethRoam.wait>0){ rethRoam.wait=Math.max(0,rethRoam.wait-dt); rethRoam.moving=false; return; }
+    const dx=rethRoam.targetX-rethRoam.x, dy=rethRoam.targetY-rethRoam.y;
+    const distance=Math.hypot(dx,dy);
+    if(distance<=1.2){
+      rethRoam.x=rethRoam.targetX; rethRoam.y=rethRoam.targetY; rethRoam.moving=false; rethRoam.stepClock=0; rethRoam.wait=0.65+Math.random()*0.55; pickNextRethPoint(); return;
+    }
+    const horizontal=Math.abs(dx)>1.2;
+    const remaining=horizontal?dx:dy;
+    const travel=Math.sign(remaining)*Math.min(Math.abs(remaining),rethRoam.speed*dt);
+    rethRoam.direction=horizontal?(travel>0?'right':'left'):(travel>0?'down':'up');
+    if(horizontal) rethRoam.x+=travel; else rethRoam.y+=travel;
+    rethRoam.moving=travel!==0;
+    if(rethRoam.moving) rethRoam.stepClock += dt;
+  };
+
+  const rethEnterPrev=enterRoom;
+  enterRoom=function(kind){
+    rethEnterPrev(kind);
+    if(kind==='lighterhouse'){
+      rethRoam.x=465; rethRoam.y=305; rethRoam.targetX=465; rethRoam.targetY=305; rethRoam.point=0; rethRoam.direction='down'; rethRoam.moving=false; rethRoam.stepClock=0; rethRoam.wait=0.8;
+    }
+  };
+
+  function drawRethSogan(){
+    const dirFrames=(window.rethSoganFrames&&window.rethSoganFrames[rethRoam.direction])||window.rethSoganFrames.down;
+    const frameIndex=rethRoam.moving ? (Math.floor(rethRoam.stepClock*8)%4) : 0;
+    const raw=dirFrames[frameIndex]||dirFrames[0];
+    const frame=rethGetTrimmedFrame(raw);
+    const x=rethRoam.x, y=rethRoam.y;
+    const feetY=y+12;
+    const baseH=88,baseW=Math.round(74*baseH/102);
+    if(frame){
+      const scale=Math.min(baseW/frame.w,baseH/frame.h);
+      const dw=Math.max(1,Math.round(frame.w*scale));
+      const dh=Math.max(1,Math.round(frame.h*scale));
+      const bob=rethRoam.moving ? Math.sin(rethRoam.stepClock*14)*0.8 : 0;
+      const shadowW=Math.round(Math.max(16,Math.min(24,dw*0.30)) + (rethRoam.moving?2:0));
+      ctx.save();
+      ctx.fillStyle='rgba(24,27,31,0.26)';
+      ctx.beginPath(); ctx.ellipse(Math.round(x),Math.round(feetY+2),shadowW,6,0,0,Math.PI*2); ctx.fill();
+      ctx.imageSmoothingEnabled=false;
+      ctx.drawImage(frame.canvas,Math.round(x-dw/2),Math.round(feetY-dh+bob),dw,dh);
+      ctx.restore();
+    }
+    ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    ctx.font='bold 16px system-ui';ctx.lineWidth=4;ctx.strokeStyle='#273139';ctx.fillStyle='#fff4cc';
+    ctx.strokeText('RETH SOGAN',x,y-89);ctx.fillText('RETH SOGAN',x,y-89);
+    if(!lighterDelivered){
+      ctx.fillStyle='#ffe276';ctx.strokeStyle='#382b1a';ctx.lineWidth=3;ctx.font='bold 35px system-ui';
+      ctx.strokeText('!',x,208);ctx.fillText('!',x,208);
+    }else if(lighterFound){
+      ctx.fillStyle='#ffe276';ctx.strokeStyle='#382b1a';ctx.lineWidth=3;ctx.font='bold 31px system-ui';
+      ctx.strokeText('?',x,208);ctx.fillText('?',x,208);
+    }else if(lighterDelivered){
+      ctx.fillStyle='#9cffb8';ctx.strokeStyle='#254530';ctx.lineWidth=3;ctx.font='bold 31px system-ui';
+      ctx.strokeText('✓',x,208);ctx.fillText('✓',x,208);
+    }
+  }
+
+  const rethDrawPrev=drawInterior;
+  drawInterior=function(){
+    if(interior!=='lighterhouse'){ rethDrawPrev(); return; }
+    ctx.fillStyle='#2c241d';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#705b48';ctx.fillRect(52,96,796,490);
+    ctx.fillStyle='#e0cba5';ctx.fillRect(68,112,765,465);
+    for(let y=112;y<575;y+=43) for(let x=70;x<835;x+=43){
+      ctx.fillStyle=((Math.floor(x/43)+Math.floor(y/43))%2)?'#ddc9a4':'#eadab7';
+      ctx.fillRect(x,y,42,42);
+    }
+    ctx.fillStyle='#845845';ctx.fillRect(100,145,222,116);
+    ctx.fillStyle='#d3ad81';ctx.fillRect(110,154,202,95);
+    text('LIVING ROOM',211,196,18,'#ffeab0');
+    ctx.fillStyle='#6e765a';ctx.fillRect(568,171,190,105);
+    ctx.fillStyle='#d6ba91';ctx.fillRect(578,181,170,85);
+    text('BOOKSHELF',662,230,17,'#ffeab0');
+    ctx.fillStyle='#765d4e';ctx.fillRect(105,415,175,80);
+    ctx.fillStyle='#af8163';ctx.fillRect(112,419,161,66);
+    text('COFFEE TABLE',193,460,16,'#ffe8b2');
+    ctx.fillStyle='#403526';ctx.fillRect(368,577,164,13);
+    text('EXIT',450,606,18,'#fff0bd');
+    drawRethSogan();
+    drawHero(player.x,player.y,player.dir,player.step);
+  };
+})();
+</script>
 
 
-</head>
-<body>
+<script>
+// V156 — Reth Sogan clean transparent sprites + fixed-size perspective render.
+(()=>{
+  function drawRethSoganV156(){
+    const roam=window.rethRoam || {x:465,y:305,direction:'down',moving:false,stepClock:0};
+    const set=(window.rethSoganFrames && window.rethSoganFrames[roam.direction]) || window.rethSoganFrames.down;
+    const frameIndex=roam.moving ? (Math.floor((roam.stepClock||0)*7)%4) : 0;
+    const sprite=(set && (set[frameIndex] || set[0])) || null;
+    const x=roam.x, y=roam.y;
+    const dh=88,dw=Math.round(58*dh/92);
+    const feetY=y+18;
+    const bob=roam.moving ? Math.sin((roam.stepClock||0)*14)*0.35 : 0;
+    ctx.save();
+    ctx.imageSmoothingEnabled=false;
+    ctx.fillStyle='rgba(26,22,18,0.18)';
+    ctx.beginPath();
+    ctx.ellipse(Math.round(x), Math.round(feetY+1), 11, 4, 0, 0, Math.PI*2);
+    ctx.fill();
+    if(sprite && sprite.complete && sprite.naturalWidth){
+      ctx.drawImage(sprite, Math.round(x-dw/2), Math.round(feetY-dh+bob), dw, dh);
+    }
+    ctx.restore();
+    ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    ctx.font='bold 16px system-ui';ctx.lineWidth=4;ctx.strokeStyle='#273139';ctx.fillStyle='#fff4cc';
+    ctx.strokeText('RETH SOGAN',x,y-89);ctx.fillText('RETH SOGAN',x,y-89);
+    if(!lighterDelivered){
+      ctx.fillStyle='#ffe276';ctx.strokeStyle='#382b1a';ctx.lineWidth=3;ctx.font='bold 35px system-ui';
+      ctx.strokeText('!',x,208);ctx.fillText('!',x,208);
+    }else if(lighterFound){
+      ctx.fillStyle='#ffe276';ctx.strokeStyle='#382b1a';ctx.lineWidth=3;ctx.font='bold 31px system-ui';
+      ctx.strokeText('?',x,208);ctx.fillText('?',x,208);
+    }else if(lighterDelivered){
+      ctx.fillStyle='#9cffb8';ctx.strokeStyle='#254530';ctx.lineWidth=3;ctx.font='bold 31px system-ui';
+      ctx.strokeText('✓',x,208);ctx.fillText('✓',x,208);
+    }
+  }
 
-    
-	<script>
+  const drawInteriorPrev=drawInterior;
+  drawInterior=function(){
+    if(interior!=='lighterhouse'){ drawInteriorPrev(); return; }
+    ctx.fillStyle='#2c241d';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#705b48';ctx.fillRect(52,96,796,490);
+    ctx.fillStyle='#e0cba5';ctx.fillRect(68,112,765,465);
+    for(let y=112;y<575;y+=43) for(let x=70;x<835;x+=43){
+      ctx.fillStyle=((Math.floor(x/43)+Math.floor(y/43))%2)?'#ddc9a4':'#eadab7';
+      ctx.fillRect(x,y,42,42);
+    }
+    ctx.fillStyle='#845845';ctx.fillRect(100,145,222,116);
+    ctx.fillStyle='#d3ad81';ctx.fillRect(110,154,202,95);
+    text('LIVING ROOM',211,196,18,'#ffeab0');
+    ctx.fillStyle='#6e765a';ctx.fillRect(568,171,190,105);
+    ctx.fillStyle='#d6ba91';ctx.fillRect(578,181,170,85);
+    text('BOOKSHELF',662,230,17,'#ffeab0');
+    ctx.fillStyle='#765d4e';ctx.fillRect(105,415,175,80);
+    ctx.fillStyle='#af8163';ctx.fillRect(112,419,161,66);
+    text('COFFEE TABLE',193,460,16,'#ffe8b2');
+    ctx.fillStyle='#403526';ctx.fillRect(368,577,164,13);
+    text('EXIT',450,606,18,'#fff0bd');
+    drawRethSoganV156();
+    drawHero(player.x,player.y,player.dir,player.step);
+  };
+})();
+</script>
 
-    (function() {
-        //Initialization
-        var game = new gdjs.RuntimeGame(gdjs.projectData, {});
 
-        //Create a renderer
-        game.getRenderer().createStandardCanvas(document.body);
+<script>
+// V157 — Reth Sogan exact per-sprite crop fix.
+(()=>{
+  function drawRethSoganV157(){
+    const roam=window.rethRoam || {x:465,y:305,direction:'down',moving:false,stepClock:0};
+    const frames=(window.rethSoganFrames && window.rethSoganFrames[roam.direction]) || window.rethSoganFrames.down;
+    const fi=roam.moving ? (Math.floor((roam.stepClock||0)*7)%4) : 0;
+    const sprite=(frames && (frames[fi] || frames[0])) || null;
+    const x=roam.x, y=roam.y;
+    const feetY=y+18;
+    const targetH=88;
+    const bob=roam.moving ? Math.sin((roam.stepClock||0)*14)*0.35 : 0;
+    ctx.save();
+    ctx.imageSmoothingEnabled=false;
+    if(sprite && sprite.complete && sprite.naturalWidth && sprite.naturalHeight){
+      const dw=Math.max(1,Math.round(sprite.naturalWidth * (targetH / sprite.naturalHeight)));
+      const dh=targetH;
+      const shadowW=Math.max(9,Math.min(13,Math.round(dw*0.23)));
+      ctx.fillStyle='rgba(26,22,18,0.16)';
+      ctx.beginPath();
+      ctx.ellipse(Math.round(x), Math.round(feetY+1), shadowW, 4, 0, 0, Math.PI*2);
+      ctx.fill();
+      ctx.drawImage(sprite, Math.round(x-dw/2), Math.round(feetY-dh+bob), dw, dh);
+    }
+    ctx.restore();
+    ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    ctx.font='bold 16px system-ui';ctx.lineWidth=4;ctx.strokeStyle='#273139';ctx.fillStyle='#fff4cc';
+    ctx.strokeText('RETH SOGAN',x,y-89);ctx.fillText('RETH SOGAN',x,y-89);
+    if(!lighterDelivered){
+      ctx.fillStyle='#ffe276';ctx.strokeStyle='#382b1a';ctx.lineWidth=3;ctx.font='bold 35px system-ui';
+      ctx.strokeText('!',x,208);ctx.fillText('!',x,208);
+    }else if(lighterFound){
+      ctx.fillStyle='#ffe276';ctx.strokeStyle='#382b1a';ctx.lineWidth=3;ctx.font='bold 31px system-ui';
+      ctx.strokeText('?',x,208);ctx.fillText('?',x,208);
+    }else if(lighterDelivered){
+      ctx.fillStyle='#9cffb8';ctx.strokeStyle='#254530';ctx.lineWidth=3;ctx.font='bold 31px system-ui';
+      ctx.strokeText('✓',x,208);ctx.fillText('✓',x,208);
+    }
+  }
+  const drawInteriorPrevV157=drawInterior;
+  drawInterior=function(){
+    if(interior!=='lighterhouse'){ drawInteriorPrevV157(); return; }
+    ctx.fillStyle='#2c241d';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#705b48';ctx.fillRect(52,96,796,490);
+    ctx.fillStyle='#e0cba5';ctx.fillRect(68,112,765,465);
+    for(let y=112;y<575;y+=43) for(let x=70;x<835;x+=43){
+      ctx.fillStyle=((Math.floor(x/43)+Math.floor(y/43))%2)?'#ddc9a4':'#eadab7';
+      ctx.fillRect(x,y,42,42);
+    }
+    ctx.fillStyle='#845845';ctx.fillRect(100,145,222,116);
+    ctx.fillStyle='#d3ad81';ctx.fillRect(110,154,202,95);
+    text('LIVING ROOM',211,196,18,'#ffeab0');
+    ctx.fillStyle='#6e765a';ctx.fillRect(568,171,190,105);
+    ctx.fillStyle='#d6ba91';ctx.fillRect(578,181,170,85);
+    text('BOOKSHELF',662,230,17,'#ffeab0');
+    ctx.fillStyle='#765d4e';ctx.fillRect(105,415,175,80);
+    ctx.fillStyle='#af8163';ctx.fillRect(112,419,161,66);
+    text('COFFEE TABLE',193,460,16,'#ffe8b2');
+    ctx.fillStyle='#403526';ctx.fillRect(368,577,164,13);
+    text('EXIT',450,606,18,'#fff0bd');
+    drawRethSoganV157();
+    drawHero(player.x,player.y,player.dir,player.step);
+  };
+})();
+</script>
 
-        //Bind keyboards/mouse/touch events
-        game.getRenderer().bindStandardEvents(game.getInputManager(), window, document);
 
-        //Load all assets and start the game
-        game.loadAllAssets(function() {
-            game.startGameLoop();
-        });
-    })();
+<script src="js/game-05.js"></script>
 
-	</script>
-</body>
-</html>
+
+<script>
+// V166 — Old Lady cinematic dialogue portraits for the three opening HOME pages.
+(function(){
+  const oldLadyPortraits = [
+    'assets/v204_d0e062ab666bd515b260fdd3.png',
+    'assets/v204_ceea4133e9424a273c4895dc.png',
+    'assets/v204_72f44137c4b69ecd6c245c9d.png'
+  ];
+  const oldLadyLines = [
+    "Oh dear... this is rather embarrassing — I've forgotten my PIN number.",
+    "I wrote a few clues down on this paper to help reveal the correct four-digit code.",
+    "Would you mind solving it for me? I'd be ever so grateful."
+  ];
+  let oldLadySceneActive = false;
+
+  const style = document.createElement('style');
+  style.textContent = `
+  #oldLadyCinematic{position:fixed;inset:0;z-index:100140;display:none;align-items:center;justify-content:center;padding:12px;background:#0d1218ee;box-sizing:border-box;font-family:system-ui,sans-serif}
+  #oldLadyCinematic.active{display:flex}
+  #oldLadyStage{width:min(1100px,98vw);height:min(96dvh,850px);min-height:360px;position:relative;overflow:hidden;border:5px solid #866045;border-radius:20px;box-shadow:0 0 0 3px #2a1c14,0 18px 70px #000b;background:linear-gradient(180deg,#efe0c8 0%,#cbac89 44%,#9b7453 76%,#644934 100%);color:#fff8da}
+  #oldLadyStage:before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.22;background:repeating-linear-gradient(90deg,transparent 0 110px,#2b1e1444 112px 118px),radial-gradient(circle at 18% 16%,#fff2c533 0 10%,transparent 22%),radial-gradient(circle at 80% 12%,#fff2c522 0 8%,transparent 18%)}
+  #oldLadyTitle{position:absolute;left:0;right:0;top:2.3%;z-index:2;text-align:center;font-weight:1000;letter-spacing:1px;font-size:clamp(21px,4vw,38px);color:#fff0ae;text-shadow:3px 4px 0 #3a281b}
+  #oldLadyArt{position:absolute;top:10%;height:58%;max-height:520px;width:100%;z-index:2;display:flex;align-items:end;justify-content:center}
+  #oldLadyArt img{height:100%;width:100%;max-width:560px;object-fit:contain;object-position:center bottom;image-rendering:auto;filter:drop-shadow(10px 13px 0 #18201155);animation:oldLadyReveal .20s ease-out;background:transparent}
+  #oldLadyBox{position:absolute;bottom:2.6%;left:3%;right:3%;min-height:26%;z-index:4;border:4px solid #845938;border-radius:13px;background:#f5e5bd;box-shadow:0 7px 0 #34291e;color:#342719;padding:clamp(12px,2.8vh,23px)}
+  #oldLadyName{font-size:clamp(15px,2.5vw,24px);font-weight:1000;letter-spacing:.4px;color:#7a361f}
+  #oldLadyLine{font-size:clamp(17px,3.4vw,31px);font-weight:900;margin-top:10px;line-height:1.24;min-height:2em}
+  #oldLadyFooter{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:11px;font-weight:800;font-size:clamp(12px,1.5vw,16px);color:#745c45}
+  #oldLadyNext{border:2px solid #533a24;border-radius:9px;background:#7f5962;color:#fff2c8;padding:8px 19px;font-weight:900;cursor:pointer;min-height:42px}
+  @keyframes oldLadyReveal{from{transform:translateY(8px) scale(.97);opacity:.45}to{transform:translateY(0) scale(1);opacity:1}}
+  @media(max-height:520px){#oldLadyArt{height:49%;top:7%}#oldLadyBox{min-height:36%}#oldLadyTitle{top:1%;font-size:20px}#oldLadyLine{font-size:17px}}
+  `;
+  document.head.appendChild(style);
+
+  const scene = document.createElement('div');
+  scene.id = 'oldLadyCinematic';
+  scene.setAttribute('role','dialog');
+  scene.setAttribute('aria-modal','true');
+  scene.setAttribute('aria-label','Old Lady home cutscene');
+  scene.innerHTML = `<div id="oldLadyStage"><div id="oldLadyTitle">🏡 HOME</div><div id="oldLadyArt"><img id="oldLadySprite" alt="Old Lady portrait"></div><div id="oldLadyBox"><div id="oldLadyName">OLD LADY</div><div id="oldLadyLine"></div><div id="oldLadyFooter"><span id="oldLadyProgress">1 / 3 · Press A or Enter</span><button type="button" id="oldLadyNext">NEXT ▶</button></div></div></div>`;
+  document.body.appendChild(scene);
+
+  const sceneImg = document.getElementById('oldLadySprite');
+  const sceneLine = document.getElementById('oldLadyLine');
+  const sceneProgress = document.getElementById('oldLadyProgress');
+  const sceneNext = document.getElementById('oldLadyNext');
+  const dialogEl = document.getElementById('dialog');
+
+  function renderOldLadyScene(){
+    try{ clearTimeout(welcomeTimeout); }catch(_e){}
+    dialogOpen = true;
+    oldLadySceneActive = true;
+    if(dialogEl) dialogEl.style.display = 'none';
+    scene.classList.add('active');
+    const step = Math.max(0, Math.min(typeof oldLadyDialogueStep === 'number' ? oldLadyDialogueStep : 0, oldLadyLines.length-1));
+    sceneLine.textContent = oldLadyLines[step];
+    sceneProgress.textContent = (step+1)+' / '+oldLadyLines.length+' · Press A or Enter';
+    sceneNext.textContent = step >= oldLadyLines.length-1 ? 'OPEN PIN PUZZLE ▶' : 'NEXT ▶';
+    sceneImg.src = oldLadyPortraits[step];
+    sceneImg.style.animation = 'none'; void sceneImg.offsetWidth; sceneImg.style.animation = 'oldLadyReveal .20s ease-out';
+  }
+
+  function hideOldLadyScene(){
+    oldLadySceneActive = false;
+    scene.classList.remove('active');
+  }
+
+  const oldLadyBaseShow = show;
+  show = function(title, message){
+    if(title === '👵 OLD LADY' && interior === 'oldladyhome' && typeof oldLadyDialogueStep === 'number' && oldLadyDialogueStep >= 0 && !oldLadyMissionComplete){
+      renderOldLadyScene();
+      return;
+    }
+    hideOldLadyScene();
+    return oldLadyBaseShow(title, message);
+  };
+
+  const oldLadyBaseClose = closeDialog;
+  closeDialog = function(){
+    hideOldLadyScene();
+    return oldLadyBaseClose();
+  };
+
+  const oldLadyBaseMove = move;
+  move = function(dt){
+    if(oldLadySceneActive) return;
+    return oldLadyBaseMove(dt);
+  };
+
+  function advanceOldLadyByInput(){
+    if(!oldLadySceneActive) return;
+    if(typeof interact === 'function') interact();
+  }
+
+  window.addEventListener('keydown', e=>{
+    if(!oldLadySceneActive) return;
+    if([' ','Enter','a','A','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Escape'].includes(e.key)){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if(!e.repeat && [' ','Enter','a','A'].includes(e.key)) advanceOldLadyByInput();
+    }
+  }, true);
+
+  const actionBtn = document.getElementById('action');
+  if(actionBtn){
+    actionBtn.addEventListener('pointerdown', e=>{
+      if(!oldLadySceneActive) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      advanceOldLadyByInput();
+    }, true);
+  }
+  sceneNext.addEventListener('click', advanceOldLadyByInput);
+})();
+</script>
+
+
+<script>
+// V167 — Ball Dee gets a two-page cinematic dialogue using the pointing and wink portraits.
+(function(){
+  const ballDeePortraits = [
+    'assets/v204_7496b68296abb885e97729e2.png',
+    'assets/v204_46eadface43cad932cd05326.png'
+  ];
+  const ballDeeLines = [
+    'Hey! The Common Gym is open. Head southeast and challenge its keeper for your first badge!',
+    'You should definitely check out StrainTradingCardGame.com.'
+  ];
+  let ballDeeDialogueStep = -1;
+  let ballDeeSceneActive = false;
+
+  window.startBallDeeDialogue = function(){
+    ballDeeDialogueStep = 0;
+    show('🧑 BALL DEE', ballDeeLines[0]);
+  };
+
+  const style = document.createElement('style');
+  style.textContent = `
+  #ballDeeCinematic{position:fixed;inset:0;z-index:100150;display:none;align-items:center;justify-content:center;padding:12px;background:#0b1220ee;box-sizing:border-box;font-family:system-ui,sans-serif}
+  #ballDeeCinematic.active{display:flex}
+  #ballDeeStage{width:min(1100px,98vw);height:min(96dvh,850px);min-height:360px;position:relative;overflow:hidden;border:5px solid #466248;border-radius:20px;box-shadow:0 0 0 3px #162016,0 18px 70px #000b;background:linear-gradient(180deg,#e6efd5 0%,#a7c47d 43%,#5f8346 73%,#2d4724 100%);color:#fff8da}
+  #ballDeeStage:before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.18;background:repeating-linear-gradient(90deg,transparent 0 120px,#26422333 122px 128px),radial-gradient(circle at 18% 16%,#ffffff22 0 10%,transparent 22%),radial-gradient(circle at 82% 14%,#ffffff1c 0 9%,transparent 20%)}
+  #ballDeeTitle{position:absolute;left:0;right:0;top:2.3%;z-index:2;text-align:center;font-weight:1000;letter-spacing:1px;font-size:clamp(21px,4vw,38px);color:#fff4ab;text-shadow:3px 4px 0 #27401e}
+  #ballDeeArt{position:absolute;top:10%;height:58%;max-height:520px;width:100%;z-index:2;display:flex;align-items:end;justify-content:center}
+  #ballDeeArt img{height:100%;width:100%;max-width:560px;object-fit:contain;object-position:center bottom;image-rendering:auto;filter:drop-shadow(10px 13px 0 #18201155);animation:ballDeeReveal .20s ease-out;background:transparent}
+  #ballDeeBox{position:absolute;bottom:2.6%;left:3%;right:3%;min-height:26%;z-index:4;border:4px solid #526b39;border-radius:13px;background:#f5efda;box-shadow:0 7px 0 #24301b;color:#2a281f;padding:clamp(12px,2.8vh,23px)}
+  #ballDeeName{font-size:clamp(15px,2.5vw,24px);font-weight:1000;letter-spacing:.4px;color:#42602c}
+  #ballDeeLine{font-size:clamp(17px,3.4vw,31px);font-weight:900;margin-top:10px;line-height:1.24;min-height:2em}
+  #ballDeeFooter{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:11px;font-weight:800;font-size:clamp(12px,1.5vw,16px);color:#546543}
+  #ballDeeNext{border:2px solid #31491f;border-radius:9px;background:#5d8a36;color:#fff2c8;padding:8px 19px;font-weight:900;cursor:pointer;min-height:42px}
+  @keyframes ballDeeReveal{from{transform:translateY(8px) scale(.97);opacity:.45}to{transform:translateY(0) scale(1);opacity:1}}
+  @media(max-height:520px){#ballDeeArt{height:49%;top:7%}#ballDeeBox{min-height:36%}#ballDeeTitle{top:1%;font-size:20px}#ballDeeLine{font-size:17px}}
+  `;
+  document.head.appendChild(style);
+
+  const scene = document.createElement('div');
+  scene.id = 'ballDeeCinematic';
+  scene.setAttribute('role','dialog');
+  scene.setAttribute('aria-modal','true');
+  scene.setAttribute('aria-label','Ball Dee dialogue');
+  scene.innerHTML = `<div id="ballDeeStage"><div id="ballDeeTitle">🧭 LEAF TOWN</div><div id="ballDeeArt"><img id="ballDeeSprite" alt="Ball Dee portrait"></div><div id="ballDeeBox"><div id="ballDeeName">BALL DEE</div><div id="ballDeeLine"></div><div id="ballDeeFooter"><span id="ballDeeProgress">1 / 2 · Press A or Enter</span><button type="button" id="ballDeeNext">NEXT ▶</button></div></div></div>`;
+  document.body.appendChild(scene);
+
+  const sceneImg = document.getElementById('ballDeeSprite');
+  const sceneLine = document.getElementById('ballDeeLine');
+  const sceneProgress = document.getElementById('ballDeeProgress');
+  const sceneNext = document.getElementById('ballDeeNext');
+  const dialogEl = document.getElementById('dialog');
+
+  function renderBallDeeScene(){
+    try{ clearTimeout(welcomeTimeout); }catch(_e){}
+    dialogOpen = true;
+    ballDeeSceneActive = true;
+    if(dialogEl) dialogEl.style.display = 'none';
+    scene.classList.add('active');
+    const step = Math.max(0, Math.min(ballDeeDialogueStep, ballDeeLines.length - 1));
+    sceneLine.textContent = ballDeeLines[step];
+    sceneProgress.textContent = (step + 1) + ' / ' + ballDeeLines.length + ' · Press A or Enter';
+    sceneNext.textContent = step >= ballDeeLines.length - 1 ? 'CLOSE ▶' : 'NEXT ▶';
+    sceneImg.src = ballDeePortraits[step];
+    sceneImg.style.animation = 'none'; void sceneImg.offsetWidth; sceneImg.style.animation = 'ballDeeReveal .20s ease-out';
+  }
+
+  function hideBallDeeScene(){
+    ballDeeSceneActive = false;
+    scene.classList.remove('active');
+  }
+
+  const ballDeeBaseShow = show;
+  show = function(title, message){
+    if(title === '🧑 BALL DEE'){
+      renderBallDeeScene();
+      return;
+    }
+    hideBallDeeScene();
+    return ballDeeBaseShow(title, message);
+  };
+
+  const ballDeeBaseClose = closeDialog;
+  closeDialog = function(){
+    hideBallDeeScene();
+    ballDeeDialogueStep = -1;
+    return ballDeeBaseClose();
+  };
+
+  const ballDeeBaseMove = move;
+  move = function(dt){
+    if(ballDeeSceneActive) return;
+    return ballDeeBaseMove(dt);
+  };
+
+  function advanceBallDeeScene(){
+    if(!ballDeeSceneActive) return;
+    if(ballDeeDialogueStep < ballDeeLines.length - 1){
+      ballDeeDialogueStep += 1;
+      renderBallDeeScene();
+      return;
+    }
+    closeDialog();
+  }
+
+  window.addEventListener('keydown', e=>{
+    if(!ballDeeSceneActive) return;
+    if([' ','Enter','a','A','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Escape'].includes(e.key)){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if(!e.repeat && [' ','Enter','a','A'].includes(e.key)) advanceBallDeeScene();
+    }
+  }, true);
+
+  const actionBtn = document.getElementById('action');
+  if(actionBtn){
+    actionBtn.addEventListener('pointerdown', e=>{
+      if(!ballDeeSceneActive) return;
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      advanceBallDeeScene();
+    }, true);
+  }
+  sceneNext.addEventListener('click', advanceBallDeeScene);
+})();
+</script>
+<script src="js/game-06.js"></script>
+
+<script>
+// V174: A dedicated sandbox start. Do not mutate the ordinary PLAY route.
+(function(){
+  const adminButton=document.getElementById('menuAdmin');
+  const playButton=document.getElementById('play');
+  if(!adminButton||!playButton)return;
+  adminButton.addEventListener('click',function(){
+    // This release contains the Common Gym badge; Eastern Grove checks player.badges>=1.
+    // Assign before Play's existing click handlers so every gate sees the badge immediately.
+    player.badges=Math.max(1,player.badges);
+    updateHUD();
+    document.body.dataset.adminMode='true';
+    playButton.click();
+  });
+})();
+</script>
+
+<script>
+// V251: Admin-only Langy quest test shortcut. Never grants the quests' normal rewards.
+(function(){
+ const btn=document.createElement('button');
+ btn.id='adminFinishForLangy';btn.type='button';
+ btn.textContent='🕳️ COMPLETE 5 QUESTS FOR LANGY';
+ btn.title='Test only: finish Old Lady, Nitty, Lucy, Woodland Hobo and Reth Sogan challenges';
+ btn.style.cssText='display:none;position:fixed;right:12px;top:76px;max-width:220px;z-index:10003;padding:9px 11px;border:2px solid #bce99d;border-radius:9px;background:#1d4433;color:#fff4c5;font:bold 12px system-ui;cursor:pointer;box-shadow:0 2px 10px #0008';
+ document.body.appendChild(btn);
+ const css=document.createElement('style');
+ css.textContent='body[data-admin-mode="true"] #adminFinishForLangy{display:block!important}body.menuPending #adminFinishForLangy{display:none!important}';
+ document.head.appendChild(css);
+ btn.addEventListener('click',function(){
+  if(document.body.dataset.adminMode!=='true')return;
+  oldLadyMissionComplete=true;oldLadySpoken=true;
+  cottagePipesFixed=true;cabinMissionFinished=true;cabinMissionResult='riddle';cabinCutsceneSeen=true;
+  lighterDelivered=true;lighterFound=true;lighterConversationDone=true;
+  flowerConversationDone=true;flowerDeliveryDone=true;flowerBouquetCollected=false;
+  inventory.funeralFlowers=0;
+  // The admin mode's Common Badge is retained. Langy's own victory state is untouched.
+  player.badges=Math.max(1,player.badges);
+  updateHUD();missionList();keys.clear();
+  show('🕳️ LANGY TEST UNLOCKED','Admin-only quest flags set for Old Lady, Nitty, Lucy, Woodland Hobo and Reth Sogan. No quest payouts awarded. The sewer manhole is now available in Leaf Town.');
+  btn.textContent='✓ 5 QUESTS COMPLETE — LANGY READY';btn.disabled=true;
+ });
+})();
+</script>
+
+<script>
+/* V177 — Eastern Grove Grove House: John John and eight-door leaflet round.
+   This is scoped to the Grove and does not patch the base world renderer. */
+var jjStarted=false,jjCompleted=false,jjDialogIndex=-1,jjDelivered=new Set(),jjReturn=null;
+window.jjStarted=false;window.jjCompleted=false;window.jjDeliveredCount=0;
+const jjHouse=groveHouses.find(h=>h.n==='GROVE HOUSE');
+const jjDeliveryHouses=groveHouses.filter(h=>h!==jjHouse);
+const jjSpeech=['Here boi','I need ya to hand out these here leaflets','My tarmacking business needs the promo'];
+function jjDoor(h){
+ if(h.n==='OAK LODGE')return {x:h.x-33,y:h.y+92};
+ return {x:h.x+120,y:h.y+(h.y<800?181:-20)};
+}
+function jjNearDoor(h){const d=jjDoor(h);return Math.hypot(player.x-d.x,player.y-d.y)<125;}
+function jjRefreshProgress(){window.jjStarted=jjStarted;window.jjCompleted=jjCompleted;window.jjDeliveredCount=jjDelivered.size;inventory.jjLeaflets=jjStarted&&!jjCompleted?8-jjDelivered.size:0;missionList();if(typeof v44RefreshBag==='function'&&document.getElementById('bagPackOverlay')?.classList.contains('open'))v44RefreshBag();}
+function jjOpenHome(){
+ jjReturn={x:player.x,y:player.y};interior='jjhome';keys.clear();player.x=450;player.y=550;player.dir='up';
+ document.querySelector('#hud strong').textContent='🏠 GROVE HOUSE';closeDialog();
+}
+function jjLeaveHome(){
+ interior=null;keys.clear();player.x=jjReturn?.x??jjDoor(jjHouse).x;player.y=jjReturn?.y??(jjDoor(jjHouse).y+40);
+ player.dir='down';document.querySelector('#hud strong').textContent='🌲 EASTERN GROVE';closeDialog();
+}
+function jjAwardXP(){
+ const notes=[];
+ for(const id of [...new Set(collection)]){
+  const p=progressFor(id),start=p.level;p.xp+=30;
+  while(p.level<100&&p.xp>=xpNeeded(p.level)){
+   p.xp-=xpNeeded(p.level);p.level++;
+   p.bonuses=p.bonuses.map(v=>v+2+Math.floor(Math.random()*4));
+  }
+  notes.push(`${CREATURES[id]?.name||id} +30 XP${p.level>start?' (LEVEL UP!)':''}`);
+ }
+ return notes;
+}
+function jjFinish(){
+ if(jjCompleted||jjDelivered.size!==jjDeliveryHouses.length)return;
+ jjCompleted=true;coins+=50;inventory.spray=(inventory.spray||0)+1;
+ inventory.baggy=(inventory.baggy||0)+2;
+ const notes=jjAwardXP();jjRefreshProgress();
+ if(typeof v44RefreshWallet==='function')v44RefreshWallet();
+ if(typeof v44RefreshBag==='function')v44RefreshBag();
+ show('✅ LEAFLET RUN COMPLETE','Nice one, boi! All eight homes got me flyers! Reward: £50, 1 Terp Spray, 2 Baggies and 30 XP for every collected strain.'+(notes.length?' '+notes.join(' · '):''));
+}
+function jjInteractHome(){
+ if(dialogOpen){
+  closeDialog();
+  if(jjDialogIndex>=0){jjDialogIndex++;
+   if(jjDialogIndex<jjSpeech.length){show('👴 JOHN JOHN',jjSpeech[jjDialogIndex]);return;}
+   jjDialogIndex=-1;jjStarted=true;jjRefreshProgress();
+   show('📜 LEAFLETS ADDED','John John put 8 tarmacking leaflets in your Bag Pack. Deliver one to each of the other 8 Eastern Grove houses and come back here.');
+  }
+  return;
+ }
+ if(player.y>555&&player.x>335&&player.x<565){jjLeaveHome();return;}
+ const jjPoint=window.SAActorRoutes?.point('john-john',450,366)||{x:450,y:366};
+ if(Math.hypot(player.x-jjPoint.x,player.y-(jjPoint.y-64))>145){show('🏡 GROVE HOUSE','Walk up to John John and press A to speak, or use the EXIT at the bottom.');return;}
+ if(jjCompleted){show('👴 JOHN JOHN','Cheers, boi! Business should be booming now.');return;}
+ if(jjStarted){if(jjDelivered.size===jjDeliveryHouses.length)jjFinish();else show('👴 JOHN JOHN',`You've delivered ${jjDelivered.size} of the 8 leaflets, boi. Get the rest through those letterboxes!`);return;}
+ jjDialogIndex=0;show('👴 JOHN JOHN',jjSpeech[0]);
+}
+function jjDeliver(h){
+ if(!jjStarted){show('🏡 '+h.n,'A peaceful woodland home. Maybe somebody in Grove House has an errand for you.');return;}
+ if(jjCompleted){show('📬 '+h.n,'You already completed John John’s leaflet round.');return;}
+ if(jjDelivered.has(h.n)){show('📬 '+h.n,'Already delivered! Find another letterbox.');return;}
+ jjDelivered.add(h.n);jjRefreshProgress();
+ const left=jjDeliveryHouses.length-jjDelivered.size;
+ show('📬 LEAFLET DELIVERED',`You posted John John's leaflet through the door at ${h.n}. ${jjDelivered.size}/8 delivered. ${left?`${left} house${left===1?'':'s'} left.`:'All eight delivered! Return to John John at GROVE HOUSE for your reward.'}`);
+}
+// Render the indoor room through the original single-room camera path.
+const jjOldRender=render;
+render=function(){if(currentDistrict==='grove'&&interior==='jjhome')return v34Render();return jjOldRender();};
+const jjOldDrawInterior=drawInterior;
+drawInterior=function(){
+ if(interior!=='jjhome')return jjOldDrawInterior();
+ ctx.fillStyle='#4b6c4d';ctx.fillRect(0,0,900,680);
+ for(let y=65;y<610;y+=42)for(let x=65;x<840;x+=42){ctx.fillStyle=(x+y)%3?'#bc9364':'#aa8155';ctx.fillRect(x,y,40,40);}
+ ctx.fillStyle='#463927';ctx.fillRect(34,34,832,34);ctx.fillRect(34,34,34,595);ctx.fillRect(832,34,34,595);ctx.fillRect(34,604,832,25);
+ ctx.fillStyle='#e7cf91';text('GROVE HOUSE',450,100,34,'#fff0ba');
+ // John John's flyer table, with rolls of tarmac and a leaflet stack.
+ ctx.fillStyle='#523924';ctx.fillRect(273,230,345,85);ctx.fillStyle='#987047';ctx.fillRect(282,219,330,83);
+ for(let k=0;k<5;k++){ctx.fillStyle='#e9dcb0';ctx.fillRect(320+k*42,235,33,38);ctx.strokeStyle='#53764b';ctx.strokeRect(322+k*42,239,25,27);}
+ ctx.fillStyle='#202e29';ctx.fillRect(690,345,90,145);ctx.fillStyle='#7a6a4a';ctx.fillRect(105,365,130,90);
+ // Distinct NPC: cap, jacket, boots and a moustache.
+ const jjNPC=window.SAActorRoutes?.point('john-john',450,366)||{x:450,y:366};
+ // Fit the drawn character to the same 88-world-pixel height as the hero.
+ ctx.save();ctx.translate(jjNPC.x-450,jjNPC.y-366);ctx.translate(450,366);ctx.scale(88/138,88/138);ctx.translate(-450,-366);
+ ctx.fillStyle='#1c2d25';ctx.beginPath();ctx.ellipse(450,335,36,13,0,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#475b45';ctx.fillRect(416,288,69,43);ctx.fillStyle='#5b4a34';ctx.fillRect(422,324,20,42);ctx.fillRect(459,324,20,42);
+ ctx.fillStyle='#e0a97f';ctx.beginPath();ctx.arc(450,268,31,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#a5a398';ctx.fillRect(421,244,58,13);ctx.fillStyle='#777d71';ctx.fillRect(428,228,44,20);
+ ctx.fillStyle='#3c342b';ctx.fillRect(437,280,27,6);ctx.fillStyle='#25251f';ctx.fillRect(440,260,5,4);ctx.fillRect(458,260,5,4);
+ ctx.restore();
+ text('JOHN JOHN',jjNPC.x,jjNPC.y-163,19,'#fff4ce');
+ if(Math.hypot(player.x-jjNPC.x,player.y-(jjNPC.y-64))<160)text('A: TALK',jjNPC.x,jjNPC.y+18,17,'#fff3a7');
+ ctx.fillStyle='#264c3a';ctx.fillRect(364,582,170,62);text('EXIT ↓',450,623,26,'#fff7be');
+ drawHero(player.x,player.y,player.dir,player.step);
+};
+// Existing Grove movement bypasses interiors, so use the base-room movement only here.
+const jjOldMove=move;
+move=function(dt){if(currentDistrict==='grove'&&interior==='jjhome')return v34Move(dt);return jjOldMove(dt);};
+const jjOldInteract=interact;
+interact=function(){
+ if(currentDistrict==='grove'){
+  if(interior==='jjhome'){jjInteractHome();return;}
+  if(!interior){
+   if(dialogOpen){closeDialog();return;}
+   if(jjNearDoor(jjHouse)){jjOpenHome();return;}
+   for(const h of jjDeliveryHouses)if(jjNearDoor(h)){jjDeliver(h);return;}
+  }
+ }
+ return jjOldInteract();
+};
+const jjOldRefreshBag=v44RefreshBag;
+v44RefreshBag=function(){
+ jjOldRefreshBag();const el=document.getElementById('bagPackContents');
+ if(!el||!inventory.jjLeaflets)return;
+ const blank=el.querySelector('p');if(blank&&/bag is empty/i.test(blank.textContent))blank.remove();
+ el.insertAdjacentHTML('afterbegin',`<div class="bagItem"><span>📜 John John's Tarmacking Leaflets · Quest item</span><strong>× ${inventory.jjLeaflets}</strong></div>`);
+};
+// Show entry/delivery hints at the actual front-door location, not over the house body.
+const jjOldGroveHouseDraw=drawGroveHouse;
+drawGroveHouse=function(h){
+ jjOldGroveHouseDraw(h);
+ const door=jjDoor(h);if(Math.hypot(player.x-door.x,player.y-door.y)>175)return;
+ if(h===jjHouse)text('A: ENTER GROVE HOUSE',door.x,door.y+(h.y<800?43:-45),15,'#faffc5');
+ else if(jjStarted&&!jjCompleted)text(jjDelivered.has(h.n)?'✓ DELIVERED':'A: POST LEAFLET',door.x,door.y+(h.y<800?43:-45),15,jjDelivered.has(h.n)?'#b6ffaf':'#ffedaa');
+};
+// Allow actual clicking/tapping a doorway on desktop/mobile, besides A interaction.
+canvas.addEventListener('pointerdown',e=>{
+ if(currentDistrict!=='grove'||interior||dialogOpen||shopOpen||missionOpen||battle||!running)return;
+ const r=canvas.getBoundingClientRect(),screenX=(e.clientX-r.left)*(W/r.width),screenY=(e.clientY-r.top)*(H/r.height);
+ const scale=Math.max(.53,Math.min(1.08,W/950));
+ const cameraX=Math.max(0,Math.min(world.w-W/scale,player.x-W/(2*scale)));
+ const cameraY=Math.max(0,Math.min(world.h-H/scale,player.y-H/(2*scale)));
+ const x=screenX/scale+cameraX,y=screenY/scale+cameraY;
+ for(const h of groveHouses){const d=jjDoor(h);
+  if(Math.hypot(x-d.x,y-d.y)<80&&jjNearDoor(h)){
+   e.preventDefault();e.stopPropagation();if(h===jjHouse)jjOpenHome();else jjDeliver(h);return;
+  }
+ }
+});
+</script>
+
+<script src="js/game-07.js"></script>
+
+<script id="orbitRushPatchV181" src="js/game-08.js"></script>
+<script>
+// V198: OLAF — independently animated, path-following Leaf Town dog.
+// Each directional frame is an isolated transparent 216x248 tile. Preserves all existing NPCs.
+(function(){
+ 'use strict';
+ const OLAF_TILE_W=216, OLAF_TILE_H=248;
+ const OLAF_DIRECTIONS={down:{row:0,count:9,scale:.43},left:{row:1,count:8,scale:.51},right:{row:2,count:8,scale:.51},up:{row:3,count:9,scale:.43}};
+ const sheet=new Image();
+ sheet.src='assets/v204_b81a5169f948722765074b15.png';
+ // Waypoints trace the ACTUAL first-area cobblestone walkways: central north/south
+ // spine, east/west path, and door spurs at the Cure Shop and PapaHerb HQ.
+ // Edges are cardinal/axis-aligned, no movement across lawns or buildings.
+ const PATH={
+  north:{x:766,y:220,to:['upper']},
+  upper:{x:766,y:405,to:['north','cross']},
+  cross:{x:766,y:621,to:['upper','south','westMid','eastMid']},
+  south:{x:766,y:847,to:['cross','farSouth']},
+  farSouth:{x:766,y:1070,to:['south']},
+  westMid:{x:588,y:621,to:['cross','westShop']},
+  westShop:{x:420,y:621,to:['westMid','cureDoor','westEnd']},
+  cureDoor:{x:420,y:530,to:['westShop']},
+  westEnd:{x:225,y:621,to:['westShop']},
+  eastMid:{x:944,y:621,to:['cross','eastShop']},
+  eastShop:{x:1090,y:621,to:['eastMid','hqDoor','eastEnd']},
+  hqDoor:{x:1090,y:530,to:['eastShop']},
+  eastEnd:{x:1345,y:621,to:['eastShop']}
+ };
+ const olaf={name:'Olaf',x:766,y:847,node:'south',target:'cross',dir:'up',moving:true,
+   speed:72,stepTime:0,rest:0,lastNode:'farSouth',frame:0};
+ window.olafNPC=olaf;
+ function chooseNext(){
+   const options=PATH[olaf.node].to;
+   const alternatives=options.filter(v=>v!==olaf.lastNode);
+   const pool=alternatives.length&&Math.random()<.79?alternatives:options;
+   olaf.target=pool[(Math.random()*pool.length)|0];
+ }
+ function canMove(){
+   return typeof running!=='undefined'&&running&&currentDistrict==='leaf'&&!interior&&
+      !dialogOpen&&!shopOpen&&!missionOpen&& !battle &&
+      (typeof creatureMode==='undefined'||creatureMode!=='battle');
+ }
+ function tickOlaf(dt){
+   if(!canMove()){olaf.moving=false;return;}
+   dt=Math.min(.055,Math.max(0,Number(dt)||0));
+   if(!dt)return;
+   if(window.SAActorRoutes?.drive('olaf',olaf,dt))return;
+   if(olaf.rest>0){olaf.rest=Math.max(0,olaf.rest-dt);olaf.moving=false;return;}
+   if(!olaf.target){chooseNext();}
+   const end=PATH[olaf.target];
+   if(!end){olaf.target=null;olaf.moving=false;return;}
+   const dx=end.x-olaf.x,dy=end.y-olaf.y;
+   const remaining=Math.hypot(dx,dy);
+   if(remaining<.9){
+      olaf.x=end.x;olaf.y=end.y;
+      olaf.lastNode=olaf.node;olaf.node=olaf.target;
+      olaf.target=null;olaf.rest=.3+Math.random()*1.4;
+      olaf.moving=false;olaf.stepTime=0;
+      return;
+   }
+   const pace=Math.min(remaining,olaf.speed*dt);
+   // All route segments are straight and remain entirely on the path.
+   if(Math.abs(dx)>Math.abs(dy)){
+      olaf.x+=Math.sign(dx)*pace;
+      olaf.y=end.y;
+      olaf.dir=dx>0?'right':'left';
+   }else{
+      olaf.y+=Math.sign(dy)*pace;
+      olaf.x=end.x;
+      olaf.dir=dy>0?'down':'up';
+   }
+   olaf.moving=true;
+   olaf.stepTime+=dt;
+ }
+ const originalMoveOlaf=move;
+ move=function(dt){originalMoveOlaf(dt);tickOlaf(dt);};
+ function drawOlaf(){
+   if(currentDistrict!=='leaf'||interior)return;
+   const x=Math.round(olaf.x),y=Math.round(olaf.y);
+   const desc=OLAF_DIRECTIONS[olaf.dir]||OLAF_DIRECTIONS.down;
+   const fr=olaf.moving?(Math.floor(olaf.stepTime*8.5)%desc.count):0;
+   const dh=88,dw=Math.round(OLAF_TILE_W*dh/OLAF_TILE_H);
+   ctx.save();
+   ctx.imageSmoothingEnabled=false;
+   ctx.fillStyle='rgba(25,39,30,.34)';
+   ctx.beginPath();ctx.ellipse(x,y+3,olaf.dir==='left'||olaf.dir==='right'?37:22,6,0,0,Math.PI*2);ctx.fill();
+   if(sheet.complete&&sheet.naturalWidth===OLAF_TILE_W*9){
+      ctx.drawImage(sheet,fr*OLAF_TILE_W,desc.row*OLAF_TILE_H,
+          OLAF_TILE_W,OLAF_TILE_H,x-dw/2,y-dh+2,dw,dh);
+   }
+   // Keep the name label visible while Olaf wanders like other friendly NPCs.
+   ctx.font='900 17px system-ui';ctx.textAlign='center';ctx.lineWidth=4;
+   ctx.strokeStyle='#263924';ctx.fillStyle='#fff6c9';
+   ctx.strokeText('OLAF',x,y-98);ctx.fillText('OLAF',x,y-98);
+   if(Math.hypot(player.x-olaf.x,player.y-olaf.y)<126){
+      ctx.font='900 14px system-ui';ctx.lineWidth=3;
+      ctx.strokeText('A: PET',x,y-117);ctx.fillText('A: PET',x,y-117);
+   }
+   ctx.restore();
+ }
+ window.drawOlaf=drawOlaf;
+ const priorOlafInteract=interact;
+ interact=function(){
+   if(currentDistrict==='leaf'&&!interior&&!dialogOpen&&!shopOpen&&!missionOpen&&
+        !battle&&Math.hypot(player.x-olaf.x,player.y-olaf.y)<125){
+      olaf.moving=false;olaf.rest=1.8;
+      keys.clear();
+      show('🐕 OLAF','Woof');
+      return;
+   }
+   return priorOlafInteract();
+ };
+})();
+</script>
+
+<script>
+// V213 IAN — approved bald, dark-bearded NPC replacing the former Ian art.
+// 16 tightly silhouette-cut RGBA sprites; keep Ian's existing route and dialogue.
+(function(){
+ 'use strict';
+ const IAN_FRAME_W=240, IAN_FRAME_H=320;
+ const IAN_DIRECTIONS={down:{row:0,count:4},left:{row:1,count:4},right:{row:2,count:4},up:{row:3,count:4}};
+ const IAN_FPS={down:8,left:8,up:8,right:8};
+ // Paired footfalls alternate through an intermediate standing pose.
+ const IAN_SEQUENCES={down:[0,1,2,3],left:[0,1,2,3],right:[0,1,2,3],up:[0,1,2,3]};
+ const ianSheet=new Image();
+ ianSheet.src='editor/npcs/ian_walk.png';
+ // These are the centrelines of the game's eastern cobbled road and the vertical
+ // cabin approach (x 1830–1950, y 560–1320). Stops before the cabin wall (y 1190).
+ // The westmost node is well east of Olaf's furthest x=1345 patrol node.
+ const IAN_PATH={
+  westernRoad:{x:1545,y:621,to:['crossing']},
+  crossing:{x:1890,y:621,to:['westernRoad','eastRoad','midCabin']},
+  eastRoad:{x:2225,y:621,to:['crossing','farEast']},
+  farEast:{x:2345,y:621,to:['eastRoad']},
+  midCabin:{x:1890,y:844,to:['crossing','cabinFront']},
+  cabinFront:{x:1890,y:1105,to:['midCabin']}
+ };
+ const ian={name:'Ian',x:1890,y:990,node:'midCabin',target:'cabinFront',dir:'down',
+  speed:68,stepTime:0,rest:.2,moving:false,lastNode:'crossing'};
+ window.ianNPC=ian;
+ function selectNextNode(){
+  const choices=IAN_PATH[ian.node].to;
+  const fresh=choices.filter(k=>k!==ian.lastNode);
+  const pool=fresh.length&&Math.random()<.76?fresh:choices;
+  ian.target=pool[Math.floor(Math.random()*pool.length)];
+ }
+ function ianInWorld(){return typeof currentDistrict!=='undefined'&&currentDistrict==='leaf'&&!interior;}
+ function ianCanWalk(){
+  return ianInWorld()&&typeof running!=='undefined'&&running &&
+   !dialogOpen&&!shopOpen&&!missionOpen&&!battle &&
+   (typeof creatureMode==='undefined'||creatureMode!=='battle');
+ }
+ function tickIan(dt){
+  if(!ianCanWalk()){ian.moving=false;return;}
+  dt=Math.min(.055,Math.max(0,Number(dt)||0));
+  if(!dt)return;
+   if(window.SAActorRoutes?.drive('ian',ian,dt))return;
+  if(ian.rest>0){ian.rest=Math.max(0,ian.rest-dt);ian.moving=false;return;}
+  if(!ian.target)selectNextNode();
+  const next=IAN_PATH[ian.target];
+  if(!next){ian.target=null;ian.moving=false;return;}
+  const dx=next.x-ian.x,dy=next.y-ian.y;
+  const dist=Math.hypot(dx,dy);
+  if(dist<.95){
+    ian.x=next.x;ian.y=next.y;
+    ian.lastNode=ian.node;ian.node=ian.target;
+    ian.target=null;ian.moving=false;ian.stepTime=0;
+    ian.rest=.3+Math.random()*1.5;
+    return;
+  }
+  const amount=Math.min(dist,ian.speed*dt);
+  // Each graph edge is axis aligned and stays inside the cobblestone footprint.
+  if(Math.abs(dx)>.5){
+   ian.x+=Math.sign(dx)*amount;
+   ian.y=next.y;
+   ian.dir=dx>0?'right':'left';
+  }else{
+   ian.y+=Math.sign(dy)*amount;
+   ian.x=next.x;
+   ian.dir=dy>0?'down':'up';
+  }
+  ian.moving=true;ian.stepTime+=dt;
+ }
+ const beforeIanMove=move;
+ move=function(dt){beforeIanMove(dt);tickIan(dt);};
+ function drawIan(){
+  if(!ianInWorld())return;
+  const x=Math.round(ian.x),y=Math.round(ian.y);
+  const direction=IAN_DIRECTIONS[ian.dir]||IAN_DIRECTIONS.down;
+  const seq=IAN_SEQUENCES[ian.dir]||IAN_SEQUENCES.down;
+  const fps=IAN_FPS[ian.dir]||8;
+  const frame=ian.moving ? seq[Math.floor(ian.stepTime*fps)%seq.length] : 0;
+  const h=88,w=Math.round(95*h/127);
+  ctx.save();ctx.imageSmoothingEnabled=false;
+  ctx.fillStyle='rgba(22,28,21,.34)';
+  ctx.beginPath();ctx.ellipse(x,y+2,24,6,0,0,Math.PI*2);ctx.fill();
+  if(ianSheet.complete&&ianSheet.naturalWidth===IAN_FRAME_W*4){
+   ctx.drawImage(ianSheet,frame*IAN_FRAME_W,direction.row*IAN_FRAME_H,
+    IAN_FRAME_W,IAN_FRAME_H,Math.round(x-w/2),y-h+2,w,h);
+  }
+  ctx.font='900 17px system-ui';ctx.textAlign='center';ctx.lineWidth=4;
+  ctx.strokeStyle='#263924';ctx.fillStyle='#fff6c9';
+  ctx.strokeText('IAN',x,y-98);ctx.fillText('IAN',x,y-98);
+  if(Math.hypot(player.x-ian.x,player.y-ian.y)<126){
+   ctx.font='900 14px system-ui';ctx.lineWidth=3;
+   ctx.strokeText('A: TALK',x,y-117);ctx.fillText('A: TALK',x,y-117);
+  }
+  ctx.restore();
+ }
+ window.drawIan=drawIan;
+ const beforeIanInteract=interact;
+ interact=function(){
+  if(ianInWorld()&&!dialogOpen&&!shopOpen&&!missionOpen&&!battle&&
+      Math.hypot(player.x-ian.x,player.y-ian.y)<125){
+   ian.rest=1.6;ian.moving=false;
+   keys.clear();
+   show('IAN','Alright mate!');
+   return;
+  }
+  return beforeIanInteract();
+ };
+})();
+</script>
+
+<script>
+// V212 MISS MUFFET — original Leaf Town route and interaction with rebuilt transparent 4x4 walking art.
+(function(){
+ 'use strict';
+ const MISS_TILE_W=208, MISS_TILE_H=320;
+ // Each direction repeats: feet together > left step > feet together > right step.
+ const MISS_DIRECTIONS={down:{row:0},left:{row:1},right:{row:2},up:{row:3}};
+ const missSheet=new Image();
+ missSheet.src='editor/npcs/miss_muffet_walk.png';
+ // Miss Muffet stays on the north/west first-area Leaf Town paths so she patrols
+ // a different stretch from Ian's cabin route while remaining on valid cobbles.
+ const MISS_PATH={
+  north:{x:766,y:220,to:['upper']},
+  upper:{x:766,y:405,to:['north','cross']},
+  cross:{x:766,y:621,to:['upper','westMid']},
+  westMid:{x:588,y:621,to:['cross','westShop']},
+  westShop:{x:420,y:621,to:['westMid','cureDoor','westEnd']},
+  cureDoor:{x:420,y:530,to:['westShop']},
+  westEnd:{x:225,y:621,to:['westShop']}
+ };
+ const missMuffet={name:'Miss Muffet',x:420,y:530,node:'cureDoor',target:'westShop',dir:'down',
+   speed:68,stepTime:0,rest:.15,moving:true,lastNode:'westShop'};
+ window.missMuffetNPC=missMuffet;
+ function missInWorld(){return typeof currentDistrict!=='undefined'&&currentDistrict==='leaf'&&!interior;}
+ function missCanWalk(){
+  return missInWorld()&&typeof running!=='undefined'&&running &&
+   !dialogOpen&&!shopOpen&&!missionOpen&&!battle &&
+   (typeof creatureMode==='undefined'||creatureMode!=='battle');
+ }
+ function chooseMissNext(){
+  const choices=MISS_PATH[missMuffet.node].to;
+  const fresh=choices.filter(k=>k!==missMuffet.lastNode);
+  const pool=fresh.length&&Math.random()<.78?fresh:choices;
+  missMuffet.target=pool[Math.floor(Math.random()*pool.length)];
+ }
+ function tickMissMuffet(dt){
+  if(!missCanWalk()){missMuffet.moving=false;return;}
+  dt=Math.min(.055,Math.max(0,Number(dt)||0));
+  if(!dt)return;
+   if(window.SAActorRoutes?.drive('miss-muffet',missMuffet,dt))return;
+  if(missMuffet.rest>0){missMuffet.rest=Math.max(0,missMuffet.rest-dt);missMuffet.moving=false;return;}
+  if(!missMuffet.target)chooseMissNext();
+  const next=MISS_PATH[missMuffet.target];
+  if(!next){missMuffet.target=null;missMuffet.moving=false;return;}
+  const dx=next.x-missMuffet.x, dy=next.y-missMuffet.y;
+  const dist=Math.hypot(dx,dy);
+  if(dist<.95){
+    missMuffet.x=next.x; missMuffet.y=next.y;
+    missMuffet.lastNode=missMuffet.node; missMuffet.node=missMuffet.target;
+    missMuffet.target=null; missMuffet.moving=false; missMuffet.stepTime=0;
+    missMuffet.rest=.35+Math.random()*1.45;
+    return;
+  }
+  const amount=Math.min(dist,missMuffet.speed*dt);
+  if(Math.abs(dx)>.5){
+    missMuffet.x+=Math.sign(dx)*amount;
+    missMuffet.y=next.y;
+    missMuffet.dir=dx>0?'right':'left';
+  }else{
+    missMuffet.y+=Math.sign(dy)*amount;
+    missMuffet.x=next.x;
+    missMuffet.dir=dy>0?'down':'up';
+  }
+  missMuffet.moving=true;
+  missMuffet.stepTime+=dt;
+ }
+ const priorMissMove=move;
+ move=function(dt){priorMissMove(dt);tickMissMuffet(dt);};
+ function drawMissMuffet(){
+  if(!missInWorld())return;
+  const x=Math.round(missMuffet.x), y=Math.round(missMuffet.y);
+  const desc=MISS_DIRECTIONS[missMuffet.dir]||MISS_DIRECTIONS.down;
+  const fr=missMuffet.moving ? Math.floor(missMuffet.stepTime*8.2)%4 : 0;
+  const dh=88,dw=Math.round(80*dh/123);
+  ctx.save(); ctx.imageSmoothingEnabled=false;
+  ctx.fillStyle='rgba(25,39,30,.30)';
+  ctx.beginPath();
+  ctx.ellipse(x,y+2,missMuffet.dir==='left'||missMuffet.dir==='right'?24:19,6,0,0,Math.PI*2);
+  ctx.fill();
+  if(missSheet.complete&&missSheet.naturalWidth===MISS_TILE_W*4){
+    ctx.drawImage(missSheet,fr*MISS_TILE_W,desc.row*MISS_TILE_H,
+      MISS_TILE_W,MISS_TILE_H,Math.round(x-dw/2),y-dh+2,dw,dh);
+  }
+  ctx.font='900 17px system-ui'; ctx.textAlign='center'; ctx.lineWidth=4;
+  ctx.strokeStyle='#263924'; ctx.fillStyle='#fff6c9';
+  ctx.strokeText('MISS MUFFET',x,y-98); ctx.fillText('MISS MUFFET',x,y-98);
+  if(Math.hypot(player.x-missMuffet.x,player.y-missMuffet.y)<126){
+    ctx.font='900 14px system-ui'; ctx.lineWidth=3;
+    ctx.strokeText('A: TALK',x,y-117); ctx.fillText('A: TALK',x,y-117);
+  }
+  ctx.restore();
+ }
+ window.drawMissMuffet=drawMissMuffet;
+ const priorMissInteract=interact;
+ interact=function(){
+  if(missInWorld()&&!dialogOpen&&!shopOpen&&!missionOpen&&!battle&&
+      Math.hypot(player.x-missMuffet.x,player.y-missMuffet.y)<125){
+    missMuffet.moving=false; missMuffet.rest=1.8;
+    keys.clear();
+    show("🎀 MISS MUFFET","Lovely day for a walk, isn't it?");
+    return;
+  }
+  return priorMissInteract();
+ };
+})();
+</script>
+
+
+<script>
+// V216 Josh — approved 4x4 blue-jacket walking art; 16 silhouette-isolated
+// transparent poses, consistently foot-grounded with no background rectangle.
+(function(){
+ 'use strict';
+ const CW=240, CH=320;
+ const directions={down:0,left:1,right:2,up:3};
+ const sheet=new Image();
+ sheet.src='editor/npcs/josh_walk.png';
+ // Southern eastern cobblestone road (y 1190–1308), with one spur on the
+ // cabin-side cobblestone approach (x 1830–1950). All graph edges are cardinal.
+ // Josh has a different principal patrol area from Olaf, Ian and Miss Muffet.
+ const path={
+   upper:{x:1890,y:1142,to:['junction']},
+   junction:{x:1890,y:1250,to:['upper','west','eastStart']},
+   west:{x:1850,y:1250,to:['junction']},
+   eastStart:{x:2070,y:1250,to:['junction','eastMiddle']},
+   eastMiddle:{x:2220,y:1250,to:['eastStart','eastEnd']},
+   eastEnd:{x:2390,y:1250,to:['eastMiddle']}
+ };
+ const josh={name:'Josh',x:2220,y:1250,node:'eastMiddle',target:'eastEnd',
+   lastNode:'eastStart',dir:'right',moving:false,speed:73,walkDistance:0,
+   rest:.45};
+ window.joshNPC=josh;
+ const inWorld=()=>typeof currentDistrict!=='undefined' && currentDistrict==='leaf' && !interior;
+ function mayWalk(){
+   return inWorld() && typeof running!=='undefined' && running &&
+    !dialogOpen && !shopOpen && !missionOpen && !battle &&
+    (typeof creatureMode==='undefined' || creatureMode!=='battle');
+ }
+ function chooseTarget(){
+   const exits=path[josh.node].to;
+   const fresh=exits.filter(k=>k!==josh.lastNode);
+   const options=fresh.length && Math.random()<.8 ? fresh:exits;
+   josh.target=options[(Math.random()*options.length)|0];
+ }
+ function tick(dt){
+   if(!mayWalk()){josh.moving=false;return;}
+   dt=Math.max(0,Math.min(.055,Number(dt)||0));
+   if(!dt)return;
+   // World Studio patrols move Josh through SAActorRoutes, so animate from
+   // that real displacement too (without modifying any saved waypoints).
+   const beforeRouteX=josh.x, beforeRouteY=josh.y;
+   if(window.SAActorRoutes?.drive('josh',josh,dt)){
+     const traveled=Math.hypot(josh.x-beforeRouteX,josh.y-beforeRouteY);
+     if(josh.moving && traveled>0 && traveled<18)josh.walkDistance+=traveled;
+     else if(!josh.moving)josh.walkDistance=0;
+     return;
+   }
+   if(josh.rest>0){josh.rest=Math.max(0,josh.rest-dt);josh.moving=false;return;}
+   if(!josh.target)chooseTarget();
+   const end=path[josh.target];
+   if(!end){josh.target=null;josh.moving=false;return;}
+   const dx=end.x-josh.x, dy=end.y-josh.y;
+   const dist=Math.hypot(dx,dy);
+   if(dist<.75){
+     josh.x=end.x;josh.y=end.y;
+     josh.lastNode=josh.node;josh.node=josh.target;
+     josh.target=null;josh.moving=false;
+     josh.rest=.35+Math.random()*1.1;
+     return;
+   }
+   const amount=Math.min(dist,dt*josh.speed);
+   if(Math.abs(dx)>.5){
+     josh.x+=Math.sign(dx)*amount;josh.y=end.y;
+     const nextDir=dx>0?'right':'left';
+     if(josh.dir!==nextDir)josh.walkDistance=0;
+     josh.dir=nextDir;
+   }else{
+     josh.y+=Math.sign(dy)*amount;josh.x=end.x;
+     const nextDir=dy>0?'down':'up';
+     if(josh.dir!==nextDir)josh.walkDistance=0;
+     josh.dir=nextDir;
+   }
+   josh.moving=true;
+   // Tie animation progress to actual travel distance to avoid cycle-speed drift.
+   josh.walkDistance+=amount;
+ }
+ const previousMove=move;
+ move=function(dt){previousMove(dt);tick(dt);};
+ function drawJosh(){
+   if(!inWorld())return;
+   const x=Math.round(josh.x), y=Math.round(josh.y);
+   const row=directions[josh.dir]??0;
+   // The player's walking rhythm is roughly 8 steps/s. This yields 8 fps
+   // at Josh's 73 px/s walking speed and stays consistent across frame rates.
+   const frame=josh.moving?Math.floor(josh.walkDistance/9.1)%4:0;
+   const h=88,w=Math.round(115*h/140);
+   ctx.save();ctx.imageSmoothingEnabled=false;
+   ctx.fillStyle='rgba(21,33,23,.34)';
+   ctx.beginPath();ctx.ellipse(x,y+3,23,6,0,0,Math.PI*2);ctx.fill();
+   if(sheet.complete&&sheet.naturalWidth===CW*4&&sheet.naturalHeight===CH*4){
+     ctx.drawImage(sheet,frame*CW,row*CH,CW,CH,Math.round(x-w/2),y-h+2,w,h);
+   }
+   ctx.font='900 17px system-ui';ctx.textAlign='center';ctx.lineWidth=4;
+   ctx.strokeStyle='#263924';ctx.fillStyle='#fff6c9';
+   ctx.strokeText('JOSH',x,y-98);ctx.fillText('JOSH',x,y-98);
+   if(Math.hypot(player.x-josh.x,player.y-josh.y)<126){
+     ctx.font='900 14px system-ui';ctx.lineWidth=3;
+     ctx.strokeText('A: TALK',x,y-117);ctx.fillText('A: TALK',x,y-117);
+   }
+   ctx.restore();
+ }
+ window.drawJosh=drawJosh;
+ const previousInteract=interact;
+ interact=function(){
+   if(inWorld()&&!dialogOpen&&!shopOpen&&!missionOpen&&!battle&&
+        Math.hypot(player.x-josh.x,player.y-josh.y)<125){
+     josh.moving=false;josh.rest=1.6;
+     keys.clear();show('JOSH','Hey! Enjoying Leaf Town?');
+     return;
+   }
+   return previousInteract();
+ };
+})();
+</script>
+
+
+<script>
+// V204 — Naturally drifting clouds for Leaf Town, with a real under-character
+// ground-shadow pass. Completely self-contained: no images or external assets.
+(function(){
+ 'use strict';
+ const CLOUD_COUNT=14;
+ const SKY_W=360, SKY_H=204;
+ const clouds=[];
+ const alive=()=>typeof currentDistrict!=='undefined' && currentDistrict==='leaf' && !interior;
+ const visible=()=>alive() && typeof running!=='undefined' && running &&
+   !(typeof battle!=='undefined' && battle) &&
+   !(typeof creatureMode!=='undefined' && creatureMode==='battle') &&
+   !(typeof normSceneMode!=='undefined' && normSceneMode);
+ const rand=(min,max)=>min+Math.random()*(max-min);
+ const makeCanvas=()=>{const c=document.createElement('canvas');c.width=SKY_W;c.height=SKY_H;return c;};
+
+ function paintCloudSprite(seed){
+  const c=makeCanvas(), g=c.getContext('2d');
+  // Every cloud receives its own collection of asymmetrical, softly lit puffs.
+  let v=seed|0;
+  function noise(){v=(Math.imul(1664525,v)+1013904223)|0;return (v>>>0)/4294967296;}
+  const lobes=[];
+  const count=8+Math.floor(noise()*5);
+  for(let i=0;i<count;i++){
+   const t=i/(count-1), x=57+t*247+(noise()-.5)*25;
+   const y=94+Math.sin(t*Math.PI)*-23+(noise()-.5)*29;
+   const rw=40+noise()*37, rh=33+noise()*25;
+   lobes.push({x,y,rw,rh});
+  }
+  // A soft blue-grey underside for volume, shaped around the cloud outline.
+  g.save();g.globalAlpha=.64;
+  lobes.forEach(p=>{
+   const grad=g.createRadialGradient(p.x-4,p.y+14,5,p.x,p.y+11,p.rw*1.08);
+   grad.addColorStop(0,'rgba(118,158,179,.66)');
+   grad.addColorStop(.57,'rgba(139,172,192,.40)');
+   grad.addColorStop(1,'rgba(154,188,209,0)');
+   g.fillStyle=grad;g.save();g.translate(p.x,p.y+10);g.scale(1,p.rh/p.rw);
+   g.beginPath();g.arc(0,0,p.rw*1.13,0,Math.PI*2);g.fill();g.restore();
+  });g.restore();
+  // Bright ivory crowns and gentle feathery edges.
+  lobes.forEach((p,i)=>{
+   const grad=g.createRadialGradient(p.x-9,p.y-10,3,p.x,p.y,p.rw*1.2);
+   grad.addColorStop(0,'rgba(255,255,254,.93)');
+   grad.addColorStop(.35,'rgba(252,254,255,.88)');
+   grad.addColorStop(.64,'rgba(244,251,255,.66)');
+   grad.addColorStop(.88,'rgba(236,249,255,.20)');
+   grad.addColorStop(1,'rgba(226,245,255,0)');
+   g.fillStyle=grad;g.save();g.translate(p.x,p.y);g.scale(1,p.rh/p.rw);
+   g.beginPath();g.arc(0,0,p.rw*1.2,0,Math.PI*2);g.fill();g.restore();
+  });
+  return c;
+ }
+ function paintShadowSprite(sprite){
+  const c=makeCanvas(),g=c.getContext('2d');
+  g.filter='blur(13px)';g.drawImage(sprite,0,0);g.filter='none';
+  g.globalCompositeOperation='source-in';
+  g.fillStyle='rgba(22,48,45,.31)';g.fillRect(0,0,SKY_W,SKY_H);
+  return c;
+ }
+ function randomCloud(edge){
+  const size=rand(155,310);
+  const dir=Math.random()<.80?1:-1;
+  const speed=rand(18,51);
+  const variation=Math.round(rand(0,2147483647));
+  const art=paintCloudSprite(variation);
+  return {
+   x:edge ? (dir===1 ? -size*1.5 : world.w+size*1.5) : rand(-120,world.w+120),
+   y:rand(-70,world.h+70), w:size, h:size*(SKY_H/SKY_W),
+   vx:dir*speed, vy:rand(-3.5,3.5),
+   opacity:rand(.72,.91),
+   shadowAlpha:rand(.63,.98),
+   sprite:art, shadow:paintShadowSprite(art)
+  };
+ }
+ for(let i=0;i<CLOUD_COUNT;i++) clouds.push(randomCloud(false));
+ function update(dt){
+  if(!alive())return;
+  const step=Math.max(0,Math.min(.07,Number(dt)||0));
+  if(!step)return;
+  for(let i=0;i<clouds.length;i++){
+   const c=clouds[i];c.x+=c.vx*step;c.y+=c.vy*step;
+   if((c.vx>0&&c.x>world.w+c.w*1.5) ||
+      (c.vx<0&&c.x<-c.w*1.5) || c.y<-c.h*2 || c.y>world.h+c.h*2){
+    clouds[i]=randomCloud(true);
+   }
+  }
+ }
+ // Called at the precisely chosen ground-paint stage, BEFORE any character.
+ window.saDrawTownCloudShadows=function(g){
+  if(!visible())return;
+  g.save();g.globalCompositeOperation='multiply';
+  for(const c of clouds){
+   const sx=c.x+41,sy=c.y+46;
+   if(sx+c.w<0||sx-c.w>world.w||sy+c.h<0||sy-c.h>world.h)continue;
+   g.globalAlpha=c.shadowAlpha;
+   g.drawImage(c.shadow,sx-c.w*.52,sy-c.h*.42,c.w*1.1,c.h*.75);
+  }
+  g.restore();
+ };
+ // Clouds are painted AFTER the complete world, NPCs and player. The HUD and
+ // dialogue live in DOM elements, which deliberately remain above the clouds.
+ function drawClouds(){
+  if(!visible())return;
+  const scale=Math.max(.53,Math.min(1.08,W/950));
+  const cameraX=Math.max(0,Math.min(world.w-W/scale,player.x-W/(2*scale)));
+  const cameraY=Math.max(0,Math.min(world.h-H/scale,player.y-H/(2*scale)));
+  ctx.save();
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.beginPath();ctx.rect(0,0,W,H);ctx.clip();
+  ctx.scale(scale,scale);ctx.translate(-cameraX,-cameraY);
+  for(const c of clouds){
+   if(c.x+c.w<cameraX||c.x-c.w>cameraX+W/scale||
+      c.y+c.h<cameraY||c.y-c.h>cameraY+H/scale)continue;
+   ctx.globalAlpha=c.opacity;
+   ctx.drawImage(c.sprite,c.x-c.w*.50,c.y-c.h*.57,c.w,c.h);
+  }
+  ctx.restore();
+ }
+ // Wrap the actual frame functions instead of replacing existing game systems.
+ const originalMove=move;
+ move=function(dt){originalMove(dt);update(dt);};
+ const originalRender=render;
+ render=function(){originalRender();drawClouds();};
+})();
+</script>
+
+
+
+<script id="v218-reth-sogan-living-room">
+// V218 — Reth Sogan's approved minimalist living room (house-only patch).
+// Do not modify other interiors, NPC dialogue, movement rules or saved map data.
+(()=>{
+  'use strict';
+  const scene=new Image();
+  scene.src='assets/reth_sogan_living_room.png';
+  // Native square art is scaled uniformly: no stretching or redrawn furniture.
+  const room={x:175,y:36,size:560};
+  const heroRadius=12;
+  const blocks=[
+    {name:'sofa',x1:262,y1:141,x2:445,y2:228},
+    {name:'coffee table',x1:293,y1:235,x2:416,y2:311},
+    {name:'bookshelf',x1:591,y1:92,x2:688,y2:218},
+    {name:'left plant',x1:216,y1:116,x2:251,y2:193},
+    {name:'side table',x1:219,y1:430,x2:259,y2:525}
+  ];
+  function inRect(x,y,r){
+    return x>=r.x1-heroRadius&&x<=r.x2+heroRadius&&
+           y>=r.y1-heroRadius&&y<=r.y2+heroRadius;
+  }
+  function blocked(x,y){
+    if(!Number.isFinite(x)||!Number.isFinite(y))return true;
+    // A narrow bottom doorway is walkable and lines up with the original EXIT.
+    if(y>521){
+      if(x<413||x>497||y>580)return true;
+    }else if(x<217||x>691||y<114)return true;
+    for(const obstacle of blocks)if(inRect(x,y,obstacle))return true;
+    return false;
+  }
+  // The existing movement and animation systems continue running unchanged.
+  // Reject only a move that tries to step onto a wall or furniture footprint.
+  const moveBeforeLivingRoom=move;
+  move=function(dt){
+    if(interior!=='lighterhouse')return moveBeforeLivingRoom(dt);
+    const prevX=player.x,prevY=player.y;
+    moveBeforeLivingRoom(dt);
+    if(interior==='lighterhouse'&&blocked(player.x,player.y)){
+      // Keep valid prior positions, and allow sliding if only one axis is obstructed.
+      if(!blocked(player.x,prevY))player.y=prevY;
+      else if(!blocked(prevX,player.y))player.x=prevX;
+      else {player.x=prevX;player.y=prevY;}
+    }
+  };
+  function drawReth(){
+    const npc=window.rethRoam||{x:465,y:305,direction:'down',moving:false,stepClock:0};
+    const sets=window.rethSoganFrames;
+    const frames=sets&&(sets[npc.direction]||sets.down);
+    const num=npc.moving?(Math.floor((npc.stepClock||0)*7)%4):0;
+    const sprite=frames&&(frames[num]||frames[0]);
+    const footY=npc.y+18;
+    ctx.save();
+    ctx.imageSmoothingEnabled=false;
+    ctx.fillStyle='rgba(21,18,17,.25)';
+    ctx.beginPath();ctx.ellipse(Math.round(npc.x),Math.round(footY+2),12,5,0,0,Math.PI*2);ctx.fill();
+    if(sprite&&sprite.complete&&sprite.naturalWidth&&sprite.naturalHeight){
+      const h=88,w=Math.round(sprite.naturalWidth*h/sprite.naturalHeight);
+      ctx.drawImage(sprite,Math.round(npc.x-w/2),Math.round(footY-h),w,h);
+    }
+    ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    ctx.font='bold 15px system-ui';ctx.lineWidth=4;
+    ctx.strokeStyle='#202d25';ctx.fillStyle='#fff2c9';
+    ctx.strokeText('RETH SOGAN',npc.x,npc.y-92);
+    ctx.fillText('RETH SOGAN',npc.x,npc.y-92);
+    ctx.font='bold 27px system-ui';
+    const tag=lighterDelivered?'✓':lighterFound?'?':'!';
+    ctx.strokeText(tag,npc.x,npc.y-119);ctx.fillText(tag,npc.x,npc.y-119);
+    if(!dialogOpen&&!shopOpen&&!missionOpen&&lighterNearOwner()){
+      ctx.font='bold 13px system-ui';
+      ctx.strokeText('A: TALK',npc.x,npc.y-141);
+      ctx.fillText('A: TALK',npc.x,npc.y-141);
+    }
+    ctx.restore();
+  }
+  // Installed last: avoids older room backgrounds redrawing over the new picture.
+  const drawBeforeLivingRoom=drawInterior;
+  drawInterior=function(){
+    if(interior!=='lighterhouse')return drawBeforeLivingRoom();
+    ctx.save();
+    ctx.fillStyle='#11100f';ctx.fillRect(0,0,900,680);
+    if(scene.complete&&scene.naturalWidth){
+      ctx.imageSmoothingEnabled=false;
+      ctx.drawImage(scene,room.x,room.y,room.size,room.size);
+    }else{
+      ctx.fillStyle='#9e6a45';ctx.fillRect(218,110,472,438);
+    }
+    // Grounded depth ordering for Reth and the player.
+    const npc=window.rethRoam;
+    if(npc&&player.y<npc.y){drawHero(player.x,player.y,player.dir,player.step);drawReth();}
+    else{drawReth();drawHero(player.x,player.y,player.dir,player.step);}
+    ctx.fillStyle='#fbe3a7';ctx.strokeStyle='#271910';ctx.lineWidth=3;
+    ctx.font='bold 16px system-ui';ctx.textAlign='center';
+    ctx.strokeText('EXIT',450,582);ctx.fillText('EXIT',450,582);
+    ctx.restore();
+  };
+  // House-specific geometry; no changes to World Studio boundaries in other regions.
+  window.rethLivingRoomCollision=Object.freeze({bounds:{x1:217,y1:114,x2:691,y2:521},exit:{x1:413,y1:521,x2:497,y2:580},furniture:blocks.map(b=>({...b}))});
+})();
+</script>
+
+<script id="v219-nitty-workshop-interior">
+// V219 — Nitty's approved workshop picture; preserve dialogue, pipes quest and lighter quest.
+(()=>{
+  'use strict';
+  const scene = new Image();
+  scene.src = 'assets/nitty_minimal_workshop.png';
+  // Square art uses uniform scaling, just as Reth Sogan's V218 living room does.
+  const room = {x:135,y:18,size:630};
+  const radius = 11;
+  const obstacles = [
+    {name:'tool shelf',x1:199,y1:198,x2:355,y2:254},
+    {name:'workbench',x1:196,y1:409,x2:360,y2:552},
+    {name:'leaking pipes and barrels',x1:575,y1:191,x2:726,y2:318}
+  ];
+  function inObstacle(x,y,obstacle){
+    return x>=obstacle.x1-radius&&x<=obstacle.x2+radius&&
+           y>=obstacle.y1-radius&&y<=obstacle.y2+radius;
+  }
+  function blocked(x,y){
+    if(!Number.isFinite(x)||!Number.isFinite(y))return true;
+    // Bottom-center exit remains open; no invisible barrier at the doorway.
+    if(x<202||x>728||y<201||y>580)return true;
+    if(y>549&&(x<411||x>534))return true;
+    return obstacles.some(b=>inObstacle(x,y,b));
+  }
+  // Reject steps into walls or furniture; original movement logic stays in control.
+  const beforeWorkshopMove = move;
+  move=function(dt){
+    if(interior!=='cottage')return beforeWorkshopMove(dt);
+    const x=player.x, y=player.y;
+    beforeWorkshopMove(dt);
+    if(interior==='cottage'&&blocked(player.x,player.y)){
+      if(!blocked(player.x,y))player.y=y;
+      else if(!blocked(x,player.y))player.x=x;
+      else {player.x=x;player.y=y;}
+    }
+  };
+  function drawLiveNitty(){
+    const npc=window.nittyRoam;
+    if(!npc)return;
+    ctx.save();
+    ctx.fillStyle='rgba(25,22,17,.25)';
+    ctx.beginPath();ctx.ellipse(npc.x,npc.y+10,13,5,0,0,Math.PI*2);ctx.fill();
+    if(typeof drawNitty==='function')drawNitty(npc.x,npc.y);
+    ctx.font='bold 17px system-ui';ctx.textAlign='center';ctx.textBaseline='alphabetic';
+    ctx.lineWidth=3;ctx.strokeStyle='#142016';ctx.fillStyle='#ffefbe';
+    ctx.strokeText('NITTY',npc.x,npc.y-88);ctx.fillText('NITTY',npc.x,npc.y-88);
+    if(!cottageManSpoken||cottagePipesFixed){
+      ctx.font='bold 27px system-ui';
+      const mark=cottagePipesFixed?'✓':'!';
+      ctx.strokeText(mark,npc.x,npc.y-110);ctx.fillText(mark,npc.x,npc.y-110);
+    }
+    ctx.restore();
+  }
+  const beforeWorkshopDraw = drawInterior;
+  drawInterior=function(){
+    if(interior!=='cottage')return beforeWorkshopDraw();
+    ctx.save();
+    ctx.fillStyle='#111016';ctx.fillRect(0,0,900,680);
+    if(scene.complete&&scene.naturalWidth){
+      ctx.imageSmoothingEnabled=false;
+      ctx.drawImage(scene,room.x,room.y,room.size,room.size);
+    }else{
+      // Fallback only if image cannot load; the actual PNG is shipped in the ZIP.
+      ctx.fillStyle='#715039';ctx.fillRect(160,84,580,516);
+    }
+    // Preserve the existing optional missing-lighter collectible in the cottage.
+    if(typeof lighterDrawPickup==='function'&&lighterQuestActive()&&!lighterFound&&lighterLocation==='cottage'){
+      lighterDrawPickup();
+    }
+    const npc=window.nittyRoam;
+    if(npc&&player.y<npc.y){drawHero(player.x,player.y,player.dir,player.step);drawLiveNitty();}
+    else{drawLiveNitty();drawHero(player.x,player.y,player.dir,player.step);}
+    ctx.font='bold 16px system-ui';ctx.textAlign='center';ctx.lineWidth=3;
+    ctx.strokeStyle='#181313';ctx.fillStyle='#ffe6a8';
+    ctx.strokeText('EXIT',450,590);ctx.fillText('EXIT',450,590);
+    ctx.restore();
+  };
+  window.nittyWorkshopCollision=Object.freeze({
+    room:Object.freeze({...room}),
+    exit:Object.freeze({x1:411,y1:549,x2:534,y2:580}),
+    obstacles:obstacles.map(o=>Object.freeze({...o}))
+  });
+})();
+</script>
+
+<script id="v220-old-lady-and-woodland-hobo-interiors">
+// V220: Room artwork and walls are isolated to HOME and CABIN. No save-data or
+// path, encounter, quest, or battle handler is replaced.
+(()=>{
+ 'use strict';
+ const pics={oldladyhome:new Image(),cabin:new Image()};
+ pics.oldladyhome.src='assets/old_lady_living_room_v220.png';
+ pics.cabin.src='assets/hobo_doorless_cabin_v220.png';
+ // Both supplied 1536x1024 pictures: preserve natural 3:2 proportions.
+ const imageRect={x:0,y:40,w:900,h:600};
+ const rooms={
+  oldladyhome:{
+   floor:{x1:155,y1:160,x2:752,y2:559},
+   exit:{x1:380,y1:545,x2:522,y2:589},
+   blocks:[
+    {name:'side cabinet',x1:157,y1:167,x2:257,y2:256},
+    {name:'sofa',x1:149,y1:260,x2:256,y2:450},
+    {name:'coffee table',x1:283,y1:316,x2:363,y2:437},
+    {name:'bookshelf',x1:454,y1:150,x2:566,y2:244},
+    {name:'staircase',x1:612,y1:82,x2:771,y2:263},
+    {name:'side table',x1:680,y1:271,x2:750,y2:374},
+    {name:'plant cabinet',x1:681,y1:380,x2:750,y2:527}
+   ]
+  },
+  cabin:{
+   floor:{x1:155,y1:194,x2:749,y2:559},
+   exit:{x1:372,y1:550,x2:530,y2:590},
+   blocks:[
+    {name:'junk shelf',x1:163,y1:115,x2:305,y2:225},
+    {name:'old crate',x1:152,y1:245,x2:211,y2:328},
+    {name:'worktable',x1:609,y1:151,x2:700,y2:221},
+    {name:'stove',x1:727,y1:106,x2:803,y2:222},
+    {name:'barrel and boxes',x1:710,y1:314,x2:790,y2:471},
+    {name:'sleeping bag',x1:138,y1:436,x2:241,y2:541},
+    {name:'camp clutter',x1:236,y1:488,x2:359,y2:549}
+   ]
+  }
+ };
+ const radius=11;
+ const inside=(x,y,b,p=radius)=>x>=b.x1-p&&x<=b.x2+p&&y>=b.y1-p&&y<=b.y2+p;
+ function blocked(room,x,y){
+  if(!Number.isFinite(x)||!Number.isFinite(y))return true;
+  const r=rooms[room];if(!r)return false;
+  // The walkable floor and the doorway overlap; there is no collision seam.
+  const onFloor=x>=r.floor.x1+radius&&x<=r.floor.x2-radius&&
+   y>=r.floor.y1+radius&&y<=r.floor.y2;
+  const atGap=x>=r.exit.x1+radius&&x<=r.exit.x2-radius&&
+   y>=r.exit.y1&&y<=r.exit.y2;
+  if(!onFloor&&!atGap)return true;
+  return r.blocks.some(b=>inside(x,y,b));
+ }
+ const priorMove=move;
+ move=function(dt){
+  const room=interior;
+  if(!rooms[room])return priorMove(dt);
+  const x=player.x,y=player.y;
+  priorMove(dt);
+  if(interior!==room)return;
+  if(blocked(room,player.x,player.y)){
+   if(!blocked(room,player.x,y))player.y=y;
+   else if(!blocked(room,x,player.y))player.x=x;
+   else{player.x=x;player.y=y;}
+  }
+ };
+ function renderHobo(){
+  // Same hobo walking sprites/route/timing as V219, redrawn over the new room.
+  const elapsed=performance.now()/1000,phase=elapsed%13;
+  let cx=452, footY=375,dir=0, walking=true;
+  if(phase<2.5){cx=452+phase*30;dir=3;}
+  else if(phase<3.2){cx=527;dir=0;walking=false;}
+  else if(phase<6.7){cx=527-(phase-3.2)*43;dir=2;}
+  else if(phase<7.4){cx=376.5;dir=0;walking=false;}
+  else if(phase<9.9){cx=376.5+(phase-7.4)*30.2;dir=3;}
+  else if(phase<10.6){cx=452;dir=0;walking=false;}
+  else if(phase<11.7){footY=375-(phase-10.6)*22;dir=1;}
+  else{footY=350.8+(phase-11.7)*18.62;dir=0;}
+  const routeSpot=window.SAActorRoutes?.point('woodland-hobo',cx,footY);
+  if(routeSpot?.custom){cx=routeSpot.x;footY=routeSpot.y;dir=['down','up','left','right'].indexOf(routeSpot.direction);walking=routeSpot.moving;}
+  const lookup=[0,2,4,6],frame=walking?lookup[Math.floor(elapsed*8)%4]:0;
+  const img=woodlandHoboCabinFrames[dir*8+frame];
+  ctx.save();
+  ctx.fillStyle='rgba(35,29,25,.3)';ctx.beginPath();ctx.ellipse(cx,footY+2,18,5,0,0,Math.PI*2);ctx.fill();
+  if(img&&img.complete&&img.naturalWidth>0){
+   const h=88,w=Math.round(h*img.naturalWidth/img.naturalHeight);
+   ctx.imageSmoothingEnabled=false;
+   ctx.drawImage(img,Math.round(cx-w/2),Math.round(footY-h+(walking?Math.sin(elapsed*17)*.65:0)),w,h);
+  }
+  ctx.textAlign='center';ctx.textBaseline='alphabetic';ctx.font='bold 17px system-ui';
+  ctx.lineWidth=4;ctx.strokeStyle='#2c1d13';ctx.fillStyle='#fff0b7';
+  ctx.strokeText('WOODLAND HOBO',cx,footY-100);ctx.fillText('WOODLAND HOBO',cx,footY-100);
+  const mark=cabinMissionFinished?'✓':'!';
+  ctx.strokeText(mark,cx,footY-121);ctx.fillText(mark,cx,footY-121);
+  ctx.restore();
+ }
+ const priorDraw=drawInterior;
+ drawInterior=function(){
+  if(!rooms[interior])return priorDraw();
+  const which=interior,img=pics[which];
+  ctx.save();
+  ctx.fillStyle='#090809';ctx.fillRect(0,0,900,680);
+  if(img.complete&&img.naturalWidth){ctx.imageSmoothingEnabled=false;ctx.drawImage(img,imageRect.x,imageRect.y,imageRect.w,imageRect.h);}
+  else{ctx.fillStyle='#65452f';ctx.fillRect(160,155,600,420);}
+  if(which==='oldladyhome'){
+   if(typeof window.__v220DrawOldLady==='function')window.__v220DrawOldLady();
+  }else renderHobo();
+  drawHero(player.x,player.y,player.dir,player.step);
+  // Visible prompt, but no automatic trigger or extra drawn doorway.
+  if(player.y>=510&&player.x>335&&player.x<570){
+   ctx.font='bold 15px system-ui';ctx.textAlign='center';ctx.lineWidth=3;
+   ctx.strokeStyle='#281c15';ctx.fillStyle='#fff2bc';
+   ctx.strokeText('A: EXIT',450,618);ctx.fillText('A: EXIT',450,618);
+  }
+  ctx.restore();
+ };
+ // Enforce one explicit A press at the physical gap, without touching all
+ // the other houses' A-button handlers or adding an invisible exit sensor.
+ const priorInteract=interact;
+ interact=function(){
+  if(interior==='cabin'&&!dialogOpen&&!cabinRiddleVisible&&!battle){
+   const e=rooms.cabin.exit;
+   if(inside(player.x,player.y,e,10)){leaveRoom();return;}
+   // Avoid matching an old broad cabin exit zone at the wrong part of the floor.
+   if(player.y>540&&player.x>325&&player.x<575&&!inside(player.x,player.y,e,10)){
+    show('🌲 WOODLAND CABIN','Stand at the gap in the bottom wall and press A to leave.');return;
+   }
+  }
+  return priorInteract();
+ };
+ window.v220InteriorCollision={oldladyhome:rooms.oldladyhome,cabin:rooms.cabin};
+})();
+</script>
+
+
+<script id="v221-norm-wooden-gym">
+// V221: approved Norm's Gym art and image-matched collision, replacing the former gym drawing only.
+// Existing Norm roaming animation, badge battle, A controls, music, saves, and all other maps stay in place.
+(function(){
+  'use strict';
+  const art=new Image(); art.src='assets/norm_wooden_gym_v221.png';
+  // The source image is 1312×1199. Keep its natural aspect ratio inside the 900×680 interior.
+  const imageRect=Object.freeze({x:78,y:0,w:744,h:680});
+  // Bounds mapped from source image furniture positions to the game's interior coordinates.
+  const furniture=[
+    {name:'left weight machine',x1:141,y1:152,x2:271,y2:274},
+    {name:'left dumbbell rack',x1:126,y1:280,x2:184,y2:409},
+    {name:'right weight machine',x1:627,y1:152,x2:766,y2:274},
+    {name:'right dumbbell rack',x1:716,y1:280,x2:780,y2:411},
+    {name:'leader stage and stairs',x1:351,y1:139,x2:548,y2:239},
+    {name:'left corner table',x1:122,y1:440,x2:215,y2:508},
+    {name:'right corner bench',x1:647,y1:440,x2:766,y2:508}
+  ];
+  const pad=9;
+  const touching=(x,y,r)=>x>=r.x1-pad&&x<=r.x2+pad&&y>=r.y1-pad&&y<=r.y2+pad;
+  function blocked(x,y){
+    if(!Number.isFinite(x)||!Number.isFinite(y))return true;
+    // The building boundary, with a walkable approach to the visible bottom centre exit.
+    if(x<127||x>774||y<143||y>582)return true;
+    if(y>525&&(x<376||x>524))return true;
+    if(y<248&&(x<338||x>560)&&y<172)return true;
+    return furniture.some(item=>touching(x,y,item));
+  }
+  const previousMove=move;
+  move=function(dt){
+    if(interior!=='gym')return previousMove(dt);
+    const px=player.x,py=player.y;
+    previousMove(dt);
+    if(interior!=='gym')return;
+    if(blocked(player.x,player.y)){
+      if(!blocked(player.x,py))player.y=py;
+      else if(!blocked(px,player.y))player.x=px;
+      else {player.x=px;player.y=py;}
+    }
+  };
+  const previousDraw=drawInterior;
+  drawInterior=function(){
+    if(interior!=='gym')return previousDraw();
+    ctx.save();
+    ctx.fillStyle='#0c0b09';ctx.fillRect(0,0,900,680);
+    if(art.complete&&art.naturalWidth){
+      ctx.imageSmoothingEnabled=false;
+      ctx.drawImage(art,imageRect.x,imageRect.y,imageRect.w,imageRect.h);
+    }else{
+      ctx.fillStyle='#734a2d';ctx.fillRect(127,140,647,443);
+    }
+    // Norm remains animated; his current path and all encounter code are unchanged.
+    if(typeof drawAnimatedNorm==='function')drawAnimatedNorm();
+    drawHero(player.x,player.y,player.dir,player.step);
+    if(player.y>520&&player.x>380&&player.x<520){
+      ctx.textAlign='center';ctx.font='bold 15px system-ui';ctx.lineWidth=3;
+      ctx.strokeStyle='#1b2b19';ctx.fillStyle='#ffe9ae';
+      ctx.strokeText('A: EXIT',450,616);ctx.fillText('A: EXIT',450,616);
+    }
+    ctx.restore();
+  };
+  window.normWoodenGymCollision=Object.freeze({imageRect,blocks:furniture.map(b=>Object.freeze({...b})),exit:Object.freeze({x1:376,y1:525,x2:524,y2:582})});
+})();
+</script>
+
+<!-- V205: optional World Studio. Existing V204 game scripts and movement stay unchanged. -->
+<link rel="stylesheet" href="css/style-05.css">
+<link rel="stylesheet" href="css/style-06.css">
+<script src="js/game-09.js"></script>
+<script src="js/game-10.js"></script>
+<script>
+/* V224 — Viewport-wide darkness at device-pixel-correct scale with grounded two-stage lamp halos.
+ * Visual-only: no changes to movement, interactions, interiors, quests, or saved progress.
+ */
+(()=>{
+ 'use strict';
+ const DAY_MS=12*60*1000, KEY='strain_adventures_day_cycle_v222';
+ const clamp=v=>Math.max(0,Math.min(1,v));
+ const smooth=v=>{v=clamp(v);return v*v*(3-2*v);};
+ // Glow coordinates match the bulbs in the nine approved transparent lamp images.
+ // Radii are WORLD pixels; the lights remain firmly anchored to placed objects.
+ const streetlights=Object.fromEntries([
+ ['lamp_victorian',.50,.31,71],['lamp_iron_hanging',.75,.38,72],
+ ['lamp_wood_hanging',.74,.43,72],['lamp_stone_low',.50,.34,54],
+ ['lamp_ivy_hanging',.77,.41,72],['lamp_classic_black',.50,.31,70],
+ ['lamp_wood_ivy',.76,.39,72],['lamp_green_banner',.34,.26,72],
+ ['lamp_stone_leaf',.50,.33,54]
+ ].map(([id,x,y,r])=>[id,{x,y,r}]));
+ let phase=0;
+ try{
+   const old=JSON.parse(localStorage.getItem(KEY));
+   if(old&&Number.isFinite(old.phase))phase=((old.phase%DAY_MS)+DAY_MS)%DAY_MS;
+ }catch(_){}
+ let lastTime=performance.now(),lastWrite=lastTime,forced='auto',cachedLights=[],lastScan=-Infinity;
+ let shade=document.createElement('canvas'),mask=shade.getContext('2d');
+ const save=()=>{try{localStorage.setItem(KEY,JSON.stringify({phase:Math.round(phase),at:Date.now(),version:2}));}catch(_){}};
+ const clockPhase=()=>phase/DAY_MS;
+ // Day -> an uninterrupted 3-minute deepening of twilight -> 70% black at night,
+ // followed by a continuous 3-minute dawn. No sudden blue overlay / abrupt threshold.
+ function strength(){
+   if(forced==='day')return 0;
+   if(forced==='night')return 1;
+   if(forced==='sunset')return .55;
+   if(forced==='dawn')return .45;
+   const p=clockPhase();
+   if(p<=.23)return 0;
+   if(p<.48)return smooth((p-.23)/.25);
+   if(p<=.64)return 1;
+   if(p<.89)return 1-smooth((p-.64)/.25);
+   return 0;
+ }
+ function setPreview(mode){forced=['auto','day','night','sunset','dawn'].includes(mode)?mode:'auto';}
+ function timeLabel(){
+   const t=(12+clockPhase()*24)%24,h=Math.floor(t),m=Math.floor((t-h)*60);
+   return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+ }
+ function getLampList(){
+   const now=performance.now();
+   if(now-lastScan<160)return cachedLights;
+   lastScan=now;
+   const maps=window.SAWorldEditor?.placements;
+   const region=typeof currentDistrict!=='undefined'&&currentDistrict==='grove'?'grove':'leaf';
+   cachedLights=(maps?.[region]||[]).filter(p=>!!streetlights[p.assetId]);
+   return cachedLights;
+ }
+ function cutCircle(x,y,r,stops){
+   const grad=mask.createRadialGradient(x,y,.1,x,y,r);
+   for(const [pos,value] of stops)grad.addColorStop(pos,`rgba(0,0,0,${value})`);
+   mask.fillStyle=grad;
+   mask.fillRect(x-r,y-r,2*r,2*r);
+ }
+ function drawLighting(){
+   if(typeof interior!=='undefined'&&interior)return;
+   if(typeof battle!=='undefined'&&battle)return;
+   if(typeof running!=='undefined'&&!running)return;
+   const darkness=strength();
+   if(darkness<=.0001)return;
+   if(!mask)return;
+   if(shade.width!==W||shade.height!==H){shade.width=W;shade.height=H;}
+   const scale=Math.max(.53,Math.min(1.08,W/950));
+   const cameraX=Math.max(0,Math.min(world.w-W/scale,player.x-W/(2*scale)));
+   const cameraY=Math.max(0,Math.min(world.h-H/scale,player.y-H/(2*scale)));
+   mask.clearRect(0,0,W,H);
+   mask.globalCompositeOperation='source-over';
+   // One opaque, uniform, viewport-wide darkness layer: it is NOT a player-centred
+   // radial vignette. Full night is dimmed uniformly to 70% black outside permanent world lights.
+   mask.fillStyle=`rgba(0,0,0,${(darkness*.70).toFixed(5)})`;
+   mask.fillRect(0,0,W,H);
+   const visible=[];
+   for(const o of getLampList()){
+     const info=streetlights[o.assetId];
+     const theta=o.rotation||0,cos=Math.cos(theta),sin=Math.sin(theta);
+     const lampX=(info.x-.5)*o.w*(o.flipX?-1:1);
+     const lampY=(info.y-.5)*o.h*(o.flipY?-1:1);
+     const bulbX=o.x+lampX*cos-lampY*sin;
+     const bulbY=o.y+lampX*sin+lampY*cos;
+     // Pool is positioned at the ground beneath the lamp rather than as a huge
+     // spherical halo that lights roofs / entire nearby streets.
+     const floorOffset=(.93-info.y)*o.h*(o.flipY?-1:1);
+     const groundX=bulbX-floorOffset*sin,groundY=bulbY+floorOffset*cos;
+     const factor=Math.max(.76,Math.min(1.25,o.h/125));
+     const r=Math.max(22,info.r*scale*factor*1.13); // slightly wider bright pool at the base
+     const x=(groundX-cameraX)*scale,y=(groundY-cameraY)*scale;
+     const bx=(bulbX-cameraX)*scale,by=(bulbY-cameraY)*scale;
+     const outer=r*1.70;
+     if(x+outer<0||y+outer<0||x-outer>W||y-outer>H)continue;
+     visible.push({x,y,bx,by,r});
+   }
+   mask.globalCompositeOperation='destination-out';
+   for(const l of visible){
+     // Two-stage ground light: a bright, slightly enlarged useful walking area,
+   // plus a much softer, low-intensity feather outside it. Both are stationary
+   // in WORLD SPACE at the lamp's base, not anchored to the moving player.
+   cutCircle(l.x,l.y,l.r*1.70,[[0,.16],[.24,.14],[.50,.085],[.76,.025],[1,0]]);
+   cutCircle(l.x,l.y,l.r,[[0,.995],[.16,.97],[.37,.87],[.62,.56],[.83,.23],[1,0]]);
+   // Light also escapes from the lantern itself above the ground plane.
+   cutCircle(l.bx,l.by,Math.max(13,l.r*.34),[[0,.99],[.22,.90],[.63,.35],[1,0]]);
+   }
+   // Do not cut out a player-following visibility bubble. That was producing the
+   // illusion of a moving/stretching darkness boundary near the hero.
+   mask.globalCompositeOperation='source-over';
+   ctx.save();
+   // CRITICAL: W and H are CSS pixels but the game canvas backing store is
+   // W*dpr by H*dpr. Device-space transform(1) only covered part of the screen
+   // on high-density Android phones; use the SAME dpr as the main renderer.
+   ctx.setTransform(dpr,0,0,dpr,0,0);
+   ctx.drawImage(shade,0,0,W,H);
+   // Warm ground colour stays concentrated under the lantern and feathers out.
+   for(const l of visible){
+     const r=l.r,outer=r*1.70;
+     let glow=ctx.createRadialGradient(l.x,l.y,0,l.x,l.y,outer);
+     glow.addColorStop(0,`rgba(255,193,89,${(.36*darkness).toFixed(3)})`);
+     glow.addColorStop(.25,`rgba(255,176,70,${(.28*darkness).toFixed(3)})`);
+     glow.addColorStop(.54,`rgba(249,160,60,${(.095*darkness).toFixed(3)})`);
+     glow.addColorStop(.77,`rgba(242,142,48,${(.027*darkness).toFixed(3)})`);
+     glow.addColorStop(1,'rgba(242,142,48,0)');
+     ctx.fillStyle=glow;ctx.fillRect(l.x-outer,l.y-outer,2*outer,2*outer);
+     const br=Math.max(14,r*.28);
+     glow=ctx.createRadialGradient(l.bx,l.by,0,l.bx,l.by,br);
+     glow.addColorStop(0,`rgba(255,251,208,${(.90*darkness).toFixed(3)})`);
+     glow.addColorStop(.20,`rgba(255,229,149,${(.67*darkness).toFixed(3)})`);
+     glow.addColorStop(1,'rgba(255,173,67,0)');
+     ctx.fillStyle=glow;ctx.fillRect(l.bx-br,l.by-br,2*br,2*br);
+   }
+   ctx.restore();
+ }
+ // Keep the original renderer and the existing gameplay / HUD intact.
+ const originalRender=render;
+ render=function(){originalRender();drawLighting();};
+ function tick(){
+   const now=performance.now(),dt=Math.max(0,Math.min(200,now-lastTime));lastTime=now;
+   if(typeof running!=='undefined'&&running&&!document.hidden)phase=(phase+dt)%DAY_MS;
+   if(now-lastWrite>10000){lastWrite=now;save();}
+   if(hudClock&&hudClock.isConnected){
+     const v=strength();
+     hudClock.textContent=`${v>.72?'☾':v>.07?'☽':'☀'} ${timeLabel()}`;
+   }
+ }
+ const originalFrame=frame;
+ frame=function(time){tick();return originalFrame(time);};
+ let hudClock=null;
+ function attachClock(){
+   const hud=document.getElementById('hud');if(!hud||document.getElementById('saGameClock'))return;
+   hudClock=document.createElement('span');hudClock.id='saGameClock';
+   hudClock.style.cssText='display:inline-block;margin-left:8px;color:#f6e8bb;font-weight:700;font-size:12px;white-space:nowrap';
+   hudClock.textContent='☀ 12:00';hud.appendChild(hudClock);
+ }
+ document.addEventListener('DOMContentLoaded',attachClock);
+ attachClock();
+ document.addEventListener('visibilitychange',()=>{save();lastTime=performance.now();});
+ window.addEventListener('pagehide',save);
+ window.SADayNight={getNightStrength:strength,setPreview,get clock(){return timeLabel();},get phase(){return phase;},get lightCount(){return getLampList().length;},get durationMinutes(){return 12;}};
+})();
+
+</script>
+
+<script id="sa-v225-performance-audio">
+/* V225 performance patch: Web Audio look-ahead beat scheduling.
+   Maintains existing town/gym/battle tunes and all gameplay controls. */
+(function(){
+ 'use strict';
+ const audioCtor=window.AudioContext||window.webkitAudioContext;
+ if(!audioCtor || typeof note!=='function' || typeof startMusic!=='function')return;
+ let scheduler=null, nextBeat=0, currentMode='', audioClock=null;
+ const LEAD_TIME=.22, POLL_MS=25;
+ function mode(){
+   return (typeof battle!=='undefined'&&battle || typeof creatureMode!=='undefined'&&creatureMode==='battle')
+     ? 'battle' : interior==='gym' ? 'gym' : 'town';
+ }
+ function ensureAudio(){
+   audio=audio||new audioCtor();
+   if(audio.state==='suspended')audio.resume().then(()=>{schedule();}).catch(()=>{});
+   return audio;
+ }
+ // Only scheduled game music uses `when`. Existing one-off SFX can still use
+ // original `note` timing, as can any older gameplay systems calling it.
+ note=function(midi,dur,vol=.04,type='triangle',when){
+   if(!audio||!musicOn)return;
+   const at=(typeof when==='number'&&Number.isFinite(when))?Math.max(audio.currentTime,when):audio.currentTime;
+   const end=at+Math.max(.03,dur);
+   const o=audio.createOscillator(),g=audio.createGain();
+   o.type=type;o.frequency.value=440*Math.pow(2,(midi-69)/12);
+   g.gain.setValueAtTime(.0001,at);
+   g.gain.exponentialRampToValueAtTime(Math.max(.0002,vol),at+.015);
+   g.gain.exponentialRampToValueAtTime(.0001,end);
+   o.connect(g);g.connect(audio.destination);
+   o.start(at);o.stop(end+.03);
+ };
+ function scheduleBeat(what,at){
+   if(what==='battle'){
+     note(battleLead[beat%battleLead.length],.09,.065,'square',at);
+     if(beat%2===0){
+       note(battleLow[Math.floor(beat/4)%battleLow.length],.18,.075,'sawtooth',at);
+       note(battleLead[(beat+11)%battleLead.length]-12,.09,.022,'triangle',at);
+     }
+     if(beat%4===0)note(33,.08,.065,'sine',at);
+     if(beat%4===2)note(58,.045,.035,'square',at);
+   }else if(what==='gym'){
+     note(gymMelody[beat%gymMelody.length],.15,.047,'sawtooth',at);
+     if(beat%2===0)note(gymBass[Math.floor(beat/4)%gymBass.length],.27,.045,'square',at);
+     if(beat%4===0)note(43,.065,.018,'triangle',at);
+   }else{
+     note(melody[beat%melody.length],.21,.033,'triangle',at);
+     if(beat%2===0)note(bass[Math.floor(beat/4)%bass.length],.37,.025,'sine',at);
+     if(beat%4===2)note(melody[(beat+8)%melody.length]-12,.13,.013,'square',at);
+   }
+   beat++;
+ }
+ function schedule(){
+   if(!musicOn||!running||!audio||audio.state!=='running')return;
+   const now=audio.currentTime, what=mode();
+   if(what!==currentMode){currentMode=what;beat=0;nextBeat=now+.025;}
+   if(nextBeat<now-.12)nextBeat=now+.015; // don't bunch up beats after a tab stalls
+   if(nextBeat>now+1)nextBeat=now+.025;
+   const period=what==='battle'?.105:what==='gym'?.170:.250;
+   let scheduled=0;
+   while(nextBeat<now+LEAD_TIME && scheduled++<4){
+     scheduleBeat(what,nextBeat);
+     nextBeat+=period;
+   }
+ }
+ // Existing battle call-sites invoke musicTick() after a battle starts.
+ // These now hand off to the same scheduler and won't spawn legacy intervals.
+ musicTick=function(){schedule()};
+ startMusic=function(){
+   try{
+     ensureAudio();
+     if(tuneTimer){clearInterval(tuneTimer);tuneTimer=null;}
+     if(!scheduler)scheduler=setInterval(schedule,POLL_MS);
+     schedule();
+   }catch(e){console.warn('Audio unavailable',e)}
+ };
+ // Unlock on the actual PLAY interaction, ahead of menu/scene initialization.
+ // Does not create a second music loop; the existing startMusic call schedules notes.
+ const playButton=document.getElementById('play');
+ if(playButton)playButton.addEventListener('pointerdown',()=>{
+   if(!musicOn)return;
+   try{ensureAudio()}catch(e){console.warn('Audio unlock unavailable',e)}
+ },{capture:true});
+ // Fresh audio scheduling after returning to a tab without restarting the game.
+ document.addEventListener('visibilitychange',()=>{
+   if(!document.hidden && running && musicOn){
+     nextBeat=0;
+     try{startMusic()}catch(e){}
+   }
+ });
+})();
+</script>
+<link rel="stylesheet" href="css/style-07.css">
+<script id="v236-progression-core">
+/* Level bonuses are derived from individual strain levels and capped at Tier 6. */
+function v236Tier(level){return Math.min(6,Math.max(1,1+Math.floor((Math.max(1,Number(level)||1)-1)/10)));}
+function v236Steps(level){return v236Tier(level)-1;}
+function v236Dot(level,base){return base+2*v236Steps(level);}
+function v236Gravity(level){return Math.min(.40,.30+.02*v236Steps(level));}
+function v236OverclockBonus(level){return 15+2*v236Steps(level);}
+function v236Level(side,id){return side==='enemy'?(battle?.enemy?.level||1):progressFor(id).level;}
+function v236Recover(side,id,amount){
+ if(!battle||!amount)return 0;
+ staminaInitialize();
+ const before=side==='enemy'?battle.stamina.enemy:staminaPlayerValue(id);
+ const after=Math.min(staminaMaximum(v236Level(side,id)),before+amount);
+ if(side==='enemy')battle.stamina.enemy=after;else battle.stamina.player[id]=after;
+ return after-before;
+}
+</script>
+<script id="v226-stamina-system" src="js/game-11.js"></script>
+
+<link rel="stylesheet" href="css/style-08.css">
+<script id="v227-compact-battle-script">
+(function(){
+  const v227OriginalHpMarkup = hpMarkup;
+  hpMarkup = function(id,hp,who){
+    if(!battle) return v227OriginalHpMarkup(id,hp,who);
+    const c = CREATURES[id];
+    const level = who==='enemy' ? (battle?.enemy.level||10) : progressFor(id).level;
+    const hpMax = who==='enemy' ? (battle?.enemy.maxHp||maxHealth(id,level)) : maxHealth(id,level);
+    const hpPct = Math.max(0,Math.min(100,100*hp/hpMax));
+    const staminaMax = who==='enemy' ? staminaMaximum(battle?.enemy.level||1) : staminaMaximum(progressFor(id).level);
+    const staminaCurrent = who==='enemy' ? (battle?.stamina?.enemy ?? staminaMax) : staminaPlayerValue(id);
+    const staminaPct = Math.max(0,Math.min(100,100*staminaCurrent/staminaMax));
+    return `<div class="battle-hud ${who}">
+      <div class="row"><span class="name">${c.name}</span><span class="level">Lv. ${level}</span></div>
+      <div class="type-line">${c.type} type</div>
+      <div class="meter hp-meter"><div class="meter-head"><span class="label">HP</span><span>${hp} / ${hpMax}</span></div><div class="bar"><div class="fill ${hpPct<=20?'critical':hpPct<=45?'low':''}" style="width:${hpPct}%"></div></div></div>
+      <div class="meter stamina-meter"><div class="meter-head"><span class="label">STM</span><span>${Math.floor(staminaCurrent)} / ${staminaMax}</span></div><div class="stamina-track"><div class="stamina-fill ${staminaPct<20?'empty':staminaPct<40?'low':''}" style="width:${staminaPct}%"></div></div></div>
+    </div>`;
+  };
+
+  const v227RenderSideBattle = renderSideBattle;
+  renderSideBattle = function(){
+    v227RenderSideBattle();
+    if(!battle || !cContent) return;
+    const buttons = cContent.querySelectorAll('.battle-moves button[data-attack]');
+    buttons.forEach(btn=>{
+      const index = Number(btn.dataset.attack);
+      const cost = STAMINA_MOVE_COSTS[index];
+      const small = btn.querySelector('small');
+      if(small){
+        const match = small.textContent.match(/(\d+)/);
+        const dmg = match ? match[1] : small.textContent.replace(/\s*damage/i,'').trim();
+        small.innerHTML = `${dmg} DMG · <span class="stamina-cost">${cost}⚡</span>`;
+      }
+    });
+    const rest = cContent.querySelector('#v226RestButton');
+    if(rest) rest.innerHTML = 'REST <small>+35 STM · enemy turn</small>';
+  };
+})();
+</script>
+
+
+<link rel="stylesheet" href="css/style-09.css">
+<script id="v228-sticky-slam-effect">
+/* V228 - Gorilla Glue / Sticky Slam:
+   A landed Sticky Slam has a 40% chance of canceling the enemy's next attack
+   when both strains have the same level. The chance falls by 3 percentage
+   points per level of ABSOLUTE difference, with a 10% minimum (10+ levels).
+   A skipped enemy does not attack and does not gain a REST bonus; normal end
+   of round stamina regeneration still applies.
+*/
+function stickySlamChance(attackerLevel,defenderLevel){
+  const gap=Math.abs(Math.max(1,Number(attackerLevel)||1)-Math.max(1,Number(defenderLevel)||1));
+  return Math.max(.10,Math.round((.40+.02*v236Steps(attackerLevel)-.03*gap)*100)/100);
+}
+const v228PreviousBattleAction=battleAction;
+battleAction=function(action){
+  if(!battle||battle.busy)return v228PreviousBattleAction(action);
+  // Only an affordable, valid attack can arm the special effect. A switch,
+  // REST, or a different attack cancels any previous pending arm.
+  const id=team[battle.active];
+  const i=typeof action==='number'?action:Number(action);
+  battle._v228StickyArm=(id==='gorilla'&&Number.isInteger(i)&&i===2&&
+    currentMove(id,i)[0]==='Sticky Slam'&&staminaPlayerValue(id)>=STAMINA_MOVE_COSTS[i]);
+  battle._v228SkipInProgress=false;
+  return v228PreviousBattleAction(action);
+};
+const v228PreviousPlayerResolver=v152ResolvePlayerAttack;
+v152ResolvePlayerAttack=function(attackerId,defenderId,attackerLevel,defenderLevel,base){
+  const armed=!!(battle&&battle._v228StickyArm&&attackerId==='gorilla');
+  if(battle)battle._v228StickyArm=false;
+  const result=v228PreviousPlayerResolver(attackerId,defenderId,attackerLevel,defenderLevel,base);
+  // Dodged attacks cannot apply the sticky effect.
+  if(armed&&!result.dodged&&battle){
+    const chance=stickySlamChance(attackerLevel,defenderLevel);
+    if(Math.random()<chance){
+      battle._v228EnemyStuck=true;
+      result.note=((result.note||'')+' 🕸️ STICKY! Enemy skips its next attack!').trim();
+      result.stickySlamApplied=true;
+    }
+  }
+  return result;
+};
+const v228PreviousEnemyChooser=staminaChooseEnemyIndex;
+staminaChooseEnemyIndex=function(options){
+  if(battle&&battle._v228EnemyStuck){
+    battle._v228EnemyStuck=false;
+    battle._v228SkipInProgress=true;
+    battle._staminaEnemyRested=false;
+    return -1; // Existing attack flow handles this as a zero-damage turn.
+  }
+  if(battle)battle._v228SkipInProgress=false;
+  return v228PreviousEnemyChooser(options);
+};
+const v228PreviousBattleMessage=battleMessage;
+battleMessage=function(message){
+  if(battle&&battle._v228SkipInProgress&&
+    /used Recover\b|\bdodged?\b|\btook 0 damage\b|\bhit for 0 damage\b|recovering stamina/i.test(message)){
+    message=`🕸️ ${CREATURES[battle.enemy.id].name} is stuck! Sticky Slam cancelled its attack!`;
+  }
+  return v228PreviousBattleMessage(message);
+};
+const v228PreviousStaminaEndRound=staminaEndRound;
+staminaEndRound=function(){
+  const finished=!!(battle&&battle._staminaPendingRegen&&!battle.busy);
+  const result=v228PreviousStaminaEndRound();
+  if(finished&&battle)battle._v228SkipInProgress=false;
+  return result;
+};
+const v228PreviousRenderBattle=renderSideBattle;
+renderSideBattle=function(){
+  v228PreviousRenderBattle();
+  if(!battle||team[battle.active]!=='gorilla')return;
+  const btn=cContent.querySelector('.battle-moves button[data-attack="2"]');
+  if(!btn)return;
+  const percent=Math.round(100*stickySlamChance(progressFor('gorilla').level,battle.enemy.level||1));
+  btn.classList.add('v228-special-move');
+  btn.title=`Sticky Slam: ${percent}% chance to skip the enemy's next attack (minimum 10%).`;
+  const small=btn.querySelector('small');
+  if(small&&!small.querySelector('.v228-sticky-odds')){
+    small.insertAdjacentHTML('beforeend',` · <span class="v228-sticky-odds">🕸️ ${percent}%</span>`);
+  }
+};
+</script>
+
+
+<link rel="stylesheet" href="css/style-10.css">
+<script id="v229-spark-zap-effect">
+/* V229: Northern Lights -> Spark Zap (first move).
+   If it hits, a 50% base chance to halve the enemy's NEXT damaging attack.
+   When the enemy is higher level, reduce by 5 percentage points per level,
+   down to a floor of 15% (7+ levels higher); no penalty for equal/lower foes.
+   This modifies final damage once, without altering stamina or attack timing.
+*/
+function sparkZapChance(attackerLevel,defenderLevel){
+  const higherGap=Math.max(0,Math.max(1,Number(defenderLevel)||1)-Math.max(1,Number(attackerLevel)||1));
+  return Math.max(.15,Math.round((.50+.02*v236Steps(attackerLevel)-.05*higherGap)*100)/100);
+}
+const v229EarlierBattleAction=battleAction;
+battleAction=function(action){
+  if(battle&&!battle.busy){
+    const id=team[battle.active],index=Number(action);
+    battle._v229SparkArm=(id==='northern'&&Number.isInteger(index)&&index===0&&
+      currentMove(id,index)[0]==='Spark Zap'&&staminaPlayerValue(id)>=STAMINA_MOVE_COSTS[index]);
+  }
+  return v229EarlierBattleAction(action);
+};
+// v26ResolveAttack is shared by players and opponents, so mark the resolver's
+// player context to avoid accidentally weakening a player's move in a mirror match.
+let v229InsidePlayerResolver=false;
+const v229EarlierPlayerResolver=v152ResolvePlayerAttack;
+v152ResolvePlayerAttack=function(attackerId,defenderId,attackerLevel,defenderLevel,base){
+  const armed=!!(battle&&battle._v229SparkArm&&attackerId==='northern');
+  if(battle)battle._v229SparkArm=false;
+  v229InsidePlayerResolver=true;
+  let result;
+  try{result=v229EarlierPlayerResolver(attackerId,defenderId,attackerLevel,defenderLevel,base)}
+  finally{v229InsidePlayerResolver=false}
+  if(armed&&battle&&!result.dodged&&Math.random()<sparkZapChance(attackerLevel,defenderLevel)){
+    battle._v229EnemyWeakened=true; // reapplying refreshes; effects do not stack
+    result.note=((result.note||'')+' ⚡ SPARK SHOCK! Next enemy attack deals half damage!').trim();
+    result.sparkZapApplied=true;
+  }
+  return result;
+};
+const v229EarlierResolveAttack=v26ResolveAttack;
+v26ResolveAttack=function(attackerId,defenderId,attackerLevel,defenderLevel,base){
+  const consume=!!(battle&&!v229InsidePlayerResolver&&battle._v229EnemyWeakened&&
+    attackerId===battle.enemy.id&&defenderId===team[battle.active]&&base>0);
+  const result=v229EarlierResolveAttack(attackerId,defenderId,attackerLevel,defenderLevel,base);
+  if(consume){
+    battle._v229EnemyWeakened=false;
+    if(!result.dodged&&result.damage>0){
+      result.damage=Math.max(1,Math.ceil(result.damage/2));
+      result.note=((result.note||'')+' ⚡ SPARK WEAKENED! Half damage!').trim();
+      battle._v229JustReduced=true;
+    } else battle._v229JustReduced=false;
+  }
+  return result;
+};
+const v229EarlierBattleMessage=battleMessage;
+battleMessage=function(message){
+  // Some battle modes do not display resolver notes. Keep the reduction visible.
+  if(battle&&battle._v229JustReduced&&/took \d+ damage|hit for \d+ damage|damage!/i.test(message)){
+    battle._v229JustReduced=false;
+    if(!/SPARK WEAKENED/i.test(message))message+=' ⚡ Spark Zap halved the attack!';
+  }
+  return v229EarlierBattleMessage(message);
+};
+const v229EarlierRenderBattle=renderSideBattle;
+renderSideBattle=function(){
+  v229EarlierRenderBattle();
+  if(!battle)return;
+  if(battle._v229EnemyWeakened){
+    const typeLine=cContent.querySelector('.battle-hud.enemy .type-line');
+    if(typeLine&&!typeLine.querySelector('.v229-weaken-marker'))
+      typeLine.insertAdjacentHTML('beforeend','<span class="v229-weaken-marker"> · ⚡ WEAKENED</span>');
+  }
+  if(team[battle.active]!=='northern')return;
+  const button=cContent.querySelector('.battle-moves button[data-attack="0"]');
+  if(!button)return;
+  const percent=Math.round(100*sparkZapChance(progressFor('northern').level,battle.enemy.level||1));
+  button.classList.add('v229-special-move');
+  button.title=`Spark Zap: ${percent}% chance to halve enemy's next attack (minimum 15% vs higher-level enemies).`;
+  const small=button.querySelector('small');
+  if(small&&!small.querySelector('.v229-spark-odds'))
+    small.insertAdjacentHTML('beforeend',` · <span class="v229-spark-odds">⚡ ${percent}% weaken</span>`);
+};
+</script>
+
+
+<link rel="stylesheet" href="css/style-11.css">
+<script id="v230-funky-fumes-effect">
+/* V230 - UK Cheese, Funky Fumes (2nd move, cost 35 stamina).
+ * A landed attack immediately deals its normal damage, then inflicts FUMES:
+ * 10 HP at the end of each full round while the affected strain is alive.
+ * One REST clears all of that strain's combat debuffs AND still restores
+ * stamina. Fumes do not stack; a repeat hit refreshes the condition.
+ * Works when UK Cheese is used by either the player or an opponent.
+ * Battling one foe does not carry conditions over to another battle.
+ */
+const V230_FUMES_DAMAGE=10;
+function v230Debuffs(){
+ if(!battle)return null;
+ if(!battle._v230Debuffs)battle._v230Debuffs={enemy:{fumes:false},player:Object.create(null)};
+ return battle._v230Debuffs;
+}
+function v230PlayerDebuffs(id){
+ const statuses=v230Debuffs();
+ if(!statuses)return null;
+ return statuses.player[id]||(statuses.player[id]={fumes:false});
+}
+function v230ClearDebuffs(side,id){
+ if(!battle)return false;
+ const data=side==='enemy'?v230Debuffs().enemy:v230PlayerDebuffs(id);
+ const cleared=!!Object.values(data).some(Boolean);
+ for(const key of Object.keys(data))data[key]=false;
+ // Existing combat debuffs target the enemy, not the player. REST on the
+ // enemy clears them too, while a player's REST never cures the opponent.
+ if(side==='enemy'){
+  if(battle._v229EnemyWeakened||battle._v228EnemyStuck)battle._v230RemovedOtherEffects=true;
+  battle._v229EnemyWeakened=false;
+  battle._v228EnemyStuck=false;
+ }
+ return cleared||!!(side==='enemy'&&battle._v230RemovedOtherEffects);
+}
+// Arm only the second UK Cheese move, with enough stamina for a real move.
+const v230PriorBattleAction=battleAction;
+battleAction=function(action){
+ if(battle&&!battle.busy){
+  const attacker=team[battle.active],index=Number(action);
+  battle._v230PlayerFumesArmed=(attacker==='cheese'&&index===1&&
+   currentMove(attacker,index)[0]==='Funky Fumes'&&
+   staminaPlayerValue(attacker)>=STAMINA_MOVE_COSTS[1]);
+ }
+ return v230PriorBattleAction(action);
+};
+const v230PriorPlayerResolver=v152ResolvePlayerAttack;
+v152ResolvePlayerAttack=function(attackerId,defenderId,attackerLevel,defenderLevel,base){
+ const armed=!!(battle&&battle._v230PlayerFumesArmed&&attackerId==='cheese');
+ if(battle)battle._v230PlayerFumesArmed=false;
+ const hit=v230PriorPlayerResolver(attackerId,defenderId,attackerLevel,defenderLevel,base);
+ if(armed&&battle&&!hit.dodged&&hit.damage>0){
+  v230Debuffs().enemy.fumes=v236Dot(attackerLevel,10);
+  hit.note=((hit.note||'')+` ☁️ FUMES! Enemy loses ${v236Dot(attackerLevel,10)} HP each round until REST!`).trim();
+  hit.funkyFumesApplied=true;
+ }
+ return hit;
+};
+// The enemy must follow the same special-move rules. Enemy attacks have a
+// separate move list and all battle types use this shared decision function.
+const v230PriorEnemyChooser=staminaChooseEnemyIndex;
+staminaChooseEnemyIndex=function(options){
+ const index=v230PriorEnemyChooser(options);
+ if(!battle)return index;
+ battle._v230EnemyFumesArmed=(index===1&&battle.enemy.id==='cheese'&&
+  options[index]&&options[index][0]==='Funky Fumes');
+ // A forced skipped turn from Sticky Slam is NOT REST; it must not cleanse.
+ if(index<0&&battle._staminaEnemyRested&&!battle._v228SkipInProgress){
+  battle._v230EnemyJustCleansed=v230ClearDebuffs('enemy');
+ }
+ return index;
+};
+const v230PriorEnemyResolver=v26ResolveAttack;
+v26ResolveAttack=function(attackerId,defenderId,attackerLevel,defenderLevel,base){
+ const enemyFumes=!!(battle&&battle._v230EnemyFumesArmed&&
+  !v229InsidePlayerResolver&&attackerId==='cheese'&&
+  defenderId===team[battle.active]&&base>0);
+ const hit=v230PriorEnemyResolver(attackerId,defenderId,attackerLevel,defenderLevel,base);
+ if(enemyFumes){
+  battle._v230EnemyFumesArmed=false;
+  if(!hit.dodged&&hit.damage>0){
+   v230PlayerDebuffs(defenderId).fumes=v236Dot(attackerLevel,10);
+   hit.note=((hit.note||'')+` ☁️ FUMES! -${v236Dot(attackerLevel,10)} HP each round until REST!`).trim();
+   hit.funkyFumesApplied=true;
+  }
+ }
+ return hit;
+};
+// Clearing happens before the opponent takes its free turn from player REST.
+const v230PriorPlayerRest=staminaPlayerRest;
+staminaPlayerRest=function(){
+ if(battle&&!battle.busy){
+  const id=team[battle.active];
+  battle._v230PlayerJustCleansed=v230ClearDebuffs('player',id);
+ }
+ return v230PriorPlayerRest();
+};
+const v230PriorMessage=battleMessage;
+battleMessage=function(message){
+ if(battle&&battle._v230PlayerJustCleansed&&/rests and recovers/i.test(message)){
+  message+=' 🧼 All debuffs cleared!';battle._v230PlayerJustCleansed=false;
+ }
+ if(battle&&battle._v230EnemyJustCleansed&&/rested and recovered|used Recover/i.test(message)){
+  message+=' 🧼 All debuffs cleared!';battle._v230EnemyJustCleansed=false;
+ }
+ return v230PriorMessage(message);
+};
+// Award poison damage exactly ONCE per completed round, sharing V226's
+// end-of-round flag, and before the next turn becomes available.
+const v230PriorEndRound=staminaEndRound;
+staminaEndRound=function(){
+ const current=battle;
+ const completed=!!(current&&current._staminaPendingRegen&&!current.busy);
+ const result=v230PriorEndRound();
+ if(!completed||!battle||battle!==current)return result;
+ const statuses=v230Debuffs();
+ const hitNames=[];
+ if(statuses.enemy.fumes&&battle.enemy.hp>0){
+  const dmg=Number(statuses.enemy.fumes)||V230_FUMES_DAMAGE;
+  battle.enemy.hp=Math.max(0,battle.enemy.hp-dmg);
+  hitNames.push(`${CREATURES[battle.enemy.id].name} -${dmg} HP`);
+ }
+ for(const [id,debuff] of Object.entries(statuses.player)){
+  if(!debuff.fumes||!(battle.hp[id]>0))continue;
+  const dmg=Number(debuff.fumes)||V230_FUMES_DAMAGE;
+  battle.hp[id]=Math.max(0,battle.hp[id]-dmg);
+  hitNames.push(`${CREATURES[id].name} -${dmg} HP`);
+ }
+ if(hitNames.length){
+  battleMessage(`☁️ Funky Fumes: ${hitNames.join(' · ')} this round! REST to cleanse.`);
+ }
+ // DOT can cause fainting. Avoid mutating/closing the battle midway through
+ // renderSideBattle's nested UI wrappers; settle at the next task instead.
+ if(battle.enemy.hp<=0){
+  battle.busy=true;
+  const token=battleToken;
+  setTimeout(()=>{if(battle===current&&battleToken===token)finishBattleVictory()},0);
+ }else{
+  const activeId=team[battle.active];
+  if(!(battle.hp[activeId]>0)){
+   const next=team.findIndex(id=>battle.hp[id]>0);
+   if(next>=0){
+    battle.active=next;
+    battleMessage(`☁️ ${CREATURES[activeId].name} fainted from Funky Fumes! ${CREATURES[team[next]].name}, you're up!`);
+   }else{
+    battle.busy=true;
+    const token=battleToken;
+    setTimeout(()=>{if(battle===current&&battleToken===token)finishBattleDefeat()},0);
+   }
+  }
+ }
+ return result;
+};
+const v230PriorHpMarkup=hpMarkup;
+hpMarkup=function(id,hp,who){
+ let html=v230PriorHpMarkup(id,hp,who);
+ if(!battle)return html;
+ const debuff=who==='enemy'?v230Debuffs().enemy:v230PlayerDebuffs(id);
+ if(debuff.fumes){
+  html=html.replace('type-line">','type-line">')
+   .replace(/(<div class="type-line">[^<]*)(<\/div>)/,
+    '$1<span class="v230-fumes-marker"> · ☁️ FUMES -10</span>$2');
+ }
+ return html;
+};
+const v230PriorRenderSideBattle=renderSideBattle;
+renderSideBattle=function(){
+ v230PriorRenderSideBattle();
+ if(!battle)return;
+ // Status hints stay small so the V227 compact UI is preserved.
+ const active=team[battle.active];
+ if(active==='cheese'){
+  const move=cContent.querySelector('.battle-moves button[data-attack="1"]');
+  if(move){
+   move.classList.add('v230-special-move');
+   move.title='Funky Fumes: normal damage + 10 HP per round until opponent rests. Does not stack.';
+   const small=move.querySelector('small');
+   if(small&&!small.querySelector('.v230-fumes-label'))
+    small.insertAdjacentHTML('beforeend',' · <span class="v230-fumes-label">☁️ Fumes</span>');
+  }
+ }
+ const rest=cContent.querySelector('#v226RestButton');
+ if(rest){
+  rest.title='Restore 35 extra stamina, clear all your active debuffs, and give your opponent a turn.';
+  rest.innerHTML='REST <small>+35 STM · clear debuffs · enemy turn</small>';
+ }
+};
+</script>
+
+
+<link rel="stylesheet" href="css/style-12.css">
+<script id="v231-boiler-blast-effect">
+/* V231 - Train Wreck / Boiler Blast, third attack (40 stamina).
+ * Initial hit deals normal move damage. A landed Boiler Blast then applies
+ * BURN, which deals exactly 10 fire HP damage each completed round until
+ * that target chooses REST. Status doesn't stack; players and enemy can
+ * both inflict it. REST still restores the normal stamina and clears all
+ * active combat debuffs (including V230 Funky Fumes).
+ */
+const V231_BURN_DAMAGE = 10;
+// V230's debuff store is shared with Fumes so its existing REST cleanup
+// automatically clears BURN without removing the Fumes implementation.
+function v231BurnFor(side,id){
+ const conditions=v230Debuffs();
+ return side==='enemy' ? conditions.enemy : v230PlayerDebuffs(id);
+}
+function v231ApplyBurn(side,id,level){
+ if(!battle)return;
+ v231BurnFor(side,id).burn=v236Dot(level,10);
+}
+// Player move recognition happens before stamina is deducted, preserving
+// switch/rest and the existing Gorilla Glue, Northern Lights, UK Cheese effects.
+const v231PriorBattleAction=battleAction;
+battleAction=function(action){
+ if(battle&&!battle.busy){
+  const attacker=team[battle.active],i=Number(action);
+  battle._v231PlayerBurnArmed=(attacker==='trainwreck'&&i===2&&
+    currentMove(attacker,i)[0]==='Boiler Blast'&&
+    staminaPlayerValue(attacker)>=STAMINA_MOVE_COSTS[2]);
+ }
+ return v231PriorBattleAction(action);
+};
+const v231PriorPlayerResolver=v152ResolvePlayerAttack;
+v152ResolvePlayerAttack=function(attackerId,defenderId,attackerLevel,defenderLevel,base){
+ const armed=!!(battle&&battle._v231PlayerBurnArmed&&attackerId==='trainwreck');
+ if(battle)battle._v231PlayerBurnArmed=false;
+ const hit=v231PriorPlayerResolver(attackerId,defenderId,attackerLevel,defenderLevel,base);
+ if(armed&&battle&&!hit.dodged&&hit.damage>0){
+  v231ApplyBurn('enemy',null,attackerLevel);
+  hit.note=((hit.note||'')+` 🔥 BURN! -${v236Dot(attackerLevel,10)} fire HP per round until REST!`).trim();
+  hit.boilerBlastApplied=true;
+ }
+ return hit;
+};
+// Opponents spend stamina through the existing enemy chooser. Capture
+// precisely when they choose Train Wreck's third move, not any third move.
+const v231PriorEnemyChooser=staminaChooseEnemyIndex;
+staminaChooseEnemyIndex=function(options){
+ const i=v231PriorEnemyChooser(options);
+ if(battle){
+  battle._v231EnemyBurnArmed=!!(i===2&&battle.enemy.id==='trainwreck'&&
+    options[i]&&options[i][0]==='Boiler Blast');
+ }
+ return i;
+};
+const v231PriorEnemyResolver=v26ResolveAttack;
+v26ResolveAttack=function(attackerId,defenderId,attackerLevel,defenderLevel,base){
+ const armed=!!(battle&&battle._v231EnemyBurnArmed&&
+   !v229InsidePlayerResolver&&attackerId==='trainwreck'&&
+   defenderId===team[battle.active]&&base>0);
+ const hit=v231PriorEnemyResolver(attackerId,defenderId,attackerLevel,defenderLevel,base);
+ if(armed&&battle){
+  battle._v231EnemyBurnArmed=false;
+  if(!hit.dodged&&hit.damage>0){
+   v231ApplyBurn('player',defenderId,attackerLevel);
+   hit.note=((hit.note||'')+` 🔥 BURN! -${v236Dot(attackerLevel,10)} fire HP each round until REST!`).trim();
+   hit.boilerBlastApplied=true;
+  }
+ }
+ return hit;
+};
+// Tick fire once per normal completed turn, on the same turn cadence as
+// Funky Fumes. V230 gets first opportunity to apply its own damage and
+// schedule any knockout; this layer never double-awards stamina or burn.
+const v231PriorStaminaEndRound=staminaEndRound;
+staminaEndRound=function(){
+ const current=battle;
+ const completed=!!(current&&current._staminaPendingRegen&&!current.busy);
+ const result=v231PriorStaminaEndRound();
+ if(!completed||!battle||battle!==current)return result;
+ // Earlier Fumes processing can already have knocked out the opponent.
+ if(battle.enemy.hp<=0)return result;
+ const conditions=v230Debuffs(),hitNames=[];
+ if(conditions.enemy.burn&&battle.enemy.hp>0){
+  const dmg=Number(conditions.enemy.burn)||V231_BURN_DAMAGE;
+  battle.enemy.hp=Math.max(0,battle.enemy.hp-dmg);
+  hitNames.push(`${CREATURES[battle.enemy.id].name} -${dmg} HP`);
+ }
+ for(const [id,effects] of Object.entries(conditions.player)){
+  if(!effects.burn||!(battle.hp[id]>0))continue;
+  const dmg=Number(effects.burn)||V231_BURN_DAMAGE;
+  battle.hp[id]=Math.max(0,battle.hp[id]-dmg);
+  hitNames.push(`${CREATURES[id].name} -${dmg} HP`);
+ }
+ if(hitNames.length)battleMessage(`🔥 Boiler Blast burn: ${hitNames.join(' · ')} this round! REST to cleanse.`);
+ if(battle.enemy.hp<=0){
+  battle.busy=true;
+  const token=battleToken;
+  setTimeout(()=>{if(battle===current&&battleToken===token)finishBattleVictory()},0);
+ } else if(!(battle.hp[team[battle.active]]>0)){
+  const activeId=team[battle.active],next=team.findIndex(id=>battle.hp[id]>0);
+  if(next>=0){
+   battle.active=next;
+   battleMessage(`🔥 ${CREATURES[activeId].name} fainted from burn! ${CREATURES[team[next]].name}, you're up!`);
+  }else{
+   battle.busy=true;
+   const token=battleToken;
+   setTimeout(()=>{if(battle===current&&battleToken===token)finishBattleDefeat()},0);
+  }
+ }
+ return result;
+};
+// Visible status for either combatant, including player when attacked
+// by a wild or trainer-controlled Train Wreck.
+const v231PriorHpMarkup=hpMarkup;
+hpMarkup=function(id,hp,who){
+ let html=v231PriorHpMarkup(id,hp,who);
+ if(!battle||!v231BurnFor(who,id).burn)return html;
+ return html.replace(/(<div class="type-line">[^<]*)(<\/div>)/,
+  '$1<span class="v231-burn-marker"> · 🔥 BURN -10</span>$2');
+};
+const v231PriorRenderSideBattle=renderSideBattle;
+renderSideBattle=function(){
+ v231PriorRenderSideBattle();
+ if(!battle||team[battle.active]!=='trainwreck')return;
+ const move=cContent.querySelector('.battle-moves button[data-attack="2"]');
+ if(!move)return;
+ move.classList.add('v231-special-move');
+ move.title='Boiler Blast: normal hit damage + 10 fire HP each round until the target RESTS. Does not stack.';
+ const small=move.querySelector('small');
+ if(small&&!small.querySelector('.v231-burn-label'))
+  small.insertAdjacentHTML('beforeend',' · <span class="v231-burn-label">🔥 Burn</span>');
+};
+</script>
+
+
+<link rel="stylesheet" href="css/style-13.css">
+<script id="v232-smog-overclock-effect" src="js/game-12.js"></script>
+
+
+<link rel="stylesheet" href="css/style-14.css">
+<script id="v233-envy-hex-lunar-gravity">
+/* V233: player and opponent obey the same status rules.
+ * JEALOUSY - ENVY HEX (second move, 35 stamina, 28 base damage): every
+ * successful hit curses its target for the fight. Cursed attackers take 10
+ * direct HP damage PER ATTACK ATTEMPT, even if their move misses; no damage
+ * on REST, forced Sticky Slam skips, switching, or item usage. No stacking.
+ * LUNAR ROCK - LUNAR GRAVITY (third move, 40 stamina, 46 base damage):
+ * successful hit inflicts an independent 30% miss roll on future damaging
+ * attacks, in addition to existing level-based dodge. No stacking.
+ * Both effects stay until the affected strain RESTS; status flags share
+ * the V230 debuff collection, so regular player/enemy REST clears them.
+ */
+const V233_HEX_REFLECT=10;
+const V233_GRAVITY_MISS_CHANCE=.30;
+function v233Effects(side,id){
+ if(!battle)return null;
+ return side==='enemy'?v230Debuffs().enemy:v230PlayerDebuffs(id);
+}
+function v233SetEffect(side,id,effect,level){
+ const statuses=v233Effects(side,id);
+ if(statuses)statuses[effect]=effect==='hex'?v236Dot(level,10):v236Gravity(level);
+}
+function v233Reflect(side,id){
+ if(!battle)return 0;
+ if(side==='enemy'){
+  if(!(battle.enemy.hp>0))return 0;
+  const amount=Math.min(Number(v233Effects(side,id)?.hex)||V233_HEX_REFLECT,battle.enemy.hp);
+  battle.enemy.hp=Math.max(0,battle.enemy.hp-amount);
+  if(battle.enemy.hp<=0)v233ScheduleEnemyHexKnockout(battle);
+  return amount;
+ }
+ if(!(battle.hp[id]>0))return 0;
+ const amount=Math.min(Number(v233Effects(side,id)?.hex)||V233_HEX_REFLECT,battle.hp[id]);
+ battle.hp[id]=Math.max(0,battle.hp[id]-amount);
+ return amount;
+}
+// Let the attack finish its animations/damage first, then resolve a curse KO.
+function v233ScheduleEnemyHexKnockout(current){
+ if(!current||current._v233HexKOQueued)return;
+ current._v233HexKOQueued=true;
+ const token=battleToken;
+ let checks=0;
+ function finishWhenReady(){
+  if(battle!==current||battleToken!==token)return;
+  if(battle.enemy.hp>0)return;
+  if(battle.busy&&checks++<65){setTimeout(finishWhenReady,100);return;}
+  if(!battle.busy)finishBattleVictory();
+ }
+ setTimeout(finishWhenReady,100);
+}
+// Mark player move before the existing action handler spends stamina.
+const v233PreviousBattleAction=battleAction;
+battleAction=function(action){
+ if(battle&&!battle.busy){
+  const id=team[battle.active],i=Number(action);
+  const valid=Number.isInteger(i)&&i>=0&&i<4&&
+    staminaPlayerValue(id)>=STAMINA_MOVE_COSTS[i];
+  battle._v233PlayerHexArmed=!!(valid&&id==='jealousy'&&i===1&&currentMove(id,i)[0]==='Envy Hex');
+  battle._v233PlayerGravityArmed=!!(valid&&id==='lunarrock'&&i===2&&currentMove(id,i)[0]==='Lunar Gravity');
+ }
+ return v233PreviousBattleAction(action);
+};
+const v233PreviousPlayerResolver=v152ResolvePlayerAttack;
+v152ResolvePlayerAttack=function(attackerId,defenderId,attackerLevel,defenderLevel,base){
+ const hex=!!(battle&&battle._v233PlayerHexArmed&&attackerId==='jealousy');
+ const gravity=!!(battle&&battle._v233PlayerGravityArmed&&attackerId==='lunarrock');
+ if(battle){battle._v233PlayerHexArmed=false;battle._v233PlayerGravityArmed=false;}
+ const hit=v233PreviousPlayerResolver(attackerId,defenderId,attackerLevel,defenderLevel,base);
+ if(!battle)return hit;
+ // Cursed player pays for choosing an actual attack, regardless of hit/miss.
+ if(base>0&&v233Effects('player',attackerId)?.hex){
+  const reflected=v233Reflect('player',attackerId);
+  if(reflected>0){
+   hit.note=((hit.note||'')+` 🪬 HEX CURSE! -${reflected} HP to ${CREATURES[attackerId].name}!`).trim();
+   battle._v233PlayerRecoilNotice=`🪬 Hex curse dealt ${reflected} HP to ${CREATURES[attackerId].name}!`;
+  }
+ }
+ if(!hit.dodged&&hit.damage>0){
+  if(hex){v233SetEffect('enemy',null,'hex',attackerLevel);hit.note=((hit.note||'')+` 🪬 ENVY HEX! Every attack costs the enemy ${v236Dot(attackerLevel,10)} HP until REST!`).trim();hit.envyHexApplied=true;}
+  if(gravity){v233SetEffect('enemy',null,'gravity',attackerLevel);hit.note=((hit.note||'')+` 🌙 LUNAR GRAVITY! Enemy attacks gain ${Math.round(100*v236Gravity(attackerLevel))}% miss chance until REST!`).trim();hit.lunarGravityApplied=true;}
+ }
+ return hit;
+};
+// Enemy move selection is shared by gym, wild, Hobo, and Langy opponents.
+const v233PreviousEnemyChooser=staminaChooseEnemyIndex;
+staminaChooseEnemyIndex=function(options){
+ const index=v233PreviousEnemyChooser(options);
+ if(battle){
+  battle._v233EnemyHexArmed=!!(index===1&&battle.enemy.id==='jealousy'&&options[index]?.[0]==='Envy Hex');
+  battle._v233EnemyGravityArmed=!!(index===2&&battle.enemy.id==='lunarrock'&&options[index]?.[0]==='Lunar Gravity');
+ }
+ return index;
+};
+// Resolve misses before applying other attack effects. A 0-damage
+// resolver call is used for a gravity miss so previous handlers don't apply
+// on-hit status/buffs. Reset pending move flags for that skipped hit.
+const v233PreviousEnemyResolver=v26ResolveAttack;
+v26ResolveAttack=function(attackerId,defenderId,attackerLevel,defenderLevel,base){
+ const isPlayer=!!(battle&&v229InsidePlayerResolver&&
+   attackerId===team[battle.active]&&defenderId===battle.enemy.id);
+ const isEnemy=!!(battle&&!v229InsidePlayerResolver&&
+   attackerId===battle.enemy.id&&defenderId===team[battle.active]);
+ const attacking=isPlayer||isEnemy;
+ const status=attacking?v233Effects(isEnemy?'enemy':'player',attackerId):null;
+ const gravityMiss=!!(attacking&&base>0&&status?.gravity&&Math.random()<(Number(status?.gravity)||V233_GRAVITY_MISS_CHANCE));
+ let hit;
+ if(gravityMiss){
+  hit=v233PreviousEnemyResolver(attackerId,defenderId,attackerLevel,defenderLevel,0);
+  hit={...hit,dodged:true,damage:0,rested:false,note:'🌙 GRAVITY MISS! Attack missed!'};
+  hit.lunarGravityMiss=true;
+  if(isEnemy){
+   // This is a spent attack, NOT a REST or a Sticky Slam skip.
+   battle._v229EnemyWeakened=false;
+   battle._v230EnemyFumesArmed=false;
+   battle._v231EnemyBurnArmed=false;
+   battle._v232EnemySmogArmed=false;
+   battle._v232EnemyOverclockArmed=false;
+   battle._v233EnemyHexArmed=false;
+   battle._v233EnemyGravityArmed=false;
+   battle._v233EnemyGravityNotice='🌙 Lunar Gravity made the enemy miss!';
+  }else if(isPlayer)battle._v233PlayerGravityNotice='🌙 Lunar Gravity made your attack miss!';
+ }else hit=v233PreviousEnemyResolver(attackerId,defenderId,attackerLevel,defenderLevel,base);
+ if(!battle||!isEnemy||base<=0)return hit;
+ const hex=!!battle._v233EnemyHexArmed;
+ const gravity=!!battle._v233EnemyGravityArmed;
+ battle._v233EnemyHexArmed=false;
+ battle._v233EnemyGravityArmed=false;
+ // CURSE recoil still happens for attacks that miss, but never for REST.
+ if(status?.hex){
+  const amount=v233Reflect('enemy',attackerId);
+  if(amount>0){
+   hit.note=((hit.note||'')+` 🪬 CURSED! -${amount} HP to ${CREATURES[attackerId].name}!`).trim();
+   battle._v233EnemyRecoilNotice=`🪬 Hex curse hit ${CREATURES[attackerId].name} for ${amount} HP!`;
+  }
+ }
+ if(!hit.dodged&&hit.damage>0){
+  if(hex){v233SetEffect('player',defenderId,'hex',attackerLevel);hit.note=((hit.note||'')+` 🪬 ENVY HEX! You lose ${v236Dot(attackerLevel,10)} HP whenever you attack until REST!`).trim();hit.envyHexApplied=true;}
+  if(gravity){v233SetEffect('player',defenderId,'gravity',attackerLevel);hit.note=((hit.note||'')+` 🌙 LUNAR GRAVITY! +${Math.round(100*v236Gravity(attackerLevel))}% miss chance until REST!`).trim();hit.lunarGravityApplied=true;}
+ }
+ return hit;
+};
+// Existing battle modes sometimes show only generic dodge messages. Keep
+// recoil and gravity-miss information visible without changing their flow.
+const v233PreviousBattleMessage=battleMessage;
+battleMessage=function(message){
+ if(battle&&(/dodged|took \d+ damage|dealt \d+ damage|hit for \d+ damage|damage!/i.test(message))){
+  const notices=['_v233EnemyGravityNotice','_v233PlayerGravityNotice','_v233EnemyRecoilNotice','_v233PlayerRecoilNotice'];
+  for(const key of notices){if(battle[key]){message+=' '+battle[key];battle[key]='';}}
+ }
+ return v233PreviousBattleMessage(message);
+};
+const v233PreviousHpMarkup=hpMarkup;
+hpMarkup=function(id,hp,who){
+ let html=v233PreviousHpMarkup(id,hp,who);
+ if(!battle)return html;
+ const conditions=v233Effects(who,id);
+ let badges='';
+ if(conditions?.hex)badges+='<span class="v233-hex-marker"> · 🪬 HEX -10/attack</span>';
+ if(conditions?.gravity)badges+='<span class="v233-gravity-marker"> · 🌙 +30% MISS</span>';
+ if(badges)html=html.replace(/(<div class="type-line">[\s\S]*?)(<\/div>)/,'$1'+badges+'$2');
+ return html;
+};
+const v233PreviousRenderSideBattle=renderSideBattle;
+renderSideBattle=function(){
+ v233PreviousRenderSideBattle();
+ if(!battle)return;
+ const active=team[battle.active];
+ const i=active==='jealousy'?1:active==='lunarrock'?2:-1;
+ if(i<0)return;
+ const button=cContent.querySelector(`.battle-moves button[data-attack="${i}"]`);
+ if(!button)return;
+ const small=button.querySelector('small');
+ if(active==='jealousy'){
+  button.classList.add('v233-hex-move');
+  button.title='Envy Hex: normal damage plus a curse that costs the target 10 HP each time it attacks, hit or miss, until REST. No stacking.';
+  if(small&&!small.querySelector('.v233-hex-label'))small.insertAdjacentHTML('beforeend',' · <span class="v233-hex-label">🪬 Hex -10/attack</span>');
+ }else{
+  button.classList.add('v233-gravity-move');
+  button.title='Lunar Gravity: normal damage plus 30% extra chance for the target to miss attacks until REST. No stacking.';
+  if(small&&!small.querySelector('.v233-gravity-label'))small.insertAdjacentHTML('beforeend',' · <span class="v233-gravity-label">🌙 +30% miss</span>');
+ }
+};
+</script>
+
+
+<link rel="stylesheet" href="css/style-15.css">
+<script id="v234-royal-inferno-effect">
+/* V234: Angola Roja — Royal Inferno (fourth attack, 70 base damage, 55 stamina).
+ * A landed Royal Inferno deals normal initial damage and inflicts a persistent
+ * ROYAL INFERNO debuff dealing exactly 20 HP damage at the end of every
+ * completed round. Lasts until the affected strain RESTS; does not stack
+ * with another Royal Inferno, but other distinct debuffs can coexist.
+ * Applies symmetrically to player / enemy attacks in every battle mode.
+ */
+const V234_INFERNO_DAMAGE=20;
+function v234InfernoStatus(side,id){
+ if(!battle)return null;
+ return side==='enemy'?v230Debuffs().enemy:v230PlayerDebuffs(id);
+}
+function v234SetInferno(side,id,level){
+ const statuses=v234InfernoStatus(side,id);
+ if(statuses)statuses.inferno=v236Dot(level,20);
+}
+// Player attack recognition (not switching, resting or un-affordable moves).
+const v234PriorBattleAction=battleAction;
+battleAction=function(action){
+ if(battle&&!battle.busy){
+  const attacker=team[battle.active],i=Number(action);
+  battle._v234PlayerInfernoArmed=!!(attacker==='angolaroja'&&i===3&&
+   staminaPlayerValue(attacker)>=STAMINA_MOVE_COSTS[3]&&
+   currentMove(attacker,i)[0]==='Royal Inferno');
+ }
+ return v234PriorBattleAction(action);
+};
+const v234PriorPlayerResolver=v152ResolvePlayerAttack;
+v152ResolvePlayerAttack=function(attackerId,defenderId,attackerLevel,defenderLevel,base){
+ const armed=!!(battle&&battle._v234PlayerInfernoArmed&&attackerId==='angolaroja');
+ if(battle)battle._v234PlayerInfernoArmed=false;
+ const hit=v234PriorPlayerResolver(attackerId,defenderId,attackerLevel,defenderLevel,base);
+ if(armed&&battle&&!hit.dodged&&hit.damage>0){
+  v234SetInferno('enemy',null,attackerLevel);
+  hit.note=((hit.note||'')+` 🔥 ROYAL INFERNO! -${v236Dot(attackerLevel,20)} HP every round until REST!`).trim();
+  hit.royalInfernoApplied=true;
+ }
+ return hit;
+};
+// Shared enemy move chooser handles trainer, wild, Hobo and Langy encounters.
+const v234PriorEnemyChooser=staminaChooseEnemyIndex;
+staminaChooseEnemyIndex=function(options){
+ const i=v234PriorEnemyChooser(options);
+ if(battle){
+  battle._v234EnemyInfernoArmed=!!(i===3&&battle.enemy.id==='angolaroja'&&
+   options[i]&&options[i][0]==='Royal Inferno');
+ }
+ return i;
+};
+const v234PriorEnemyResolver=v26ResolveAttack;
+v26ResolveAttack=function(attackerId,defenderId,attackerLevel,defenderLevel,base){
+ const enemyInferno=!!(battle&&battle._v234EnemyInfernoArmed&&
+  !v229InsidePlayerResolver&&attackerId==='angolaroja'&&
+  defenderId===team[battle.active]&&base>0);
+ const hit=v234PriorEnemyResolver(attackerId,defenderId,attackerLevel,defenderLevel,base);
+ if(enemyInferno&&battle){
+  battle._v234EnemyInfernoArmed=false;
+  if(!hit.dodged&&hit.damage>0){
+   v234SetInferno('player',defenderId,attackerLevel);
+   hit.note=((hit.note||'')+` 🔥 ROYAL INFERNO! -${v236Dot(attackerLevel,20)} HP each round until REST!`).trim();
+   hit.royalInfernoApplied=true;
+  }
+ }
+ return hit;
+};
+// Existing debuffs share V230's conditions object. REST from either combatant
+// automatically clears Inferno along with Fumes, Burn, Smog, Hex and Gravity.
+const v234PriorStaminaEndRound=staminaEndRound;
+staminaEndRound=function(){
+ const current=battle;
+ const completed=!!(current&&current._staminaPendingRegen&&!current.busy);
+ const result=v234PriorStaminaEndRound();
+ if(!completed||!battle||battle!==current)return result;
+ const statuses=v230Debuffs(),hitNames=[];
+ if(statuses.enemy.inferno&&battle.enemy.hp>0){
+  const dmg=Number(statuses.enemy.inferno)||V234_INFERNO_DAMAGE;
+  battle.enemy.hp=Math.max(0,battle.enemy.hp-dmg);
+  hitNames.push(`${CREATURES[battle.enemy.id].name} -${dmg} HP`);
+ }
+ for(const [id,effects] of Object.entries(statuses.player)){
+  if(!effects.inferno||!(battle.hp[id]>0))continue;
+  const dmg=Number(effects.inferno)||V234_INFERNO_DAMAGE;
+  battle.hp[id]=Math.max(0,battle.hp[id]-dmg);
+  hitNames.push(`${CREATURES[id].name} -${dmg} HP`);
+ }
+ if(hitNames.length)battleMessage(`🔥 Royal Inferno: ${hitNames.join(' · ')} this round! REST to cleanse.`);
+ // Don't compete with earlier debuff knockout resolution (V230–V232).
+ if(battle.enemy.hp<=0){
+  battle.busy=true;
+  if(!current._v234FinishQueued){
+   current._v234FinishQueued=true;
+   const token=battleToken;
+   setTimeout(()=>{if(battle===current&&battleToken===token)finishBattleVictory()},0);
+  }
+ }else if(!(battle.hp[team[battle.active]]>0)){
+  const defeated=team[battle.active],next=team.findIndex(id=>battle.hp[id]>0);
+  if(next>=0){
+   battle.active=next;
+   battleMessage(`🔥 ${CREATURES[defeated].name} fainted from Royal Inferno! ${CREATURES[team[next]].name}, you're up!`);
+  }else{
+   battle.busy=true;
+   if(!current._v234FinishQueued){
+    current._v234FinishQueued=true;
+    const token=battleToken;
+    setTimeout(()=>{if(battle===current&&battleToken===token)finishBattleDefeat()},0);
+   }
+  }
+ }
+ return result;
+};
+const v234PriorHpMarkup=hpMarkup;
+hpMarkup=function(id,hp,who){
+ let html=v234PriorHpMarkup(id,hp,who);
+ if(!battle||!v234InfernoStatus(who,id)?.inferno)return html;
+ return html.replace(/(<div class="type-line">[\s\S]*?)(<\/div>)/,
+  '$1<span class="v234-inferno-marker"> · 🔥 INFERNO -20</span>$2');
+};
+const v234PriorRenderSideBattle=renderSideBattle;
+renderSideBattle=function(){
+ v234PriorRenderSideBattle();
+ if(!battle||team[battle.active]!=='angolaroja')return;
+ const move=cContent.querySelector('.battle-moves button[data-attack="3"]');
+ if(!move)return;
+ move.classList.add('v234-inferno-move');
+ move.title='Royal Inferno: normal hit damage, then 20 HP each completed round until target RESTS. Does not stack with itself.';
+ const small=move.querySelector('small');
+ if(small&&!small.querySelector('.v234-inferno-label'))
+  small.insertAdjacentHTML('beforeend',' · <span class="v234-inferno-label">🔥 Inferno -20/round</span>');
+};
+</script>
+
+
+<link rel="stylesheet" href="css/style-16.css">
+<script id="v235-strategic-combat-system" src="js/game-13.js"></script>
+
+
+<link rel="stylesheet" href="css/style-17.css">
+<script id="v236-balanced-combat-ui">
+function v236SignatureLabel(id,index,level,enemyLevel){
+ if(id==='gorilla'&&index===2)return `🕸️ ${Math.round(stickySlamChance(level,enemyLevel)*100)}% skip next attack`;
+ if(id==='northern'&&index===0)return `⚡ ${Math.round(sparkZapChance(level,enemyLevel)*100)}% halve next attack`;
+ if(id==='cheese'&&index===1)return `☁️ Fumes ${v236Dot(level,10)} HP/round until REST`;
+ if(id==='trainwreck'&&index===2)return `🔥 Burn ${v236Dot(level,10)} HP/round until REST`;
+ if(id==='sourdiesel'&&index===1)return `🌫️ Smog ${v236Dot(level,10)} HP/round until REST`;
+ if(id==='rs11'&&index===3)return `⚙️ 25%: +${v236OverclockBonus(level)} ATK until REST`;
+ if(id==='jealousy'&&index===1)return `🪬 Hex ${v236Dot(level,10)} HP/attack until REST`;
+ if(id==='lunarrock'&&index===2)return `🌙 +${Math.round(v236Gravity(level)*100)}% miss until REST`;
+ if(id==='angolaroja'&&index===3)return `🔥 Inferno ${v236Dot(level,20)} HP/round until REST`;
+ return '';
+}
+const v236PreviousRenderSideBattle=renderSideBattle;
+renderSideBattle=function(){
+ v236PreviousRenderSideBattle();
+ if(!battle||creatureMode!=='battle')return;
+ const id=team[battle.active],level=progressFor(id).level,foeLevel=battle.enemy.level||1;
+ cContent.querySelectorAll('.battle-moves button[data-attack]').forEach(btn=>{
+  const index=Number(btn.dataset.attack),move=currentMove(id,index);if(!move)return;
+  const extra=v235ExtraCost('player',id),cost=STAMINA_MOVE_COSTS[index]+extra;
+  const desc=v235Move('player',id,index)?.[0]||v236SignatureLabel(id,index,level,foeLevel);
+  const small=btn.querySelector('small');
+  if(small)small.innerHTML=`${move[1]} DMG · <span class="stamina-cost">${cost}⚡</span>${desc?`<span class="v236-move-detail">${desc}</span>`:''}`;
+  btn.title=`${move[0]} | ${move[1]} base damage | ${cost} stamina${desc?' | '+desc:''}`;
+  const available=!battle.busy&&staminaPlayerValue(id)>=cost;
+  btn.disabled=!available;btn.classList.toggle('stamina-unaffordable',!available&&!battle.busy);
+ });
+ const update=(selector,v)=>{const el=cContent.querySelector(selector);if(el)el.textContent=v;};
+ const sides=[['enemy',battle.enemy.id,battle.enemy.level||1],['player',id,level]];
+ for(const [side,sid,slevel] of sides){
+  const d=v235Debuffs(side,sid);
+  update(`.battle-hud.${side} .v230-fumes-marker`,` · ☁️ FUMES −${d.fumes}`);
+  update(`.battle-hud.${side} .v231-burn-marker`,` · 🔥 BURN −${d.burn}`);
+  update(`.battle-hud.${side} .v232-smog-marker`,` · 🌫️ SMOG −${d.smog}`);
+  update(`.battle-hud.${side} .v234-inferno-marker`,` · 🔥 INFERNO −${d.inferno}`);
+  update(`.battle-hud.${side} .v233-hex-marker`,` · 🪬 HEX −${d.hex}/atk`);
+  update(`.battle-hud.${side} .v233-gravity-marker`,` · 🌙 +${Math.round(Number(d.gravity)*100)}% MISS`);
+  update(`.battle-hud.${side} .v232-overclock-marker`,` · ⚙️ +${v236OverclockBonus(slevel)} ATK`);
+ }
+};
+const v236PriorRefreshCreatures=refreshCreatures;
+refreshCreatures=function(){
+ v236PriorRefreshCreatures();
+ if(creatureMode!=='collection')return;
+ const id=selectedCreature;
+ if(!id||!collection.includes(id))return;
+ const level=progressFor(id).level,tier=v236Tier(level),next=tier>=6?'MAX':`Next upgrade Lv. ${tier*10+1}`;
+ const card=cContent.querySelector('.monCard.selected')||cContent.querySelector('.monCard');
+ if(card&&!card.querySelector('.v236-tier-pill')){
+  const tag=document.createElement('span');tag.className='v236-tier-pill';
+  tag.textContent=`⚡ Ability Tier ${tier}/6 · ${next}`;card.appendChild(tag);
+ }
+};
+</script>
+
+
+<link rel="stylesheet" href="css/style-18.css">
+<script id="v237-bugfix-system">
+/* 1) Cosmic Bark finally applies a genuine weak-next-attack effect.
+   Equal to 25% at Tier 1, increasing to 35% at Tier 6; 100% on hit,
+   nonstacking, removed by REST, usable by player and enemy. */
+function v237CosmicWeakness(level){return Math.min(.35,.25+.02*v236Steps(level));}
+const v237OldSecondary=v235ApplySecondary;
+v235ApplySecondary=function(side,id,index,defenderId,hit){
+  const resolved=v237OldSecondary(side,id,index,defenderId,hit);
+  if(battle&&id==='star'&&index===2&&resolved&&!resolved.dodged&&resolved.damage>0){
+    const other=side==='enemy'?'player':'enemy';
+    const status=v235Debuffs(other,defenderId);
+    const pct=v237CosmicWeakness(v236Level(side,id));
+    status.cosmicWeaken=Math.max(Number(status.cosmicWeaken)||0,pct);
+    const message=`🌌 COSMIC BARK! Next attack −${Math.round(pct*100)}% damage until REST!`;
+    resolved.note=((resolved.note||'')+' '+message).trim();
+    battle._v235LatestEffect=message;
+  }
+  return resolved;
+};
+const v237OldIncoming=v235Incoming;
+v235Incoming=function(side,id,attackerId,hit){
+  if(!battle||!hit)return v237OldIncoming(side,id,attackerId,hit);
+  const attackSide=side==='enemy'?'player':'enemy';
+  const status=v235Debuffs(attackSide,attackerId);
+  const pct=Number(status.cosmicWeaken)||0;
+  // As with the existing flat weaken debuff, the attempted attack consumes it.
+  if(pct)status.cosmicWeaken=false;
+  hit=v237OldIncoming(side,id,attackerId,hit);
+  if(pct&&!hit.dodged){
+    const original=Math.max(0,Number(hit.damage)||0);
+    hit.damage=Math.max(0,Math.ceil(original*(1-pct)));
+    const label=`🌌 COSMIC WEAKEN −${Math.round(pct*100)}%!`;
+    hit.note=((hit.note||'')+' '+label).trim();
+    battle._v235LatestEffect=label;
+  }
+  return hit;
+};
+
+/* 2) Classify the move the enemy has actually planned, not its slot number.
+   V235 already stores the committed planned index in _v235EnemyPlan. */
+function v237EnemyIntentLabel(id,index,options){
+  const name=(options?.[index]?.[0]||ATTACKS[id]?.[index]?.[0]||'').trim();
+  const statuses=new Set(['Sticky Slam','Spark Zap','Cosmic Bark','Funky Fumes',
+    'Boiler Blast','Envy Hex','Lunar Gravity','Royal Inferno']);
+  if(name==='Smog Rush'&&id==='sourdiesel')return '☁️ STATUS MOVE';
+  if(statuses.has(name))return '☁️ STATUS MOVE';
+  if(name==='Overclock Core')return '⚙️ POWER-UP ATTACK';
+  const kind=V235_SECONDARY[id]?.[index]?.[1];
+  if(['weaken','tax','guard','evade','dodge','reflect','dispel'].includes(kind))return '🌀 TACTICAL ATTACK';
+  if(['drain','steal'].includes(kind))return '⚡ STAMINA ATTACK';
+  if(kind==='recover')return '⚡ RECOVERY ATTACK';
+  if(kind&&kind.includes('combo'))return '💥 COMBO ATTACK';
+  if(index===3)return '🔥 HEAVY ATTACK';
+  return '⚔️ QUICK ATTACK';
+}
+
+/* 3) Shadow Mirror's actual scaled reflected damage already works. Correct
+   the HUD tooltip and accessible label to match it. */
+const v237OldHpMarkup=hpMarkup;
+hpMarkup=function(id,hp,side){
+  let html=v237OldHpMarkup(id,hp,side);
+  if(!battle)return html;
+  const reflect=Number(v235Buff(side,id).reflect)||0;
+  if(reflect){
+    html=html.replaceAll('Reflects 10 HP on next successful hit',
+      `Reflects ${reflect} HP on next successful hit`);
+  }
+  const pct=Number(v235Debuffs(side,id).cosmicWeaken)||0;
+  if(pct){
+    const label=`🌌 WEAK −${Math.round(pct*100)}%`;const title='Cosmic Bark: next attack deals '+Math.round(pct*100)+'% less damage. REST removes it.';
+    const item=`<span class="v237-cosmic-mark" role="button" tabindex="0" data-v235-tooltip="${title}" title="${title}" aria-label="${title}">${label}</span>`;
+    html=html.replace(/<\/div>\s*$/,item+'</div>');
+  }
+  return html;
+};
+
+/* 4) Battle-only HUD visibility tracks actual dialog state; do not hide
+   overworld controls after leaving a fight. */
+(function(){
+  const panel=document.getElementById('creatureUI');
+  function syncBattleOverlay(){
+    document.body.classList.toggle('v237-in-battle',
+      !!battle && creatureMode==='battle' && panel.style.display==='flex');
+  }
+  const previous=renderSideBattle;
+  renderSideBattle=function(){previous();syncBattleOverlay();};
+  new MutationObserver(syncBattleOverlay).observe(panel,{attributes:true,attributeFilter:['style'],childList:true,subtree:true});
+  syncBattleOverlay();
+})();
+</script>
+
+<link rel="stylesheet" href="css/style-19.css">
+<script id="v238-tactical-combat" src="js/game-14.js"></script>
+
+<script src="eastern_grove/rebuilt_scene.js"></script>
+<script src="eastern_grove/blank_canvas.js"></script>
+<script src="eastern_grove/eastern_v242_scene.js"></script>
+<script src="editor/native-npc-routes.js"></script>
+<script id="v247-final-actor-foreground">
+/* All outdoor NPC sprites render after buildings, scenery and original hero,
+   avoiding partial occlusion by the game's later house-art overlays. */
+(()=>{
+  'use strict';
+  const previousTownDraw=drawWorld;
+  drawWorld=function(){
+    previousTownDraw();
+    if(currentDistrict!=='leaf'||interior)return;
+    window.SAWorldEditor?.drawNPCOverlay?.();
+    window.drawBallDee?.();
+    window.drawOlaf?.();
+    window.drawIan?.();
+    window.drawMissMuffet?.();
+    window.drawJosh?.();
+  };
+  const previousGroveDraw=drawEasternDistrict;
+  drawEasternDistrict=function(){
+    previousGroveDraw();
+    if(currentDistrict==='grove'&&!interior)window.SAWorldEditor?.drawNPCOverlay?.();
+  };
+})();
+</script><script id="sa-beta-cache-registration">
+(()=>{
+ if(!('serviceWorker' in navigator)||!(location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1'))return;
+ window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'})
+   .then(reg=>reg.update().catch(()=>{})).catch(err=>console.warn('Optional image cache unavailable',err)),{once:true});
+})();
+</script></body></html>
+
