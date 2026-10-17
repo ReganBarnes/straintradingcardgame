@@ -1,4 +1,13 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#183f32"><link rel="preload" as="image" href="assets/v204_6478005e2edd23fd56c8b2a7.jpg" fetchpriority="high">
+<!doctype html><html lang="en"><head>
+<script id="sa-public-beta-mode">
+// Public beta: keep studio and admin source/assets intact, but disable both editing entry points.
+window.SABetaFlags = Object.freeze({adminEnabled:false, worldEditorEnabled:false});
+</script>
+<style id="sa-public-beta-ui">
+#menuAdmin, #adminFinishForLangy, #saEditorOpen, #saEditor, #saEditorCanvas,
+#saEditorCompact, #saEditorToast, #saCollisionTestBar {display:none!important;}
+</style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#183f32"><link rel="preload" as="image" href="assets/v204_6478005e2edd23fd56c8b2a7.jpg" fetchpriority="high">
 <link rel="preload" as="image" href="assets/v204_f18d6f769b9a0a4ed95867f1.png" fetchpriority="high"><title>Strain Adventures — V243 Eastern Grove Square Editor Paths & NPC Waypoint Routes</title><link rel="stylesheet" href="css/style-01.css"><link rel="stylesheet" href="css/style-02.css"><link rel="stylesheet" href="css/style-03.css"><script id="standalone-resource-loader">
 (()=>{
   'use strict';
@@ -68,7 +77,7 @@
   };
 })();
 </script>
-</head><body class="menuPending"><canvas id="game"></canvas><div id="hud"><strong>🌿 LEAF TOWN</strong><div id="stats">HP 100/100 · 0 badges</div></div><button id="mute">♫ Music ON</button><div id="controls"><button id="up" data-dir="up">▲</button><button id="left" data-dir="left">◀</button><button id="down" data-dir="down">▼</button><button id="right" data-dir="right">▶</button></div><button id="action">A</button><div id="dialog"></div><button id="teamBtn">🌿 Strains (0 owned · 0/3 team)</button><div id="creatureUI"><div id="creatureBox"><h2 id="creatureTitle">Your Strains</h2><p id="creatureHelp"></p><div id="creatureContent"></div><button id="creatureClose" class="creatureClose">← BACK TO GAME</button></div></div><div id="shop"><div id="shopWindow"><h2>🌿 CURE SHOP SUPPLIES</h2><p style="margin:4px 0;text-align:center">Welcome! Choose an item.</p><div id="coins" style="text-align:center;color:#e7cf8a;font-weight:800">£50</div><div class="item"><div><b>🫙 Small Cure Jar</b><small>£25 · Restore 25% HP to one strain</small></div><button data-buy="jar">BUY</button></div><div class="item"><div><b>🧪 Bong</b><small>£45 · Give one strain 50 XP</small></div><button data-buy="bong">BUY</button></div><div class="item"><div><b>💨 Terp Spray</b><small>£15 · +20% attack damage for a battle</small></div><button data-buy="spray">BUY</button></div><div id="shopMsg" aria-live="polite"></div><button id="shopClose">← BACK TO GAME</button></div></div><div id="overlay" class="mainMenu" aria-label="Strain Adventures main menu"><div id="menuArtwork"><div id="menuButtons"><button id="play" class="menuHit" aria-label="Play new game"></button><button id="menuSaves" class="menuHit" aria-label="Saved games"></button><button id="menuSettings" class="menuHit" aria-label="Settings"></button></div><button id="menuAdmin" type="button" aria-label="Start admin test mode">⚙ ADMIN MODE <small>UNLOCKED TEST RUN</small></button></div><div id="menuSub" aria-live="polite" hidden><section class="menuSubPanel"><h2 id="menuSubTitle">SETTINGS</h2><div id="menuSubContent"></div><button type="button" id="menuBack">← BACK</button></section></div></div><div id="missionOverlay" role="dialog" aria-modal="true" aria-label="PapaHerb mission list"><section id="missionPanel"><h2>ACTIVE MISSIONS</h2><p class="missionIntro">PapaHerb HQ · Mission Journal</p><nav id="missionTabs"><button type="button" data-mission-tab="active" class="selected">ACTIVE MISSIONS</button><button type="button" data-mission-tab="finished">FINISHED</button></nav><div id="missionEntries"></div><div id="missionDetail">Select a mission above to view its objective.</div><button id="missionClose" type="button">← BACK TO HQ</button></section></div><script src="js/game-01.js"></script>
+<link rel="stylesheet" href="css/public-beta-mobile-touch.css"></head><body class="menuPending"><canvas id="game"></canvas><div id="hud"><strong>🌿 LEAF TOWN</strong><div id="stats">HP 100/100 · 0 badges</div></div><button id="mute">♫ Music ON</button><div id="controls"><button id="up" data-dir="up">▲</button><button id="left" data-dir="left">◀</button><button id="down" data-dir="down">▼</button><button id="right" data-dir="right">▶</button></div><button id="action">A</button><div id="dialog"></div><button id="teamBtn">🌿 Strains (0 owned · 0/3 team)</button><div id="creatureUI"><div id="creatureBox"><h2 id="creatureTitle">Your Strains</h2><p id="creatureHelp"></p><div id="creatureContent"></div><button id="creatureClose" class="creatureClose">← BACK TO GAME</button></div></div><div id="shop"><div id="shopWindow"><h2>🌿 CURE SHOP SUPPLIES</h2><p style="margin:4px 0;text-align:center">Welcome! Choose an item.</p><div id="coins" style="text-align:center;color:#e7cf8a;font-weight:800">£50</div><div class="item"><div><b>🫙 Small Cure Jar</b><small>£25 · Restore 25% HP to one strain</small></div><button data-buy="jar">BUY</button></div><div class="item"><div><b>🧪 Bong</b><small>£45 · Give one strain 50 XP</small></div><button data-buy="bong">BUY</button></div><div class="item"><div><b>💨 Terp Spray</b><small>£15 · +20% attack damage for a battle</small></div><button data-buy="spray">BUY</button></div><div id="shopMsg" aria-live="polite"></div><button id="shopClose">← BACK TO GAME</button></div></div><div id="overlay" class="mainMenu" aria-label="Strain Adventures main menu"><div id="menuArtwork"><div id="menuButtons"><button id="play" class="menuHit" aria-label="Play new game"></button><button id="menuSaves" class="menuHit" aria-label="Saved games"></button><button id="menuSettings" class="menuHit" aria-label="Settings"></button></div><button id="menuAdmin" type="button" disabled hidden aria-hidden="true" tabindex="-1" aria-label="Admin unavailable in public beta">⚙ ADMIN MODE <small>UNLOCKED TEST RUN</small></button></div><div id="menuSub" aria-live="polite" hidden><section class="menuSubPanel"><h2 id="menuSubTitle">SETTINGS</h2><div id="menuSubContent"></div><button type="button" id="menuBack">← BACK</button></section></div></div><div id="missionOverlay" role="dialog" aria-modal="true" aria-label="PapaHerb mission list"><section id="missionPanel"><h2>ACTIVE MISSIONS</h2><p class="missionIntro">PapaHerb HQ · Mission Journal</p><nav id="missionTabs"><button type="button" data-mission-tab="active" class="selected">ACTIVE MISSIONS</button><button type="button" data-mission-tab="finished">FINISHED</button></nav><div id="missionEntries"></div><div id="missionDetail">Select a mission above to view its objective.</div><button id="missionClose" type="button">← BACK TO HQ</button></section></div><script src="js/game-01.js"></script>
 <script>
 // V100 — Nitty cottage upgrade: smoother idle animation + full-screen sprite cutscene.
 (function(){
@@ -1092,6 +1101,7 @@
   const playButton=document.getElementById('play');
   if(!adminButton||!playButton)return;
   adminButton.addEventListener('click',function(){
+    if(window.SABetaFlags?.adminEnabled!==true)return;
     // This release contains the Common Gym badge; Eastern Grove checks player.badges>=1.
     // Assign before Play's existing click handlers so every gate sees the badge immediately.
     player.badges=Math.max(1,player.badges);
@@ -1115,6 +1125,7 @@
  css.textContent='body[data-admin-mode="true"] #adminFinishForLangy{display:block!important}body.menuPending #adminFinishForLangy{display:none!important}';
  document.head.appendChild(css);
  btn.addEventListener('click',function(){
+  if(window.SABetaFlags?.adminEnabled!==true)return;
   if(document.body.dataset.adminMode!=='true')return;
   oldLadyMissionComplete=true;oldLadySpoken=true;
   cottagePipesFixed=true;cabinMissionFinished=true;cabinMissionResult='riddle';cabinCutsceneSeen=true;
@@ -3572,5 +3583,5 @@ hpMarkup=function(id,hp,side){
  window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'})
    .then(reg=>reg.update().catch(()=>{})).catch(err=>console.warn('Optional image cache unavailable',err)),{once:true});
 })();
-</script></body></html>
+</script><script src="js/public-beta-mobile-touch.js"></script></body></html>
 

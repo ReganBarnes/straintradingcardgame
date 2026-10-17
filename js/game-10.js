@@ -503,7 +503,7 @@
 
  function buildUI(){
    openBtn=document.createElement('button');openBtn.id='saEditorOpen';openBtn.type='button';openBtn.textContent='✎ WORLD EDITOR';
-   openBtn.addEventListener('click',()=>{if(active)exitEditor();else enterEditor();});
+   openBtn.addEventListener('click',()=>{if(window.SABetaFlags?.worldEditorEnabled!==true)return;if(active)exitEditor();else enterEditor();});
    document.body.append(openBtn);
    editorCanvas=document.createElement('canvas');editorCanvas.id='saEditorCanvas';editorCanvas.setAttribute('aria-hidden','true');document.body.append(editorCanvas);
    toastBox=document.createElement('div');toastBox.id='saEditorToast';toastBox.setAttribute('role','status');document.body.append(toastBox);
@@ -648,6 +648,7 @@
  function deleteSelected(){const s=getSelected();if(!s)return;recordUndo();const arr=getMap();arr.splice(arr.indexOf(s),1);selected=null;syncProperties();persistSoon();}
 
  function enterEditor(){
+   if(window.SABetaFlags?.worldEditorEnabled!==true)return;
    if(!ready){tell('World Studio assets are still loading. Try again.');return;}
    if(!running){tell('Start the game first to edit the world.');return;}
    if(interior||battle||dialogOpen||shopOpen||missionOpen||typeof creatureMode!=='undefined'&&creatureMode==='battle'){
@@ -692,6 +693,7 @@
  }
  function updateOpenButton(){
    if(!openBtn)return;
+   if(window.SABetaFlags?.worldEditorEnabled!==true){openBtn.disabled=true;openBtn.hidden=true;openBtn.style.display='none';return;}
    const okay=running&&!active&&!testing&&!interior&&!battle&&!dialogOpen&&!shopOpen&&!missionOpen&&!document.hidden;
    openBtn.style.display=okay?'block':'none';
  }

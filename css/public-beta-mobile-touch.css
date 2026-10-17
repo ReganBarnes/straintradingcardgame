@@ -1,0 +1,8 @@
+/* Public beta: iOS Safari long-press controls. No gameplay changes. */
+#controls, #controls button, #action {
+  -webkit-user-select: none !important;
+  user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none !important;
+}
